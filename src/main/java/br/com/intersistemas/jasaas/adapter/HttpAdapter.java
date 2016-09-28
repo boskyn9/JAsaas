@@ -18,11 +18,11 @@ import org.apache.http.util.EntityUtils;
  */
 public class HttpAdapter implements AdapterInterface{
 
-    private String acessToken;
-    private CloseableHttpClient httpclient;
+    private final String accessToken;
+    private final CloseableHttpClient httpclient;
     
     public HttpAdapter(String acessToken) {
-        this.acessToken = acessToken;
+        this.accessToken = acessToken;
         httpclient = HttpClients.createDefault();
         
     }   
@@ -32,7 +32,7 @@ public class HttpAdapter implements AdapterInterface{
     public String get(String url) {
         try {
             HttpGet httpGet = new HttpGet(url);
-            httpGet.addHeader("access_token", acessToken);
+            httpGet.addHeader("access_token", accessToken);
             
             CloseableHttpResponse response = httpclient.execute(httpGet);
             
@@ -40,9 +40,6 @@ public class HttpAdapter implements AdapterInterface{
             
             HttpEntity entity = response.getEntity();
             String retorno = EntityUtils.toString(entity);
-            
-            System.out.println("[URL] "+url);
-            System.out.println("[RETORNO] " +retorno);
             
             return retorno;
         } catch (IOException ex) {

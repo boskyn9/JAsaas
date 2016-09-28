@@ -23,24 +23,6 @@ public class Teste {
 
     public static void main(String[] args) throws URISyntaxException, MalformedURLException, IOException, ClassNotFoundException {
         String acessToken = "0ebde6de3835057f42291b64c21a0449f4aec2674b5ea28e748df298425370e4";
-//        URL url = new URL("http://homolog.asaas.com/api/v2/cities");
-//        
-////        HttpPost post = new HttpPost(uri);
-////        post.addHeader("access_token", key);
-//        
-//        
-//        HttpGet get = new HttpGet(url.toURI());
-//        get.addHeader("access_token", key);
-//        
-//        CloseableHttpClient httpclient = HttpClients.createDefault();
-//        CloseableHttpResponse response = httpclient.execute(get);
-//        
-//        System.out.println(response.getStatusLine());
-//        
-//        HttpEntity entity = response.getEntity();
-//        String retorno = EntityUtils.toString(entity);
-//        
-//        System.out.println(retorno);
         
 //{
 //  "object": "list",
@@ -180,14 +162,9 @@ public class Teste {
 //        List<City> cities = conn.getAll(null);
         List<City> cities = conn.getAll(filter);
         
-        for (City city : cities) {
+        cities.stream().forEach((city) -> {
             System.out.println(city.getName());
-        }
-
-
- 
-
-
+        });
 //        City city = conn.getById(7637);
 //        System.out.println(city);
     }
