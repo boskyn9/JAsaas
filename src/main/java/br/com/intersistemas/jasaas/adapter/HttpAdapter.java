@@ -9,7 +9,6 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
 /**
@@ -31,6 +30,9 @@ public class HttpAdapter implements AdapterInterface{
     @Override
     public String get(String url) {
         try {
+            
+            System.out.println("[URL] "+url);
+            
             HttpGet httpGet = new HttpGet(url);
             httpGet.addHeader("access_token", accessToken);
             

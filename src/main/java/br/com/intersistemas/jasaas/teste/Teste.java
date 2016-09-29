@@ -159,8 +159,12 @@ public class Teste {
         City filter = new City();
         filter.setState("RN");
         
-//        List<City> cities = conn.getAll(null);
-        List<City> cities = conn.getAll(filter);
+        List<City> cities = conn.getAll(null);
+        
+        System.out.println(conn.getLimit());
+        System.out.println(conn.getOffset());
+        System.out.println(conn.getHasMore());
+//        List<City> cities = conn.getAll(filter);
         
         cities.stream().forEach((city) -> {
             System.out.println(city.getName());

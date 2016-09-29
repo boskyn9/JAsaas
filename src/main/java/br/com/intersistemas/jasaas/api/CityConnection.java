@@ -7,14 +7,10 @@ import br.com.intersistemas.jasaas.entity.Meta;
 import br.com.intersistemas.jasaas.util.HttpParamsUtil;
 import br.com.intersistemas.jasaas.util.JsonUtil;
 import com.sun.javafx.binding.StringFormatter;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.utils.URLEncodedUtils;
 
 /**
  *
@@ -22,25 +18,39 @@ import org.apache.http.client.utils.URLEncodedUtils;
  */
 public class CityConnection extends AbstractConnection{
 
-    private AdapterInterface adapter;
+    private final AdapterInterface adapter;
     
     public CityConnection(AdapterInterface adapter, int abstractConnectionEndpoint) {
         super(abstractConnectionEndpoint);
         this.adapter = adapter;
     }
 
-    public List<City> getAll(City cityFilter) {        
+    public List<City> getAll(City cityFilter) {
+        return getAll(cityFilter, null, null);
+    }
+    
+    public List<City> getAll(City cityFilter,Integer limit, Integer offset) {        
         try {
-            String params = HttpParamsUtil.parse(cityFilter);            
-            
             String url;
+            
+            if(limit == null) limit = 10;
+            if(offset == null) offset = 0;
+            
+            String params = HttpParamsUtil.parse(cityFilter);            
             if(params != null){
-                url = StringFormatter.concat(endpoint,"/cities",params).getValue();
+                url = StringFormatter.concat(endpoint,"/cities",params,"&limit=",limit,"&offset=",offset).getValue();
             }else{
-                url = StringFormatter.concat(endpoint,"/cities").getValue();
+                url = StringFormatter.concat(endpoint,"/cities","?limit=",limit,"&offset=",offset).getValue();
             }
+            
             String retorno = adapter.get(url);
+            
             Meta meta = (Meta) JsonUtil.parse(retorno, Meta.class);
+            
+            setHasMore(meta.getHasMore());
+            setLimit(meta.getLimit());
+            setOffset(meta.getOffset());
+            
             Content[] contentList = meta.getData();
             List<City> cities = new ArrayList<>();
             for (Content content : contentList) {
