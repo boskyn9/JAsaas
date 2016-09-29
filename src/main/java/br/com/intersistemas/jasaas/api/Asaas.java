@@ -20,5 +20,10 @@ public class Asaas {
         return new CityConnection(adapter, ambiente);
     }
     
+    public CustomerConnection customer(){
+        return new CustomerConnection(adapter, ambiente);
+    }
+    
+    
     // TODO replicar forma para outras conexões.
 }

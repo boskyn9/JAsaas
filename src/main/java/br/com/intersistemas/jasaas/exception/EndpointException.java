@@ -10,11 +10,11 @@ package br.com.intersistemas.jasaas.exception;
  * @author bosco
  */
 public class EndpointException extends RuntimeException{
-    String message;
+
     int endpointValue;
 
     public EndpointException(String message, int endpointValue) {
-        this.message = message;
+        super(message);
         this.endpointValue = endpointValue;
     }
     

@@ -1,5 +1,6 @@
 package br.com.intersistemas.jasaas.adapter;
 
+import br.com.intersistemas.jasaas.exception.ConnectionException;
 import java.util.List;
 
 /**
@@ -11,8 +12,7 @@ public interface AdapterInterface {
     /**
      * GET Request
      *
-     * @param string url Request Url
-     * @throws HttpException
+     * @param url
      * @return string
      */
     public String get(String url);
@@ -20,29 +20,25 @@ public interface AdapterInterface {
     /**
      * DELETE Request
      *
-     * @param string url Request Url
-     * @throws HttpException
+     * @param url
      */
     public void delete(String url);
 
     /**
      * PUT Request
      *
-     * @param string url Request Url
-     * @param mixed content Request Content
-     * @throws HttpException
+     * @param url
+     * @param contentJSON
      * @return string
      */
-    public String put(String url, String content);
+    public String put(String url, String contentJSON);
     /**
      * POST Request
      *
-     * @param   string  $url      Request Url
-     * @param   mixed   $content  Request Content
-     * @throws  HttpException
-     * @return  string
+     * @param url
+     * @param contentJSON
      */
-    public void post(String url, String content);
+    public void post(String url, String contentJSON);
     /**
      * Get last response headers
      *

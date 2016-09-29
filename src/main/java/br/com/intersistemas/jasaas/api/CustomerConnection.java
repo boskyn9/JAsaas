@@ -1,7 +1,7 @@
 package br.com.intersistemas.jasaas.api;
 
 import br.com.intersistemas.jasaas.adapter.AdapterInterface;
-import br.com.intersistemas.jasaas.entity.City;
+import br.com.intersistemas.jasaas.entity.Customer;
 import br.com.intersistemas.jasaas.entity.Content;
 import br.com.intersistemas.jasaas.entity.Meta;
 import br.com.intersistemas.jasaas.util.HttpParamsUtil;
@@ -16,38 +16,41 @@ import java.util.logging.Logger;
  *
  * @author bosco
  */
-public class CityConnection extends AbstractConnection{
+public class CustomerConnection extends AbstractConnection{
 
     private final AdapterInterface adapter;
     
-    public CityConnection(AdapterInterface adapter, int abstractConnectionEndpoint) {
+    public CustomerConnection(AdapterInterface adapter, int abstractConnectionEndpoint) {
         super(abstractConnectionEndpoint);
         this.adapter = adapter;
     }
-    
-    public List<City> getAll() {
+
+    public List<Customer> getAll() {
         return getAll(null, null, null);
     }
     
-    public List<City> getAll(City cityFilter) {
-        return getAll(cityFilter, null, null);
+    
+    public List<Customer> getAll(Customer customerFilter) {
+        return getAll(customerFilter, null, null);
     }
     
-    public List<City> getAll(City cityFilter,Integer limit, Integer offset) {        
+    public List<Customer> getAll(Customer customerFilter,Integer limit, Integer offset) {        
         try {
             String url;
             
             if(limit == null) limit = 10;
             if(offset == null) offset = 0;
             
-            String params = HttpParamsUtil.parse(cityFilter);            
+            String params = HttpParamsUtil.parse(customerFilter);            
             if(params != null){
-                url = StringFormatter.concat(endpoint,"/cities",params,"&limit=",limit,"&offset=",offset).getValue();
+                url = StringFormatter.concat(endpoint,"/customers",params,"&limit=",limit,"&offset=",offset).getValue();
             }else{
-                url = StringFormatter.concat(endpoint,"/cities","?limit=",limit,"&offset=",offset).getValue();
+                url = StringFormatter.concat(endpoint,"/customers","?limit=",limit,"&offset=",offset).getValue();
             }
             
             String retorno = adapter.get(url);
+            
+            System.out.println("[RETURN] " + retorno);
             
             Meta meta = (Meta) JsonUtil.parse(retorno, Meta.class);
             
@@ -56,21 +59,21 @@ public class CityConnection extends AbstractConnection{
             setOffset(meta.getOffset());
             
             Content[] contentList = meta.getData();
-            List<City> cities = new ArrayList<>();
+            List<Customer> customers = new ArrayList<>();
             for (Content content : contentList) {
-                cities.add(content.getCity());
+                customers.add(content.getCustomer());
             }           
-            return cities;
+            return customers;
         } catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException ex) {
-            Logger.getLogger(CityConnection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CustomerConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return null;
     }
     
-    public City getById(Integer id){
-        String retorno = adapter.get(StringFormatter.concat(endpoint,"/cities/",id).getValue());
-        return (City) JsonUtil.parse(retorno, City.class);
+    public Customer getById(Integer id){
+        String retorno = adapter.get(StringFormatter.concat(endpoint,"/customers/",id).getValue());
+        return (Customer) JsonUtil.parse(retorno, Customer.class);
     }
     
 }

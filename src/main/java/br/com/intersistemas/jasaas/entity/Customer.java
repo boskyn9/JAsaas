@@ -9,9 +9,9 @@ import java.util.List;
  */
 public final class Customer {
     /**
-     * @var int
+     * @var String
      */
-    private Integer id;
+    private String id;
     /**
      * @var string
      */
@@ -93,11 +93,15 @@ public final class Customer {
      */
     private List<Notification> notifications = new ArrayList<>();
 
-    public Integer getId() {
+    /**
+     *
+     * @return
+     */
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -272,4 +276,11 @@ public final class Customer {
     public void addSubscriptions(Subscription subscription){
         this.subscriptions.add(subscription);
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" + "id=" + id + ", name=" + name + ", email=" + email + ", company=" + company + ", phone=" + phone + ", mobilePhone=" + mobilePhone + ", address=" + address + ", addressNumber=" + addressNumber + ", complement=" + complement + ", province=" + province + ", foreignCustomer=" + foreignCustomer + ", notificationDisabled=" + notificationDisabled + ", city=" + city + ", state=" + state + ", country=" + country + ", postalCode=" + postalCode + ", cpfCnpj=" + cpfCnpj + ", personType=" + personType + ", subscriptions=" + subscriptions + ", payments=" + payments + ", notifications=" + notifications + '}';
+    }
+    
+    
 }
