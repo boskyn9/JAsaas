@@ -1,9 +1,9 @@
-# JAsaas EM DESENVOLVIMENTO
+# JAsaas [EM DESENVOLVIMENTO]
 
 Asaas.com JAVA-SDK
 =================
 
-SDK não-oficial de integração á API do serviço www.asaas.com
+SDK não-oficial de integração à API do serviço www.asaas.com
 
 Instalação
 ----------
