@@ -14,6 +14,7 @@ public interface AdapterInterface {
      *
      * @param url
      * @return string
+     * @throws ConnectionException
      */
     public String get(String url);
 
@@ -21,28 +22,32 @@ public interface AdapterInterface {
      * DELETE Request
      *
      * @param url
+     * @throws ConnectionException
      */
     public void delete(String url);
 
     /**
      * PUT Request
      *
-     * @param url
-     * @param contentJSON
+     * @param url URL do serviço para comunicação
+     * @param contentJSON Conteúdo da comunicação
+     * @throws ConnectionException     
      * @return string
      */
     public String put(String url, String contentJSON);
     /**
      * POST Request
      *
-     * @param url
-     * @param contentJSON
+     * @param url URL do serviço para comunicação
+     * @param contentJSON Conteúdo da comunicação
+     * @throws ConnectionException
      */
     public void post(String url, String contentJSON);
     /**
      * Get last response headers
      *
-     * @return array|null
+     * @return List
+     * @throws ConnectionException
      */
     public List getLatestResponseHeaders();
 }

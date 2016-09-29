@@ -3,7 +3,6 @@ package br.com.intersistemas.jasaas.adapter;
 import br.com.intersistemas.jasaas.exception.ConnectionException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.ConnectException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +33,7 @@ public class HttpAdapter implements AdapterInterface{
     
 
     @Override
-    public String get(String url) {
+    public String get(String url) throws ConnectionException {
         try {
             HttpGet httpGet = new HttpGet(url);
             httpGet.addHeader("access_token", accessToken);
@@ -66,7 +65,7 @@ public class HttpAdapter implements AdapterInterface{
     }
 
     @Override
-    public void post(String url, String contentJSON) {
+    public void post(String url, String contentJSON) throws ConnectionException {
         try {
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("access_token", accessToken);

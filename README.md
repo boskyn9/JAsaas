@@ -35,6 +35,20 @@ List<Customer> customers = conn.getAll();
 // Retorna os dados do cliente de acordo com o Email
 
 // Insere um novo cliente
+CustomerConnection conn = asaas.customer();
+
+Customer customer = new Customer();
+customer.setName("Bosco Filho");
+customer.setEmail("bos@liamg.moc.rb");
+customer.setMobilePhone("8488888888");
+customer.setCpfCnpj("31890545929");
+customer.setPostalCode("59875-400");
+customer.setAddress("Av. paulista");
+customer.setAddressNumber("858");
+customer.setProvince("Pitimbu");
+customer.setCity("3550308");
+
+conn.createCustomer(customer);
 
 // Atualiza os dados do cliente
 

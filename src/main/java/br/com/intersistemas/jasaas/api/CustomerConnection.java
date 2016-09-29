@@ -4,8 +4,10 @@ import br.com.intersistemas.jasaas.adapter.AdapterInterface;
 import br.com.intersistemas.jasaas.entity.Customer;
 import br.com.intersistemas.jasaas.entity.Content;
 import br.com.intersistemas.jasaas.entity.Meta;
+import br.com.intersistemas.jasaas.exception.ConnectionException;
 import br.com.intersistemas.jasaas.util.HttpParamsUtil;
 import br.com.intersistemas.jasaas.util.JsonUtil;
+import com.google.gson.Gson;
 import com.sun.javafx.binding.StringFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,16 +27,15 @@ public class CustomerConnection extends AbstractConnection{
         this.adapter = adapter;
     }
 
-    public List<Customer> getAll() {
+    public List<Customer> getAll() throws ConnectionException {
         return getAll(null, null, null);
-    }
+    }    
     
-    
-    public List<Customer> getAll(Customer customerFilter) {
+    public List<Customer> getAll(Customer customerFilter) throws ConnectionException {
         return getAll(customerFilter, null, null);
     }
     
-    public List<Customer> getAll(Customer customerFilter,Integer limit, Integer offset) {        
+    public List<Customer> getAll(Customer customerFilter,Integer limit, Integer offset) throws ConnectionException {        
         try {
             String url;
             
@@ -71,9 +72,13 @@ public class CustomerConnection extends AbstractConnection{
         return null;
     }
     
-    public Customer getById(Integer id){
+    public Customer getById(Integer id) throws ConnectionException{
         String retorno = adapter.get(StringFormatter.concat(endpoint,"/customers/",id).getValue());
         return (Customer) JsonUtil.parse(retorno, Customer.class);
     }
     
+    public void createCustomer(Customer customer) throws ConnectionException{
+        String customerJSON = JsonUtil.toJSON(customer);
+        adapter.post(StringFormatter.concat(endpoint,"/customers/").getValue(), customerJSON);        
+    }    
 }

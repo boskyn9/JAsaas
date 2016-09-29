@@ -27,23 +27,53 @@ public class Teste {
         String acessToken = "0ebde6de3835057f42291b64c21a0449f4aec2674b5ea28e748df298425370e4";
         
         Asaas asaas = new Asaas(new HttpAdapter(acessToken), AbstractConnection.AMBIENTE_HOMOLOGACAO);
+//        Asaas asaas = new Asaas(new HttpAdapter(acessToken), AbstractConnection.AMBIENTE_PRODUCAO);
+
+//        {
+//            "name": "Marcelo Almeida",
+//            "email": "marcelo.almeida@gmail.com",
+//            "mobilePhone": "11 998768814",
+//            "cpfCnpj": "50482783729",
+//            "postalCode": "01310-000",
+//            "address": "Av. Paulista",
+//            "addressNumber": "150",
+//            "complement": "Sala 201",
+//            "province": "Centro",
+//            "city": "3550308"
+//        }
+
+//        Customer customer = new Customer();
+//        customer.setName("Bosco Filho");
+//        customer.setEmail("bos@liamg.moc.rb");
+//        customer.setMobilePhone("8436669855");
+//        customer.setCpfCnpj("31890545929");
+//        customer.setPostalCode("59875-400");
+//        customer.setAddress("Av. paulista");
+//        customer.setAddressNumber("858");
+//        customer.setProvince("Pitimbu");
+//        customer.setCity("3550308");
+//
         CustomerConnection conn = asaas.customer();
 
+//        conn.createCustomer(customer);
         List<Customer> clientes = conn.getAll();
+//        
         clientes.stream().forEach((customer) -> {
-            System.out.println(customer);
+            System.out.println(customer);            
         });
         
 //        CityConnection conn = asaas.city();
+//        
 //        City filter = new City();
 //        filter.setState("RN");
-//        List<City> cities = conn.getAll(null);
-//        List<City> cities = conn.getAll(filter);
+//        
+//        List<City> cities = conn.getAll(filter, null, null);
+////        List<City> cities = conn.getAll(filter);
 //        cities.stream().forEach((city) -> {
 //            System.out.println(city.getName());
 //        });
-//        City city = conn.getById(7637);
-//        System.out.println(city);
+////        City city = conn.getById(7637);
+////        System.out.println(city);
 //        System.out.println(conn.getLimit());
 //        System.out.println(conn.getOffset());
 //        System.out.println(conn.getHasMore());

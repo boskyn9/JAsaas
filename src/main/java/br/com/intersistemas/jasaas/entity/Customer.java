@@ -193,14 +193,21 @@ public final class Customer {
         this.notificationDisabled = notificationDisabled;
     }
 
+    
+    /**
+     * @return Identificador único da cidade ou código do IBGE. Para cliente estrangeiro: nome da cidade
+     */
     public String getCity() {
         return city;
     }
-
+    
+    /**
+     * @param city Identificador único da cidade ou código do IBGE. Para cliente estrangeiro: nome da cidade
+     */
     public void setCity(String city) {
         this.city = city;
     }
-
+    
     public String getState() {
         return state;
     }

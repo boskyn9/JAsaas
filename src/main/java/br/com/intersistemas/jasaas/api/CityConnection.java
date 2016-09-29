@@ -4,6 +4,7 @@ import br.com.intersistemas.jasaas.adapter.AdapterInterface;
 import br.com.intersistemas.jasaas.entity.City;
 import br.com.intersistemas.jasaas.entity.Content;
 import br.com.intersistemas.jasaas.entity.Meta;
+import br.com.intersistemas.jasaas.exception.ConnectionException;
 import br.com.intersistemas.jasaas.util.HttpParamsUtil;
 import br.com.intersistemas.jasaas.util.JsonUtil;
 import com.sun.javafx.binding.StringFormatter;
@@ -25,15 +26,15 @@ public class CityConnection extends AbstractConnection{
         this.adapter = adapter;
     }
     
-    public List<City> getAll() {
+    public List<City> getAll() throws ConnectionException {
         return getAll(null, null, null);
     }
     
-    public List<City> getAll(City cityFilter) {
+    public List<City> getAll(City cityFilter) throws ConnectionException {
         return getAll(cityFilter, null, null);
     }
     
-    public List<City> getAll(City cityFilter,Integer limit, Integer offset) {        
+    public List<City> getAll(City cityFilter,Integer limit, Integer offset) throws ConnectionException {        
         try {
             String url;
             
@@ -68,7 +69,7 @@ public class CityConnection extends AbstractConnection{
         return null;
     }
     
-    public City getById(Integer id){
+    public City getById(Integer id) throws ConnectionException{
         String retorno = adapter.get(StringFormatter.concat(endpoint,"/cities/",id).getValue());
         return (City) JsonUtil.parse(retorno, City.class);
     }
