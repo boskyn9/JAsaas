@@ -121,8 +121,6 @@ Obs.: Esta é uma API não oficial. Foi feita com base na documentação disponi
 Creditos
 --------
 
-* [Agência Softr Ltda - www.softr.com.br](http://www.softr.com.br)
-* Esta biblioteca foi feita com base na API DigitalOcean disponível [neste link](https://github.com/softr/DigitalOceanV2)
 
 
 Suporte
