@@ -6,114 +6,167 @@ package br.com.intersistemas.jasaas.entity;
  */
 public final class Notification {
 
-    /**
-     * @var int
-     */
-    private Integer id;
-    /**
-     * @var string
-     */
-    private String customer;
-    /**
-     * @var string
-     */
-    private String event;
-    /**
-     * @var int
-     */
-    private String scheduleOffset;
-    /**
-     * @var bool
-     */
-    private Boolean emailEnabledForProvider;
-    /**
-     * @var bool
-     */
-    private Boolean smsEnabledForProvider;
-    /**
-     * @var bool
-     */
-    private Boolean emailEnabledForCustomer;
-    /**
-     * @var bool
-     */
-    private Boolean smsEnabledForCustomer;
-    /**
-     * @var bool
-     */
-    private Boolean enabled;
 
-    public Integer getId() {
-        return id;
-    }
+	public static final String PAYMENT_CREATED = "PAYMENT_CREATED";
+	public static final String PAYMENT_UPDATED = "PAYMENT_UPDATED";
+	public static final String PAYMENT_RECEIVED = "PAYMENT_RECEIVED";
+	public static final String PAYMENT_OVERDUE = "PAYMENT_OVERDUE";
+	public static final String PAYMENT_DUEDATE_WARNING = "PAYMENT_DUEDATE_WARNING";
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
-    public String getCustomer() {
-        return customer;
-    }
+	private Integer id;
+	private String customer;
+	private String event;
+	private String scheduleOffset;
+	private Boolean emailEnabledForProvider;
+	private Boolean smsEnabledForProvider;
+	private Boolean emailEnabledForCustomer;
+	private Boolean smsEnabledForCustomer;
+	private Boolean enabled;
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
-    }
+	/**
+	 *
+	 * @return id Identificador único da notificação
+	 */
+	public Integer getId() {
+		return id;
+	}
 
-    public String getEvent() {
-        return event;
-    }
+	/**
+	 *
+	 * @param id Identificador único da notificação
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setEvent(String event) {
-        this.event = event;
-    }
+	/**
+	 *
+	 * @return customer Identificador único do cliente
+	 */
+	public String getCustomer() {
+		return customer;
+	}
 
-    public String getScheduleOffset() {
-        return scheduleOffset;
-    }
+	/**
+	 *
+	 * @param customer Identificador único do cliente
+	 */
+	public void setCustomer(String customer) {
+		this.customer = customer;
+	}
 
-    public void setScheduleOffset(String scheduleOffset) {
-        this.scheduleOffset = scheduleOffset;
-    }
+	/**
+	 *
+	 * @return event Tipo de evento (Verificar tabela de eventos)
+	 */
+	public String getEvent() {
+		return event;
+	}
 
-    public Boolean getEmailEnabledForProvider() {
-        return emailEnabledForProvider;
-    }
+	/**
+	 *
+	 * @param event Tipo de evento (Verificar tabela de eventos)
+	 */
+	public void setEvent(String event) {
+		this.event = event;
+	}
 
-    public void setEmailEnabledForProvider(Boolean emailEnabledForProvider) {
-        this.emailEnabledForProvider = emailEnabledForProvider;
-    }
+	/**
+	 *
+	 * @return scheduleOffset Somente para o evento PAYMENT_DUEDATE_WARNING.
+	 */
+	public String getScheduleOffset() {
+		return scheduleOffset;
+	}
 
-    public Boolean getSmsEnabledForProvider() {
-        return smsEnabledForProvider;
-    }
+	/**
+	 *
+	 * @param scheduleOffset Somente para o evento PAYMENT_DUEDATE_WARNING.
+	 */
+	public void setScheduleOffset(String scheduleOffset) {
+		this.scheduleOffset = scheduleOffset;
+	}
 
-    public void setSmsEnabledForProvider(Boolean smsEnabledForProvider) {
-        this.smsEnabledForProvider = smsEnabledForProvider;
-    }
+	/**
+	 *
+	 * @return emailEnabledForProvider Especifica quantos dias antes do vencimento a notificação deve ser enviada. Valores válidos: 0, 5, 10 ou 15
+	 */
+	public Boolean getEmailEnabledForProvider() {
+		return emailEnabledForProvider;
+	}
 
-    public Boolean getEmailEnabledForCustomer() {
-        return emailEnabledForCustomer;
-    }
+	/**
+	 *
+	 * @param emailEnabledForProvider Especifica quantos dias antes do vencimento a notificação deve ser enviada. Valores válidos: 0, 5, 10 ou 15
+	 */
+	public void setEmailEnabledForProvider(Boolean emailEnabledForProvider) {
+		this.emailEnabledForProvider = emailEnabledForProvider;
+	}
 
-    public void setEmailEnabledForCustomer(Boolean emailEnabledForCustomer) {
-        this.emailEnabledForCustomer = emailEnabledForCustomer;
-    }
+	/**
+	 *
+	 * @return smsEnabledForProvider Desabilita/habilita envio de email para o fornecedor
+	 */
+	public Boolean getSmsEnabledForProvider() {
+		return smsEnabledForProvider;
+	}
 
-    public Boolean getSmsEnabledForCustomer() {
-        return smsEnabledForCustomer;
-    }
+	/**
+	 *
+	 * @param smsEnabledForProvider Desabilita/habilita envio de email para o fornecedor
+	 */
+	public void setSmsEnabledForProvider(Boolean smsEnabledForProvider) {
+		this.smsEnabledForProvider = smsEnabledForProvider;
+	}
 
-    public void setSmsEnabledForCustomer(Boolean smsEnabledForCustomer) {
-        this.smsEnabledForCustomer = smsEnabledForCustomer;
-    }
+	/**
+	 *
+	 * @return emailEnabledForCustomer Desabilita/habilita envio de sms para o fornecedor
+	 */
+	public Boolean getEmailEnabledForCustomer() {
+		return emailEnabledForCustomer;
+	}
 
-    public Boolean getEnabled() {
-        return enabled;
-    }
+	/**
+	 *
+	 * @param emailEnabledForCustomer Desabilita/habilita envio de sms para o fornecedor
+	 */
+	public void setEmailEnabledForCustomer(Boolean emailEnabledForCustomer) {
+		this.emailEnabledForCustomer = emailEnabledForCustomer;
+	}
 
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-    
-    
+	/**
+	 *
+	 * @return smsEnabledForCustomer Desabilita/habilita envio de email para o cliente
+	 */
+	public Boolean getSmsEnabledForCustomer() {
+		return smsEnabledForCustomer;
+	}
+
+	/**
+	 *
+	 * @param smsEnabledForCustomer Desabilita/habilita envio de email para o cliente
+	 */
+	public void setSmsEnabledForCustomer(Boolean smsEnabledForCustomer) {
+		this.smsEnabledForCustomer = smsEnabledForCustomer;
+	}
+
+	/**
+	 *
+	 * @return enabled Desabilita/habilita envio de sms para o cliente
+	 */
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	/**
+	 *
+	 * @param enabled Desabilita/habilita envio de sms para o cliente
+	 */
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+
 }
