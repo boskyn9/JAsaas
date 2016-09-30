@@ -5,7 +5,7 @@
  */
 package br.com.intersistemas.jasaas.teste;
 
-import br.com.intersistemas.jasaas.adapter.HttpAdapter;
+import br.com.intersistemas.jasaas.adapter.ApacheHttpClientAdapter;
 import br.com.intersistemas.jasaas.api.AbstractConnection;
 import br.com.intersistemas.jasaas.api.Asaas;
 import br.com.intersistemas.jasaas.api.CityConnection;
@@ -26,7 +26,7 @@ public class Teste {
     public static void main(String[] args) throws URISyntaxException, MalformedURLException, IOException, ClassNotFoundException {
         String acessToken = "0ebde6de3835057f42291b64c21a0449f4aec2674b5ea28e748df298425370e4";
         
-        Asaas asaas = new Asaas(new HttpAdapter(acessToken), AbstractConnection.AMBIENTE_HOMOLOGACAO);
+        Asaas asaas = new Asaas(new ApacheHttpClientAdapter(acessToken), Asaas.AMBIENTE_HOMOLOGACAO);
 //        Asaas asaas = new Asaas(new HttpAdapter(acessToken), AbstractConnection.AMBIENTE_PRODUCAO);
 
 //        {

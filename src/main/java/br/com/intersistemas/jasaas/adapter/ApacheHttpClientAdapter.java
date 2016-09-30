@@ -20,12 +20,12 @@ import org.apache.http.util.EntityUtils;
  *
  * @author bosco
  */
-public class HttpAdapter implements AdapterInterface{
+public class ApacheHttpClientAdapter implements AdapterConnection{
 
     private final String accessToken;
     private final CloseableHttpClient httpclient;
     
-    public HttpAdapter(String acessToken) {
+    public ApacheHttpClientAdapter(String acessToken) {
         this.accessToken = acessToken;
         httpclient = HttpClients.createDefault();
         
@@ -49,7 +49,7 @@ public class HttpAdapter implements AdapterInterface{
             
             return retorno;
         } catch (IOException ex) {
-            Logger.getLogger(HttpAdapter.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ApacheHttpClientAdapter.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -81,9 +81,9 @@ public class HttpAdapter implements AdapterInterface{
             }
 
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(HttpAdapter.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ApacheHttpClientAdapter.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(HttpAdapter.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ApacheHttpClientAdapter.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

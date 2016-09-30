@@ -1,6 +1,5 @@
 package br.com.intersistemas.jasaas.api;
 
-import br.com.intersistemas.jasaas.adapter.AdapterInterface;
 import br.com.intersistemas.jasaas.entity.City;
 import br.com.intersistemas.jasaas.entity.Content;
 import br.com.intersistemas.jasaas.entity.Meta;
@@ -12,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 
 /**
  *
@@ -19,9 +19,9 @@ import java.util.logging.Logger;
  */
 public class CityConnection extends AbstractConnection{
 
-    private final AdapterInterface adapter;
+    private final AdapterConnection adapter;
     
-    public CityConnection(AdapterInterface adapter, int abstractConnectionEndpoint) {
+    public CityConnection(AdapterConnection adapter, int abstractConnectionEndpoint) {
         super(abstractConnectionEndpoint);
         this.adapter = adapter;
     }

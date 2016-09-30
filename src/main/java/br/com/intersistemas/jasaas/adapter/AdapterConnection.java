@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author bosco
  */
-public interface AdapterInterface {
+public interface AdapterConnection {
 
     /**
      * GET Request
