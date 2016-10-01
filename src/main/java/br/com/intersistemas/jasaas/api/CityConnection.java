@@ -48,9 +48,9 @@ public class CityConnection extends AbstractConnection{
                 url = StringFormatter.concat(endpoint,"/cities","?limit=",limit,"&offset=",offset).getValue();
             }
             
-            String retorno = adapter.get(url);
+            lastResponseJson = adapter.get(url);
             
-            Meta meta = (Meta) JsonUtil.parse(retorno, Meta.class);
+            Meta meta = (Meta) JsonUtil.parse(lastResponseJson, Meta.class);
             
             setHasMore(meta.getHasMore());
             setLimit(meta.getLimit());
@@ -70,8 +70,8 @@ public class CityConnection extends AbstractConnection{
     }
     
     public City getById(Integer id) throws ConnectionException{
-        String retorno = adapter.get(StringFormatter.concat(endpoint,"/cities/",id).getValue());
-        return (City) JsonUtil.parse(retorno, City.class);
+        lastResponseJson = adapter.get(StringFormatter.concat(endpoint,"/cities/",id).getValue());
+        return (City) JsonUtil.parse(lastResponseJson, City.class);
     }
     
 }

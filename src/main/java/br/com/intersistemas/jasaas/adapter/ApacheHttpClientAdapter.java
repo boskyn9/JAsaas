@@ -67,6 +67,9 @@ public class ApacheHttpClientAdapter implements AdapterConnection{
     @Override
     public void post(String url, String contentJSON) throws ConnectionException {
         try {
+            
+            System.out.println("[URL] "+url);
+            
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("access_token", accessToken);
             

@@ -1,16 +1,18 @@
 package br.com.intersistemas.jasaas.entity;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author bosco
  */
 public class Content {
  
-    private City city;
-    private Customer customer;
-    private Payment payment;
-    private Notification notification;   
-    private Subscription subscription;      
+     @Expose private City city;
+     @Expose private Customer customer;
+     @Expose private Payment payment;
+     @Expose private Notification notification;   
+     @Expose private Subscription subscription;      
 
     public City getCity() {
         return city;

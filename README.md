@@ -31,8 +31,12 @@ CustomerConnection conn = asaas.customer();
 List<Customer> customers = conn.getAll();
 
 // Retorna os dados do cliente de acordo com o Id
+CustomerConnection conn = asaas.customer();
+Customer customer = conn.getById("cus_wFkaUbylBKNd");
 
 // Retorna os dados do cliente de acordo com o Email
+CustomerConnection conn = asaas.customer();
+Customer customer = conn.getByEmail("bos@liamg.moc.rb");
 
 // Insere um novo cliente
 CustomerConnection conn = asaas.customer();
@@ -51,6 +55,9 @@ customer.setCity("3550308");
 conn.createCustomer(customer);
 
 // Atualiza os dados do cliente
+CustomerConnection conn = asaas.customer();
+customer.setEmail("bosc@liamg.moc.rb");
+conn.updateCustomer(customer);
 
 // Deleta uma cliente
 ```
@@ -132,7 +139,7 @@ Documentação Oficial
 Obs.: Esta é uma API não oficial. Foi feita com base na documentação disponibilizada [neste link](https://docs.google.com/document/d/1XUJRHY_0nd45CzFK5EmjDK92qgaQJGMxT0rjZriTk-g).
 
 
-Creditos
+Créditos
 --------
 
 

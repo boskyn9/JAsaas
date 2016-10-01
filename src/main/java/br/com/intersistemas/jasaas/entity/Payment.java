@@ -1,5 +1,6 @@
 package br.com.intersistemas.jasaas.entity;
 
+import com.google.gson.annotations.Expose;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -16,44 +17,44 @@ public final class Payment {
 	public static final String OVERDUE = "OVERDUE";
 
 
-	private Integer id;
-	private String customer;
-	private String subscription;
-	private String billingType;
-	private BigDecimal value;
-	private BigDecimal netValue;
-	private BigDecimal originalValue;
-	private BigDecimal interestValue;
-	private BigDecimal grossValue;
-	private Date dueDate;
-	private String status;
-	private String nossoNumero;
-	private String description;
-	private String invoiceNumber;
-	private String invoiceUrl;
-	private String boletoUrl;
-	private Integer installment;
-	private Integer installmentCount;
-	private BigDecimal installmentValue;
-	private String creditCardHolderName;
-	private String creditCardNumber;
-	private String creditCardExpiryMonth;
-	private String creditCardExpiryYear;
-	private String creditCardCcv;
-	private String creditCardHolderFullName;
-	private String creditCardHolderEmail;
-	private String creditCardHolderCpfCnpj;
-	private String creditCardHolderAddress;
-	private String creditCardHolderAddressNumber;
-	private String creditCardHolderAddressComplement;
-	private String creditCardHolderProvince;
-	private String creditCardHolderCity;
-	private String creditCardHolderUf;
-	private String creditCardHolderPostalCode;
-	private String creditCardHolderPhone;
-	private String creditCardHolderPhoneDDD;
-	private String creditCardHolderMobilePhone;
-	private String creditCardHolderMobilePhoneDDD;
+	 @Expose private Integer id;
+	 @Expose private String customer;
+	 @Expose private String subscription;
+	 @Expose private String billingType;
+	 @Expose private BigDecimal value;
+	 @Expose private BigDecimal netValue;
+	 @Expose private BigDecimal originalValue;
+	 @Expose private BigDecimal interestValue;
+	 @Expose private BigDecimal grossValue;
+	 @Expose private Date dueDate;
+	 @Expose private String status;
+	 @Expose private String nossoNumero;
+	 @Expose private String description;
+	 @Expose private String invoiceNumber;
+	 @Expose private String invoiceUrl;
+	 @Expose private String boletoUrl;
+	 @Expose private Integer installment;
+	 @Expose private Integer installmentCount;
+	 @Expose private BigDecimal installmentValue;
+	 @Expose private String creditCardHolderName;
+	 @Expose private String creditCardNumber;
+	 @Expose private String creditCardExpiryMonth;
+	 @Expose private String creditCardExpiryYear;
+	 @Expose private String creditCardCcv;
+	 @Expose private String creditCardHolderFullName;
+	 @Expose private String creditCardHolderEmail;
+	 @Expose private String creditCardHolderCpfCnpj;
+	 @Expose private String creditCardHolderAddress;
+	 @Expose private String creditCardHolderAddressNumber;
+	 @Expose private String creditCardHolderAddressComplement;
+	 @Expose private String creditCardHolderProvince;
+	 @Expose private String creditCardHolderCity;
+	 @Expose private String creditCardHolderUf;
+	 @Expose private String creditCardHolderPostalCode;
+	 @Expose private String creditCardHolderPhone;
+	 @Expose private String creditCardHolderPhoneDDD;
+	 @Expose private String creditCardHolderMobilePhone;
+	 @Expose private String creditCardHolderMobilePhoneDDD;
 
 	/**
 	 * @return Identificador único da cobrança (Gerado pelo Asaas)

@@ -1,6 +1,7 @@
 package br.com.intersistemas.jasaas.entity;
 
-import java.util.ArrayList;
+import com.google.gson.annotations.Expose;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -8,28 +9,33 @@ import java.util.List;
  * @author bosco
  */
 public final class Customer {
-
+    @Expose(serialize = false)
     private String id;
-    private String name;
-    private String email;
-    private String company;
-    private String phone;
-    private String mobilePhone;
-    private String address;
-    private String addressNumber;
-    private String complement;
-    private String province;
-    private Boolean foreignCustomer;
-    private Boolean notificationDisabled;
-    private String city;
-    private String state;
-    private String country;
-    private String postalCode;
-    private String cpfCnpj;
-    private String personType;
-    private List<Subscription> subscriptions = new ArrayList<>();
-    private List<Payment> payments = new ArrayList<>();
-    private List<Notification> notifications = new ArrayList<>();
+    
+     @Expose private String name;
+     @Expose private String email;
+     @Expose private String company;
+     @Expose private String phone;
+     @Expose private String mobilePhone;
+     @Expose private String address;
+     @Expose private String addressNumber;
+     @Expose private String complement;
+     @Expose private String province;
+     @Expose private Boolean foreignCustomer;
+     @Expose private Boolean notificationDisabled;
+     @Expose private String city;
+     @Expose private String state;
+     @Expose private String country;
+     @Expose private String postalCode;
+     @Expose private String cpfCnpj;
+     @Expose private String personType;
+    
+    private List<Subscription> subscriptions ;
+    private List<Payment> payments ;
+    private List<Notification> notifications ;
+
+    @Expose(serialize = false)
+    private Date dateCreated;
 
     public Customer() {
     }
@@ -364,6 +370,16 @@ public final class Customer {
     public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
     }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+    
+    
 
     @Override
     public String toString() {

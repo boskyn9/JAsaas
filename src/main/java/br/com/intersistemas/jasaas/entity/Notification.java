@@ -1,5 +1,7 @@
 package br.com.intersistemas.jasaas.entity;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author bosco
@@ -14,21 +16,22 @@ public final class Notification {
 	public static final String PAYMENT_DUEDATE_WARNING = "PAYMENT_DUEDATE_WARNING";
 
 
-	private Integer id;
-	private String customer;
-	private String event;
-	private String scheduleOffset;
-	private Boolean emailEnabledForProvider;
-	private Boolean smsEnabledForProvider;
-	private Boolean emailEnabledForCustomer;
-	private Boolean smsEnabledForCustomer;
-	private Boolean enabled;
+	 @Expose private String id;
+	 @Expose private String customer;
+	 @Expose private Boolean enabled;    
+	 @Expose private Boolean emailEnabledForProvider;
+	 @Expose private Boolean smsEnabledForProvider;
+	 @Expose private Boolean emailEnabledForCustomer;
+	 @Expose private Boolean smsEnabledForCustomer;
+	 @Expose private String event;
+	 @Expose private String scheduleOffset;
+         @Expose private Boolean deleted;
 
 	/**
 	 *
 	 * @return id Identificador único da notificação
 	 */
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -36,7 +39,7 @@ public final class Notification {
 	 *
 	 * @param id Identificador único da notificação
 	 */
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -168,5 +171,14 @@ public final class Notification {
 		this.enabled = enabled;
 	}
 
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+        
 
 }

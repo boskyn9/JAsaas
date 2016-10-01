@@ -1,16 +1,18 @@
 package br.com.intersistemas.jasaas.entity;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author bosco
  */
 public class Meta {
     
-    private Integer limit;
-    private Integer offset;
-    private Boolean hasMore;
+    @Expose private Integer limit;
+    @Expose private Integer offset;
+    @Expose private Boolean hasMore;
     
-    private Content[] data;
+    @Expose private Content[] data;
 
     public Integer getLimit() {
         return limit;

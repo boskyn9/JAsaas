@@ -24,6 +24,8 @@ public abstract class AbstractConnection {
     private Integer offset;
     private Boolean hasMore;
     
+    protected String lastResponseJson;
+    
     public AbstractConnection(int abstractConnectionEndpoint) {
         switch (abstractConnectionEndpoint) {
             case AMBIENTE_PRODUCAO:
@@ -37,6 +39,10 @@ public abstract class AbstractConnection {
                 
         }
     }
+    
+    public String getLastResponseJson() {
+        return lastResponseJson;
+    } 
 
     public Integer getLimit() {
         return limit;

@@ -1,5 +1,7 @@
 package br.com.intersistemas.jasaas.entity;
 
+import com.google.gson.annotations.Expose;
+
 
 /**
  *
@@ -7,12 +9,12 @@ package br.com.intersistemas.jasaas.entity;
  */
 public final class City {
 
-    private Integer id;
-    private Integer ibgeCode;
-    private String name;
-    private Integer districtCode;
-    private String district;
-    private String state;
+     @Expose private Integer id;
+     @Expose private Integer ibgeCode;
+     @Expose private String name;
+     @Expose private Integer districtCode;
+     @Expose private String district;
+     @Expose private String state;
 
     /**
      * @return id Identificador único da cidade
