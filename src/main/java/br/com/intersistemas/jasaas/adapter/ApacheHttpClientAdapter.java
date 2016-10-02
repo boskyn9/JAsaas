@@ -9,12 +9,14 @@ import java.util.logging.Logger;
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import sun.net.www.http.HttpClient;
 
 /**
  *
@@ -55,21 +57,29 @@ public class ApacheHttpClientAdapter implements AdapterConnection{
     }
 
     @Override
-    public void delete(String url) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(String url) throws ConnectionException {
+        try{
+            HttpDelete httpDelete = new HttpDelete(url);
+            httpDelete.addHeader("access_token", accessToken);
+            CloseableHttpResponse response = httpclient.execute(httpDelete);
+
+            StatusLine status = response.getStatusLine();
+            if(status.getStatusCode() != 200) {
+                throw new ConnectionException(status.getStatusCode(),status.getReasonPhrase());
+            }
+        }catch (IOException ex){
+            Logger.getLogger(ApacheHttpClientAdapter.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    @Override
+    /*@Override
     public String put(String url, String content) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }*/
 
     @Override
     public void post(String url, String contentJSON) throws ConnectionException {
         try {
-            
-            System.out.println("[URL] "+url);
-            
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("access_token", accessToken);
             
@@ -90,9 +100,5 @@ public class ApacheHttpClientAdapter implements AdapterConnection{
         }
     }
 
-    @Override
-    public List getLatestResponseHeaders() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+
 }

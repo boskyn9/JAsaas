@@ -34,7 +34,8 @@ public interface AdapterConnection {
      * @throws ConnectionException     
      * @return string
      */
-    public String put(String url, String contentJSON);
+//    public String put(String url, String contentJSON);
+
     /**
      * POST Request
      *
@@ -43,11 +44,5 @@ public interface AdapterConnection {
      * @throws ConnectionException
      */
     public void post(String url, String contentJSON);
-    /**
-     * Get last response headers
-     *
-     * @return List
-     * @throws ConnectionException
-     */
-    public List getLatestResponseHeaders();
+
 }

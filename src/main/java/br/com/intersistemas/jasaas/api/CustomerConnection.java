@@ -115,6 +115,8 @@ public class CustomerConnection extends AbstractConnection {
         adapter.post(StringFormatter.concat(endpoint, "/customers/",customer.getId()).getValue(), customerJSON);
     }
 
-  
+  public void deleteCustomer(String id) throws ConnectionException {
+        adapter.delete(StringFormatter.concat(endpoint, "/customers/", id).getValue());
+    }
     
 }

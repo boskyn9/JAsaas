@@ -60,6 +60,9 @@ customer.setEmail("bosc@liamg.moc.rb");
 conn.updateCustomer(customer);
 
 // Deleta uma cliente
+CustomerConnection conn = asaas.customer();
+conn.deleteCustomer("cus_uiqd7mD1OFE0");
+
 ```
 
 

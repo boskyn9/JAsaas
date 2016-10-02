@@ -24,15 +24,7 @@ public class Teste {
 
         Asaas asaas = new Asaas(new ApacheHttpClientAdapter(acessToken), Asaas.AMBIENTE_HOMOLOGACAO);
         CustomerConnection conn = asaas.customer();
-        Customer customer = conn.getByEmail("bosc@liamg.moc.rb");
-        System.out.println(conn.getLastResponseJson());
-        System.out.println(customer);
-        
-        
-//        customer.setEmail("bosc@liamg.moc.rb");
-//        conn.updateCustomer(customer);
-        
-        
+        conn.deleteCustomer("cus_uiqd7mD1OFE0");
 
     }
 }
