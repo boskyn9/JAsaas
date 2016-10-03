@@ -20,7 +20,7 @@ public final class Subscription {
     public static String WEEKLY = "WEEKLY";
     public static String BIWEEKLY = "BIWEEKLY";
     
-    @Expose  private Integer id;
+    @Expose  private String id;
     @Expose  private String customer;
     @Expose  private BigDecimal value;
     @Expose  private BigDecimal grossValue;
@@ -58,7 +58,7 @@ public final class Subscription {
      *
      * @return Identificar único da assinatura (Gerado pelo Asaas)
      */
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -66,7 +66,7 @@ public final class Subscription {
      *
      * @param id Identificar único da assinatura (Gerado pelo Asaas)
      */
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
