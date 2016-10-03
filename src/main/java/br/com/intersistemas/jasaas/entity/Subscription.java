@@ -13,6 +13,13 @@ import java.util.List;
  */
 public final class Subscription {
 
+    public static String MONTHLY = "MONTHLY";
+    public static String QUARTERLY = "QUARTERLY";
+    public static String SEMIANNUALLY = "SEMIANNUALLY";
+    public static String YEARLY = "YEARLY";
+    public static String WEEKLY = "WEEKLY";
+    public static String BIWEEKLY = "BIWEEKLY";
+    
     @Expose  private Integer id;
     @Expose  private String customer;
     @Expose  private BigDecimal value;

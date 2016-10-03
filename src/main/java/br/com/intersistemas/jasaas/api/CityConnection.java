@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
+import br.com.intersistemas.jasaas.entity.filter.CityFilter;
 
 /**
  *
@@ -30,11 +31,11 @@ public class CityConnection extends AbstractConnection{
         return getAll(null, null, null);
     }
     
-    public List<City> getAll(City cityFilter) throws ConnectionException {
+    public List<City> getAll(CityFilter cityFilter) throws ConnectionException {
         return getAll(cityFilter, null, null);
     }
     
-    public List<City> getAll(City cityFilter,Integer limit, Integer offset) throws ConnectionException {        
+    public List<City> getAll(CityFilter cityFilter,Integer limit, Integer offset) throws ConnectionException {        
         try {
             String url;
             
