@@ -36,13 +36,17 @@ public class Asaas {
         return new CustomerConnection(adapter, ambiente);
     }
     
-//    public PaymentConnection payment(){
-//        return new PaymentConnection(adapter, ambiente);
-//    }
+    public PaymentConnection payment(){
+        return new PaymentConnection(adapter, ambiente);
+    }
     
-//    public NotificationConnection notification(){
-//        return new NotificationConnection(adapter, ambiente);
-//    }
+    public NotificationConnection notification(){
+        return new NotificationConnection(adapter, ambiente);
+    }
+    
+    public SubscriptionConnection subscription(){
+        return new SubscriptionConnection(adapter, ambiente);
+    }
     
     
     // TODO replicar forma para outras conexões.
