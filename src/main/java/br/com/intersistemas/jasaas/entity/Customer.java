@@ -66,14 +66,6 @@ public final class Customer {
     }
 
     /**
-     * @param id Identificador único do cliente (gerado pelo Asaas, somente
-     * leitura))
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
      * @return name Nome do cliente
      */
     public String getName() {

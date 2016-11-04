@@ -12,6 +12,13 @@ import java.util.List;
  * @author bosco
  */
 public final class Subscription {
+    
+    public static String BILLINGTYPE_BOLETO = "BOLETO";
+    public static String BILLINGTYPE_CREDIT_CARD = "CREDIT_CARD";
+    public static String BILLINGTYPE_UNDEFINED  = "UNDEFINED ";
+    
+    public static String STATUS_ACTIVE  = "ACTIVE";
+    public static String STATUS_INACTIVE  = "INACTIVE";
 
     public static String MONTHLY = "MONTHLY";
     public static String QUARTERLY = "QUARTERLY";
@@ -60,14 +67,6 @@ public final class Subscription {
      */
     public String getId() {
         return id;
-    }
-
-    /**
-     *
-     * @param id Identificar único da assinatura (Gerado pelo Asaas)
-     */
-    public void setId(String id) {
-        this.id = id;
     }
 
     /**
