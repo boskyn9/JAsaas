@@ -1,8 +1,7 @@
 package br.com.intersistemas.jasaas.api;
 
 import br.com.intersistemas.jasaas.entity.City;
-import br.com.intersistemas.jasaas.entity.Content;
-import br.com.intersistemas.jasaas.entity.Meta;
+import br.com.intersistemas.jasaas.entity.meta.ContentPayment;
 import br.com.intersistemas.jasaas.exception.ConnectionException;
 import br.com.intersistemas.jasaas.util.HttpParamsUtil;
 import br.com.intersistemas.jasaas.util.JsonUtil;
@@ -13,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 import br.com.intersistemas.jasaas.entity.filter.CityFilter;
+import br.com.intersistemas.jasaas.entity.meta.ContentCity;
+import br.com.intersistemas.jasaas.entity.meta.MetaCity;
 
 /**
  *
@@ -51,15 +52,15 @@ public class CityConnection extends AbstractConnection{
             
             lastResponseJson = adapter.get(url);
             
-            Meta meta = (Meta) JsonUtil.parse(lastResponseJson, Meta.class);
+            MetaCity meta = (MetaCity) JsonUtil.parse(lastResponseJson, MetaCity.class);
             
             setHasMore(meta.getHasMore());
             setLimit(meta.getLimit());
             setOffset(meta.getOffset());
             
-            Content[] contentList = meta.getData();
+            ContentCity[] contentList = meta.getData();
             List<City> cities = new ArrayList<>();
-            for (Content content : contentList) {
+            for (ContentCity content : contentList) {
                 cities.add(content.getCity());
             }           
             return cities;

@@ -1,7 +1,7 @@
 package br.com.intersistemas.jasaas.api;
 
-import br.com.intersistemas.jasaas.entity.Content;
-import br.com.intersistemas.jasaas.entity.Meta;
+import br.com.intersistemas.jasaas.entity.meta.ContentPayment;
+
 import br.com.intersistemas.jasaas.exception.ConnectionException;
 import br.com.intersistemas.jasaas.util.HttpParamsUtil;
 import br.com.intersistemas.jasaas.util.JsonUtil;
@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 import br.com.intersistemas.jasaas.entity.Notification;
+import br.com.intersistemas.jasaas.entity.meta.ContentNotification;
+import br.com.intersistemas.jasaas.entity.meta.MetaNotification;
 import javax.management.NotificationFilter;
 
 /**
@@ -55,15 +57,15 @@ public class NotificationConnection extends AbstractConnection {
 
             lastResponseJson = adapter.get(url);
 
-            Meta meta = (Meta) JsonUtil.parse(lastResponseJson, Meta.class);
+            MetaNotification meta = (MetaNotification) JsonUtil.parse(lastResponseJson, MetaNotification.class);
 
             setHasMore(meta.getHasMore());
             setLimit(meta.getLimit());
             setOffset(meta.getOffset());
 
-            Content[] contentList = meta.getData();
+            ContentNotification[] contentList = meta.getData();
             List<Notification> notifications = new ArrayList<>();
-            for (Content content : contentList) {
+            for (ContentNotification content : contentList) {
                 notifications.add(content.getNotification());
             }
             return notifications;
@@ -82,15 +84,15 @@ public class NotificationConnection extends AbstractConnection {
     public List<Notification> getByCustomer(String customer_id) throws ConnectionException {
         lastResponseJson = adapter.get(StringFormatter.concat(endpoint, "/customers/",customer_id,"/notifications").getValue());
             
-        Meta meta = (Meta) JsonUtil.parse(lastResponseJson, Meta.class);
+        MetaNotification meta = (MetaNotification) JsonUtil.parse(lastResponseJson, MetaNotification.class);
 
         setHasMore(meta.getHasMore());
         setLimit(meta.getLimit());
         setOffset(meta.getOffset());
 
-        Content[] contentList = meta.getData();
+        ContentNotification[] contentList = meta.getData();
         List<Notification> notifications = new ArrayList<>();
-        for (Content content : contentList) {
+        for (ContentNotification content : contentList) {
             notifications.add(content.getNotification());
         }
         return notifications;       
