@@ -117,24 +117,12 @@ public final class Payment {
         return netValue;
     }
 
-    public void setNetValue(BigDecimal netValue) {
-        this.netValue = netValue;
-    }
-
     public BigDecimal getOriginalValue() {
         return originalValue;
     }
 
-    public void setOriginalValue(BigDecimal originalValue) {
-        this.originalValue = originalValue;
-    }
-
     public BigDecimal getInterestValue() {
         return interestValue;
-    }
-
-    public void setInterestValue(BigDecimal interestValue) {
-        this.interestValue = interestValue;
     }
 
     public BigDecimal getGrossValue() {
@@ -165,16 +153,8 @@ public final class Payment {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getNossoNumero() {
         return nossoNumero;
-    }
-
-    public void setNossoNumero(String nossoNumero) {
-        this.nossoNumero = nossoNumero;
     }
 
     public String getDescription() {
@@ -189,24 +169,12 @@ public final class Payment {
         return invoiceUrl;
     }
 
-    public void setInvoiceUrl(String invoiceUrl) {
-        this.invoiceUrl = invoiceUrl;
-    }
-
     public String getBoletoUrl() {
         return boletoUrl;
     }
 
-    public void setBoletoUrl(String boletoUrl) {
-        this.boletoUrl = boletoUrl;
-    }
-
     public String getInvoiceNumber() {
         return invoiceNumber;
-    }
-
-    public void setInvoiceNumber(String invoiceNumber) {
-        this.invoiceNumber = invoiceNumber;
     }
 
     public Integer getInstallmentCount() {

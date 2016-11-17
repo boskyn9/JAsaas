@@ -18,6 +18,7 @@ public class PaymentFilter {
     private String subscription;
     private String installment;
     private String status;
+    private String externalReference;
 
     public PaymentFilter() {
     }
@@ -30,6 +31,14 @@ public class PaymentFilter {
         this.status = status;
     }
 
+    public String getExternalReference() {
+        return externalReference;
+    }
+
+    public void setExternalReference(String externalReference) {
+        this.externalReference = externalReference;
+    }
+        
     public String getDescription() {
         return description;
     }
