@@ -9,6 +9,10 @@ import java.util.List;
  * @author bosco
  */
 public final class Customer {
+    
+    public static final String FISICA  = "FISICA";
+    public static final String JURIDICA = "JURIDICA";
+    
     @Expose(serialize = false)
     private String id;
     
@@ -29,6 +33,7 @@ public final class Customer {
      @Expose private String postalCode;
      @Expose private String cpfCnpj;
      @Expose private String personType;
+     @Expose private String externalReference;
     
     private List<Subscription> subscriptions ;
     private List<Payment> payments ;
@@ -40,7 +45,7 @@ public final class Customer {
     public Customer() {
     }
 
-    public Customer(String name, String email, String company, String phone, String mobilePhone, String address, String addressNumber, String complement, String province, String city, String state, String country, String postalCode, String cpfCnpj) {
+    public Customer(String name, String email, String company, String phone, String mobilePhone, String address, String addressNumber, String complement, String province, String city, String state, String country, String postalCode, String cpfCnpj, String personType, String externalReference) {
         this.name = name;
         this.email = email;
         this.company = company;
@@ -55,6 +60,8 @@ public final class Customer {
         this.country = country;
         this.postalCode = postalCode;
         this.cpfCnpj = cpfCnpj;
+        this.personType = personType;
+        this.externalReference = externalReference;
     }
 
     /**
@@ -370,9 +377,15 @@ public final class Customer {
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
-    
-    
 
+    public String getExternalReference() {
+        return externalReference;
+    }
+
+    public void setExternalReference(String externalReference) {
+        this.externalReference = externalReference;
+    }
+    
     @Override
     public String toString() {
         return "Customer{" + "id=" + id + ", name=" + name + ", email=" + email + ", company=" + company + ", phone=" + phone + ", mobilePhone=" + mobilePhone + ", address=" + address + ", addressNumber=" + addressNumber + ", complement=" + complement + ", province=" + province + ", foreignCustomer=" + foreignCustomer + ", notificationDisabled=" + notificationDisabled + ", city=" + city + ", state=" + state + ", country=" + country + ", postalCode=" + postalCode + ", cpfCnpj=" + cpfCnpj + ", personType=" + personType + ", subscriptions=" + subscriptions + ", payments=" + payments + ", notifications=" + notifications + '}';
