@@ -12,6 +12,7 @@ public class CustomerFilter {
     private String name;
     private Boolean hasOverduePayments;
     private Boolean deletePendingPayments;
+    private String externalReference;
 
     public CustomerFilter() {
     }
@@ -20,6 +21,14 @@ public class CustomerFilter {
         this.name = name;
         this.hasOverduePayments = hasOverduePayments;
         this.deletePendingPayments = deletePendingPayments;
+    }
+
+    public String getExternalReference() {
+        return externalReference;
+    }
+
+    public void setExternalReference(String externalReference) {
+        this.externalReference = externalReference;
     }
 
     public String getName() {

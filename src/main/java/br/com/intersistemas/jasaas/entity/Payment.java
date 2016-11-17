@@ -21,7 +21,9 @@ public final class Payment {
     public static final String RECEIVED = "RECEIVED";
     public static final String OVERDUE = "OVERDUE";
 
-    @Expose private Integer id;
+    @Expose(serialize = false)
+    private String id;
+    
     @Expose private String customer;
     @Expose private String subscription;
     @Expose private Integer installment;
@@ -63,31 +65,52 @@ public final class Payment {
     @Expose private String creditCardHolderMobilePhone;
     @Expose private String creditCardHolderMobilePhoneDDD;
 
-    public Payment() {
+    public String getId() {
+        return id;
     }
 
-    public Integer getId() {
-        return id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCustomer() {
         return customer;
     }
 
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
     public String getSubscription() {
         return subscription;
+    }
+
+    public void setSubscription(String subscription) {
+        this.subscription = subscription;
     }
 
     public Integer getInstallment() {
         return installment;
     }
 
+    public void setInstallment(Integer installment) {
+        this.installment = installment;
+    }
+
     public String getBillingType() {
         return billingType;
     }
 
+    public void setBillingType(String billingType) {
+        this.billingType = billingType;
+    }
+
     public BigDecimal getValue() {
         return value;
+    }
+
+    public void setValue(BigDecimal value) {
+        this.value = value;
     }
 
     public BigDecimal getNetValue() {
@@ -106,12 +129,24 @@ public final class Payment {
         return grossValue;
     }
 
+    public void setGrossValue(BigDecimal grossValue) {
+        this.grossValue = grossValue;
+    }
+
     public Date getDueDate() {
         return dueDate;
     }
 
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
+
     public Date getOriginalDueDate() {
         return originalDueDate;
+    }
+
+    public void setOriginalDueDate(Date originalDueDate) {
+        this.originalDueDate = originalDueDate;
     }
 
     public String getStatus() {
@@ -124,6 +159,10 @@ public final class Payment {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getInvoiceUrl() {
@@ -142,216 +181,181 @@ public final class Payment {
         return installmentCount;
     }
 
-    public BigDecimal getInstallmentValue() {
-        return installmentValue;
-    }
-
-    public String getExternalReference() {
-        return externalReference;
-    }
-
-    public String getCreditCardHolderName() {
-        return creditCardHolderName;
-    }
-
-    public String getCreditCardNumber() {
-        return creditCardNumber;
-    }
-
-    public String getCreditCardExpiryMonth() {
-        return creditCardExpiryMonth;
-    }
-
-    public String getCreditCardExpiryYear() {
-        return creditCardExpiryYear;
-    }
-
-    public String getCreditCardCcv() {
-        return creditCardCcv;
-    }
-
-    public String getCreditCardHolderFullName() {
-        return creditCardHolderFullName;
-    }
-
-    public String getCreditCardHolderEmail() {
-        return creditCardHolderEmail;
-    }
-
-    public String getCreditCardHolderCpfCnpj() {
-        return creditCardHolderCpfCnpj;
-    }
-
-    public String getCreditCardHolderAddress() {
-        return creditCardHolderAddress;
-    }
-
-    public String getCreditCardHolderAddressNumber() {
-        return creditCardHolderAddressNumber;
-    }
-
-    public String getCreditCardHolderAddressComplement() {
-        return creditCardHolderAddressComplement;
-    }
-
-    public String getCreditCardHolderProvince() {
-        return creditCardHolderProvince;
-    }
-
-    public String getCreditCardHolderCity() {
-        return creditCardHolderCity;
-    }
-
-    public String getCreditCardHolderUf() {
-        return creditCardHolderUf;
-    }
-
-    public String getCreditCardHolderPostalCode() {
-        return creditCardHolderPostalCode;
-    }
-
-    public String getCreditCardHolderPhone() {
-        return creditCardHolderPhone;
-    }
-
-    public String getCreditCardHolderPhoneDDD() {
-        return creditCardHolderPhoneDDD;
-    }
-
-    public String getCreditCardHolderMobilePhone() {
-        return creditCardHolderMobilePhone;
-    }
-
-    public String getCreditCardHolderMobilePhoneDDD() {
-        return creditCardHolderMobilePhoneDDD;
-    }
-
-    public void setCustomer(String customer) {
-        this.customer = customer;
-    }
-
-    public void setSubscription(String subscription) {
-        this.subscription = subscription;
-    }
-
-    public void setInstallment(Integer installment) {
-        this.installment = installment;
-    }
-
-    public void setBillingType(String billingType) {
-        this.billingType = billingType;
-    }
-
-    public void setValue(BigDecimal value) {
-        this.value = value;
-    }
-
-    public void setGrossValue(BigDecimal grossValue) {
-        this.grossValue = grossValue;
-    }
-
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public void setOriginalDueDate(Date originalDueDate) {
-        this.originalDueDate = originalDueDate;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public void setInstallmentCount(Integer installmentCount) {
         this.installmentCount = installmentCount;
+    }
+
+    public BigDecimal getInstallmentValue() {
+        return installmentValue;
     }
 
     public void setInstallmentValue(BigDecimal installmentValue) {
         this.installmentValue = installmentValue;
     }
 
+    public String getExternalReference() {
+        return externalReference;
+    }
+
     public void setExternalReference(String externalReference) {
         this.externalReference = externalReference;
+    }
+
+    public String getCreditCardHolderName() {
+        return creditCardHolderName;
     }
 
     public void setCreditCardHolderName(String creditCardHolderName) {
         this.creditCardHolderName = creditCardHolderName;
     }
 
+    public String getCreditCardNumber() {
+        return creditCardNumber;
+    }
+
     public void setCreditCardNumber(String creditCardNumber) {
         this.creditCardNumber = creditCardNumber;
+    }
+
+    public String getCreditCardExpiryMonth() {
+        return creditCardExpiryMonth;
     }
 
     public void setCreditCardExpiryMonth(String creditCardExpiryMonth) {
         this.creditCardExpiryMonth = creditCardExpiryMonth;
     }
 
+    public String getCreditCardExpiryYear() {
+        return creditCardExpiryYear;
+    }
+
     public void setCreditCardExpiryYear(String creditCardExpiryYear) {
         this.creditCardExpiryYear = creditCardExpiryYear;
+    }
+
+    public String getCreditCardCcv() {
+        return creditCardCcv;
     }
 
     public void setCreditCardCcv(String creditCardCcv) {
         this.creditCardCcv = creditCardCcv;
     }
 
+    public String getCreditCardHolderFullName() {
+        return creditCardHolderFullName;
+    }
+
     public void setCreditCardHolderFullName(String creditCardHolderFullName) {
         this.creditCardHolderFullName = creditCardHolderFullName;
+    }
+
+    public String getCreditCardHolderEmail() {
+        return creditCardHolderEmail;
     }
 
     public void setCreditCardHolderEmail(String creditCardHolderEmail) {
         this.creditCardHolderEmail = creditCardHolderEmail;
     }
 
+    public String getCreditCardHolderCpfCnpj() {
+        return creditCardHolderCpfCnpj;
+    }
+
     public void setCreditCardHolderCpfCnpj(String creditCardHolderCpfCnpj) {
         this.creditCardHolderCpfCnpj = creditCardHolderCpfCnpj;
+    }
+
+    public String getCreditCardHolderAddress() {
+        return creditCardHolderAddress;
     }
 
     public void setCreditCardHolderAddress(String creditCardHolderAddress) {
         this.creditCardHolderAddress = creditCardHolderAddress;
     }
 
+    public String getCreditCardHolderAddressNumber() {
+        return creditCardHolderAddressNumber;
+    }
+
     public void setCreditCardHolderAddressNumber(String creditCardHolderAddressNumber) {
         this.creditCardHolderAddressNumber = creditCardHolderAddressNumber;
+    }
+
+    public String getCreditCardHolderAddressComplement() {
+        return creditCardHolderAddressComplement;
     }
 
     public void setCreditCardHolderAddressComplement(String creditCardHolderAddressComplement) {
         this.creditCardHolderAddressComplement = creditCardHolderAddressComplement;
     }
 
+    public String getCreditCardHolderProvince() {
+        return creditCardHolderProvince;
+    }
+
     public void setCreditCardHolderProvince(String creditCardHolderProvince) {
         this.creditCardHolderProvince = creditCardHolderProvince;
+    }
+
+    public String getCreditCardHolderCity() {
+        return creditCardHolderCity;
     }
 
     public void setCreditCardHolderCity(String creditCardHolderCity) {
         this.creditCardHolderCity = creditCardHolderCity;
     }
 
+    public String getCreditCardHolderUf() {
+        return creditCardHolderUf;
+    }
+
     public void setCreditCardHolderUf(String creditCardHolderUf) {
         this.creditCardHolderUf = creditCardHolderUf;
+    }
+
+    public String getCreditCardHolderPostalCode() {
+        return creditCardHolderPostalCode;
     }
 
     public void setCreditCardHolderPostalCode(String creditCardHolderPostalCode) {
         this.creditCardHolderPostalCode = creditCardHolderPostalCode;
     }
 
+    public String getCreditCardHolderPhone() {
+        return creditCardHolderPhone;
+    }
+
     public void setCreditCardHolderPhone(String creditCardHolderPhone) {
         this.creditCardHolderPhone = creditCardHolderPhone;
+    }
+
+    public String getCreditCardHolderPhoneDDD() {
+        return creditCardHolderPhoneDDD;
     }
 
     public void setCreditCardHolderPhoneDDD(String creditCardHolderPhoneDDD) {
         this.creditCardHolderPhoneDDD = creditCardHolderPhoneDDD;
     }
 
+    public String getCreditCardHolderMobilePhone() {
+        return creditCardHolderMobilePhone;
+    }
+
     public void setCreditCardHolderMobilePhone(String creditCardHolderMobilePhone) {
         this.creditCardHolderMobilePhone = creditCardHolderMobilePhone;
+    }
+
+    public String getCreditCardHolderMobilePhoneDDD() {
+        return creditCardHolderMobilePhoneDDD;
     }
 
     public void setCreditCardHolderMobilePhoneDDD(String creditCardHolderMobilePhoneDDD) {
         this.creditCardHolderMobilePhoneDDD = creditCardHolderMobilePhoneDDD;
     }
 
-    
-       
+    @Override
+    public String toString() {
+        return "Payment{" + "id=" + id + ", customer=" + customer + ", subscription=" + subscription + ", installment=" + installment + ", billingType=" + billingType + ", value=" + value + ", netValue=" + netValue + ", originalValue=" + originalValue + ", interestValue=" + interestValue + ", grossValue=" + grossValue + ", dueDate=" + dueDate + ", originalDueDate=" + originalDueDate + ", status=" + status + ", nossoNumero=" + nossoNumero + ", description=" + description + ", invoiceUrl=" + invoiceUrl + ", boletoUrl=" + boletoUrl + ", invoiceNumber=" + invoiceNumber + ", installmentCount=" + installmentCount + ", installmentValue=" + installmentValue + ", externalReference=" + externalReference + ", creditCardHolderName=" + creditCardHolderName + ", creditCardNumber=" + creditCardNumber + ", creditCardExpiryMonth=" + creditCardExpiryMonth + ", creditCardExpiryYear=" + creditCardExpiryYear + ", creditCardCcv=" + creditCardCcv + ", creditCardHolderFullName=" + creditCardHolderFullName + ", creditCardHolderEmail=" + creditCardHolderEmail + ", creditCardHolderCpfCnpj=" + creditCardHolderCpfCnpj + ", creditCardHolderAddress=" + creditCardHolderAddress + ", creditCardHolderAddressNumber=" + creditCardHolderAddressNumber + ", creditCardHolderAddressComplement=" + creditCardHolderAddressComplement + ", creditCardHolderProvince=" + creditCardHolderProvince + ", creditCardHolderCity=" + creditCardHolderCity + ", creditCardHolderUf=" + creditCardHolderUf + ", creditCardHolderPostalCode=" + creditCardHolderPostalCode + ", creditCardHolderPhone=" + creditCardHolderPhone + ", creditCardHolderPhoneDDD=" + creditCardHolderPhoneDDD + ", creditCardHolderMobilePhone=" + creditCardHolderMobilePhone + ", creditCardHolderMobilePhoneDDD=" + creditCardHolderMobilePhoneDDD + '}';
+    }
 
-   
 }

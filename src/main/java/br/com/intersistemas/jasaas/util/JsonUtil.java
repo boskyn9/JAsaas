@@ -15,9 +15,7 @@ public class JsonUtil {
         if(gson == null)
             gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
-                    .setDateFormat("dd/MM/yyyy").create();
-        
-        
+                    .setDateFormat("dd/MM/yyyy").create();               
         return gson.fromJson(json, clazz);
     }
     

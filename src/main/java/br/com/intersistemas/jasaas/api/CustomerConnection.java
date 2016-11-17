@@ -1,8 +1,7 @@
 package br.com.intersistemas.jasaas.api;
 
 import br.com.intersistemas.jasaas.entity.Customer;
-import br.com.intersistemas.jasaas.entity.Content;
-import br.com.intersistemas.jasaas.entity.Meta;
+import br.com.intersistemas.jasaas.entity.meta.MetaCustomer;
 import br.com.intersistemas.jasaas.exception.ConnectionException;
 import br.com.intersistemas.jasaas.util.HttpParamsUtil;
 import br.com.intersistemas.jasaas.util.JsonUtil;
@@ -13,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 import br.com.intersistemas.jasaas.entity.filter.CustomerFilter;
+import br.com.intersistemas.jasaas.entity.meta.ContentCustomer;
 
 /**
  *
@@ -54,16 +54,19 @@ public class CustomerConnection extends AbstractConnection {
             }
 
             lastResponseJson = adapter.get(url);
+            
+            System.out.println(lastResponseJson);
 
-            Meta meta = (Meta) JsonUtil.parse(lastResponseJson, Meta.class);
+            MetaCustomer meta = (MetaCustomer) JsonUtil.parse(lastResponseJson, MetaCustomer.class);
 
             setHasMore(meta.getHasMore());
             setLimit(meta.getLimit());
             setOffset(meta.getOffset());
 
-            Content[] contentList = meta.getData();
+            ContentCustomer[] contentList = meta.getData();
             List<Customer> customers = new ArrayList<>();
-            for (Content content : contentList) {
+            
+            for (ContentCustomer content : contentList) {
                 customers.add(content.getCustomer());
             }
             return customers;
@@ -81,13 +84,13 @@ public class CustomerConnection extends AbstractConnection {
     
     public Customer getByEmail(String email) throws ConnectionException {
         lastResponseJson = adapter.get(StringFormatter.concat(endpoint, "/customers?email=", email).getValue());
-        Meta meta = (Meta) JsonUtil.parse(lastResponseJson, Meta.class);
+        MetaCustomer meta = (MetaCustomer) JsonUtil.parse(lastResponseJson, MetaCustomer.class);
 
         setHasMore(meta.getHasMore());
         setLimit(meta.getLimit());
         setOffset(meta.getOffset());
 
-        Content[] contentList = meta.getData();
+        ContentCustomer[] contentList = meta.getData();
         if(contentList.length == 0){
             return null;
         }
