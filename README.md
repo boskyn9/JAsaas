@@ -30,6 +30,12 @@ Clientes
 CustomerConnection conn = asaas.customer();
 List<Customer> customers = conn.getAll();
 
+// Usando o Filter para consultar os dados do cliente
+CustomerConnection conn = asaas.customer();
+CustomerFilter filter = new CustomerFilter();
+filter.setName("Bosco Filho");
+List<Customer> customerList = conn.getAll(filter);
+
 // Retorna os dados do cliente de acordo com o Id
 CustomerConnection conn = asaas.customer();
 Customer customer = conn.getById("cus_wFkaUbylBKNd");
