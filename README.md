@@ -71,18 +71,42 @@ Cobranças
 
 ```java
 // Retorna a listagem de cobranças
+PaymentConnection conn = asaas.payment();
+List<Payment> listaPay = conn.getAll();
 
 // Retorna os dados da cobrança de acordo com o Id
+PaymentConnection conn = asaas.payment();
+Payment payment = conn.getById("pay_495842931739");
 
 // Retorna a listagem de cobranças de acordo com o Id do Cliente
+PaymentConnection conn = asaas.payment();
+List<Payment> payments = conn.getByCustomer("cus_wFkaUbylBKNd");
 
 // Retorna a listagem de cobranças de acordo com o Id da Assinaturas
+PaymentConnection conn = asaas.payment();
+List<Payment> payments = conn.getBySubscriptions("sub_1cqNggmuHEnE");
 
 // Insere uma nova cobrança
+PaymentConnection conn = asaas.payment();
+
+Payment p = new Payment();
+p.setCustomer("cus_wFkaUbylBKNd");
+p.setBillingType(Payment.BILLINGTYPE_BOLETO);
+p.setValue(new BigDecimal(100));
+p.setDueDate(new Date());
+p.setDescription("Cobrança INTERPLACAS");        
+p.setExternalReference("15");        
+conn.createPayment(p);
 
 // Atualiza os dados da cobrança
+PaymentConnection conn = asaas.payment();
+p.setValue(new BigDecimal(150));
+conn.updatePayment(p);
 
 // Deleta uma cobrança
+PaymentConnection conn = asaas.payment();
+conn.deletePayment("pay_495842931739");
+
 ```
 
 
