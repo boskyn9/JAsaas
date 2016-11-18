@@ -9,30 +9,35 @@ import java.util.List;
  * @author bosco
  */
 public final class Customer {
+
+    public static final String FISICA = "FISICA";
+    public static final String JURIDICA = "JURIDICA";
+
     @Expose(serialize = false)
     private String id;
-    
-     @Expose private String name;
-     @Expose private String email;
-     @Expose private String company;
-     @Expose private String phone;
-     @Expose private String mobilePhone;
-     @Expose private String address;
-     @Expose private String addressNumber;
-     @Expose private String complement;
-     @Expose private String province;
-     @Expose private Boolean foreignCustomer;
-     @Expose private Boolean notificationDisabled;
-     @Expose private String city;
-     @Expose private String state;
-     @Expose private String country;
-     @Expose private String postalCode;
-     @Expose private String cpfCnpj;
-     @Expose private String personType;
-    
-    private List<Subscription> subscriptions ;
-    private List<Payment> payments ;
-    private List<Notification> notifications ;
+
+    @Expose private String name;
+    @Expose private String email;
+    @Expose private String company;
+    @Expose private String phone;
+    @Expose private String mobilePhone;
+    @Expose private String address;
+    @Expose private String addressNumber;
+    @Expose private String complement;
+    @Expose private String province;
+    @Expose private Boolean foreignCustomer;
+    @Expose private Boolean notificationDisabled;
+    @Expose private String city;
+    @Expose private String state;
+    @Expose private String country;
+    @Expose private String postalCode;
+    @Expose private String cpfCnpj;
+    @Expose private String personType;
+    @Expose private String externalReference;
+
+    private List<Subscription> subscriptions;
+    private List<Payment> payments;
+    private List<Notification> notifications;
 
     @Expose(serialize = false)
     private Date dateCreated;
@@ -40,7 +45,7 @@ public final class Customer {
     public Customer() {
     }
 
-    public Customer(String name, String email, String company, String phone, String mobilePhone, String address, String addressNumber, String complement, String province, String city, String state, String country, String postalCode, String cpfCnpj) {
+    public Customer(String name, String email, String company, String phone, String mobilePhone, String address, String addressNumber, String complement, String province, String city, String state, String country, String postalCode, String cpfCnpj, String personType, String externalReference) {
         this.name = name;
         this.email = email;
         this.company = company;
@@ -55,6 +60,8 @@ public final class Customer {
         this.country = country;
         this.postalCode = postalCode;
         this.cpfCnpj = cpfCnpj;
+        this.personType = personType;
+        this.externalReference = externalReference;
     }
 
     /**
@@ -367,11 +374,19 @@ public final class Customer {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
+    /**
+     * @return externalReference Campo livre, pode ser usado para pesquisa
+     */
+    public String getExternalReference() {
+        return externalReference;
     }
-    
-    
+
+    /**
+     * @param externalReference Campo livre, pode ser usado para pesquisa.
+     */
+    public void setExternalReference(String externalReference) {
+        this.externalReference = externalReference;
+    }
 
     @Override
     public String toString() {

@@ -16,9 +16,9 @@ Endpoint
 Caso queira usar a API em modo teste basta especificar o `ambiente` no momento em que o cliente é instanciado.
 
 ```java
-Asaas asaas = new Asaas(new HttpAdapter(acessToken), Asaas.AMBIENTE_HOMOLOGACAO);
+Asaas asaas = new Asaas(new ApacheHttpClientAdapter(acessToken), Asaas.AMBIENTE_HOMOLOGACAO);
 ou
-Asaas asaas = new Asaas(new HttpAdapter(acessToken), Asaas.AMBIENTE_PRODUCAO);
+Asaas asaas = new Asaas(new ApacheHttpClientAdapter(acessToken), Asaas.AMBIENTE_PRODUCAO);
 ```
 
 
@@ -29,6 +29,12 @@ Clientes
 // Retorna a listagem de clientes
 CustomerConnection conn = asaas.customer();
 List<Customer> customers = conn.getAll();
+
+// Usando o Filter para consultar os dados do cliente
+CustomerConnection conn = asaas.customer();
+CustomerFilter filter = new CustomerFilter();
+filter.setName("Bosco Filho");
+List<Customer> customerList = conn.getAll(filter);
 
 // Retorna os dados do cliente de acordo com o Id
 CustomerConnection conn = asaas.customer();
