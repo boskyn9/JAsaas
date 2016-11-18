@@ -3,7 +3,6 @@ package br.com.intersistemas.jasaas.adapter;
 import br.com.intersistemas.jasaas.exception.ConnectionException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.http.HttpEntity;
@@ -16,7 +15,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import sun.net.www.http.HttpClient;
 
 /**
  *

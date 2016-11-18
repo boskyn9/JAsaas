@@ -1,18 +1,14 @@
 package br.com.intersistemas.jasaas.api;
 
-import br.com.intersistemas.jasaas.entity.meta.ContentPayment;
 import br.com.intersistemas.jasaas.exception.ConnectionException;
 import br.com.intersistemas.jasaas.util.HttpParamsUtil;
 import br.com.intersistemas.jasaas.util.JsonUtil;
-import com.sun.javafx.binding.StringFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 import br.com.intersistemas.jasaas.entity.Payment;
 import br.com.intersistemas.jasaas.entity.filter.PaymentFilter;
-import br.com.intersistemas.jasaas.entity.meta.ContentCustomer;
 import br.com.intersistemas.jasaas.entity.meta.MetaPayment;
 import java.util.Arrays;
 
@@ -50,12 +46,12 @@ public class PaymentConnection extends AbstractConnection {
 
             String params = HttpParamsUtil.parse(paymentFilter);
             if (params != null) {
-                url = StringFormatter.concat(endpoint, "/payments", params, "&limit=", limit, "&offset=", offset).getValue();
+                url = (endpoint + "/payments" + params + "&limit=" + limit + "&offset=" + offset);
             } else {
-                url = StringFormatter.concat(endpoint, "/payments", "?limit=", limit, "&offset=", offset).getValue();
+                url = (endpoint + "/payments" + "?limit=" + limit + "&offset=" + offset);
             }
 
-            System.out.println(url);
+            System.out.println(params);
             
             lastResponseJson = adapter.get(url);                        
             
@@ -77,12 +73,12 @@ public class PaymentConnection extends AbstractConnection {
     }
 
     public Payment getById(String id) throws ConnectionException {
-        lastResponseJson = adapter.get(StringFormatter.concat(endpoint, "/payments/", id).getValue());
+        lastResponseJson = adapter.get(endpoint + "/payments/" + id);
         return (Payment) JsonUtil.parse(lastResponseJson, Payment.class);
     }
 
     public List<Payment> getByCustomer(String customer_id) throws ConnectionException {
-        lastResponseJson = adapter.get(StringFormatter.concat(endpoint, "/customers/",customer_id,"/payments").getValue());
+        lastResponseJson = adapter.get(endpoint + "/customers/" + customer_id + "/payments");
             
         MetaPayment meta = (MetaPayment) JsonUtil.parse(lastResponseJson, MetaPayment.class);
 
@@ -98,7 +94,7 @@ public class PaymentConnection extends AbstractConnection {
     }
     
     public List<Payment> getByExternalReference(String externalReference) throws ConnectionException {
-        String url = StringFormatter.concat(endpoint, "/payments?externalReference=",externalReference).getValue();
+        String url = (endpoint + "/payments?externalReference=" + externalReference);
         lastResponseJson = adapter.get(url);
         MetaPayment meta = (MetaPayment) JsonUtil.parse(lastResponseJson, MetaPayment.class);
         Payment[] contentList = meta.getData();
@@ -110,7 +106,7 @@ public class PaymentConnection extends AbstractConnection {
     }
     
     public List<Payment> getBySubscriptions(String subscription_id) throws ConnectionException {
-        lastResponseJson = adapter.get(StringFormatter.concat(endpoint, "/subscriptions/",subscription_id,"/payments").getValue());
+        lastResponseJson = adapter.get(endpoint + "/subscriptions/" + subscription_id + "/payments");
         MetaPayment meta = (MetaPayment) JsonUtil.parse(lastResponseJson, MetaPayment.class);
 
         setHasMore(meta.getHasMore());
@@ -125,7 +121,7 @@ public class PaymentConnection extends AbstractConnection {
     }
     
     public List<Payment> getByInstallment(String installment) throws ConnectionException {
-        lastResponseJson = adapter.get(StringFormatter.concat(endpoint, "/payments?installment=[",installment,"]").getValue());
+        lastResponseJson = adapter.get(endpoint + "/payments?installment=[" + installment + "]");
         MetaPayment meta = (MetaPayment) JsonUtil.parse(lastResponseJson, MetaPayment.class);
 
         setHasMore(meta.getHasMore());
@@ -142,7 +138,7 @@ public class PaymentConnection extends AbstractConnection {
     public void createPayment(Payment payment) throws ConnectionException {
         String paymentJSON = JsonUtil.toJSON(payment);
         if (payment.getId() == null) {
-            adapter.post(StringFormatter.concat(endpoint, "/payments/").getValue(), paymentJSON);
+            adapter.post((endpoint + "/payments/"), paymentJSON);
         } else {
             updatePayment(payment);
         }
@@ -151,20 +147,20 @@ public class PaymentConnection extends AbstractConnection {
     public void saveOrUpdatePayment(Payment payment) throws ConnectionException {
         String paymentJSON = JsonUtil.toJSON(payment);
         if (payment.getId() == null) {
-            adapter.post(StringFormatter.concat(endpoint, "/payments/").getValue(), paymentJSON);
+            adapter.post((endpoint + "/payments/"), paymentJSON);
         } else {
-            adapter.post(StringFormatter.concat(endpoint, "/payments/", payment.getId()).getValue(), paymentJSON);
+            adapter.post((endpoint + "/payments/" + payment.getId()), paymentJSON);
         }
 
     }
 
     public void updatePayment(Payment payment) throws ConnectionException {
         String paymentJSON = JsonUtil.toJSON(payment);
-        adapter.post(StringFormatter.concat(endpoint, "/payments/", payment.getId()).getValue(), paymentJSON);
+        adapter.post((endpoint + "/payments/" + payment.getId()), paymentJSON);
     }
 
     public void deletePayment(String id) throws ConnectionException {
-        adapter.delete(StringFormatter.concat(endpoint, "/payments/", id).getValue());
+        adapter.delete((endpoint + "/payments/" + id));
     }
 
 }

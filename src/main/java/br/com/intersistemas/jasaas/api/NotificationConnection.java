@@ -1,11 +1,9 @@
 package br.com.intersistemas.jasaas.api;
 
-import br.com.intersistemas.jasaas.entity.meta.ContentPayment;
 
 import br.com.intersistemas.jasaas.exception.ConnectionException;
 import br.com.intersistemas.jasaas.util.HttpParamsUtil;
 import br.com.intersistemas.jasaas.util.JsonUtil;
-import com.sun.javafx.binding.StringFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -50,9 +48,9 @@ public class NotificationConnection extends AbstractConnection {
 
             String params = HttpParamsUtil.parse(notificationFilter);
             if (params != null) {
-                url = StringFormatter.concat(endpoint, "/notifications", params, "&limit=", limit, "&offset=", offset).getValue();
+                url = (endpoint + "/notifications" + params + "&limit=" + limit + "&offset="+ offset);
             } else {
-                url = StringFormatter.concat(endpoint, "/notifications", "?limit=", limit, "&offset=", offset).getValue();
+                url = (endpoint + "/notifications" + "?limit=" + limit + "&offset=" + offset);
             }
 
             lastResponseJson = adapter.get(url);
@@ -77,12 +75,12 @@ public class NotificationConnection extends AbstractConnection {
     }
 
     public Notification getById(String id) throws ConnectionException {
-        lastResponseJson = adapter.get(StringFormatter.concat(endpoint, "/notifications/", id).getValue());
+        lastResponseJson = adapter.get((endpoint + "/notifications/" + id));
         return (Notification) JsonUtil.parse(lastResponseJson, Notification.class);
     }
 
     public List<Notification> getByCustomer(String customer_id) throws ConnectionException {
-        lastResponseJson = adapter.get(StringFormatter.concat(endpoint, "/customers/",customer_id,"/notifications").getValue());
+        lastResponseJson = adapter.get((endpoint + "/customers/"  +customer_id  + "/notifications"));
             
         MetaNotification meta = (MetaNotification) JsonUtil.parse(lastResponseJson, MetaNotification.class);
 
@@ -95,14 +93,14 @@ public class NotificationConnection extends AbstractConnection {
         for (ContentNotification content : contentList) {
             notifications.add(content.getNotification());
         }
-        return notifications;       
+        return notifications;
         
     }
     
     public void createNotification(Notification notification) throws ConnectionException {
         String notificationJSON = JsonUtil.toJSON(notification);
         if (notification.getId() == null) {
-            adapter.post(StringFormatter.concat(endpoint, "/notifications/").getValue(), notificationJSON);
+            adapter.post((endpoint + "/notifications/"), notificationJSON);
         } else {
             updateNotification(notification);
         }
@@ -111,20 +109,20 @@ public class NotificationConnection extends AbstractConnection {
     public void saveOrUpdateNotification(Notification notification) throws ConnectionException {
         String notificationJSON = JsonUtil.toJSON(notification);
         if (notification.getId() == null) {
-            adapter.post(StringFormatter.concat(endpoint, "/notifications/").getValue(), notificationJSON);
+            adapter.post((endpoint + "/notifications/"), notificationJSON);
         } else {
-            adapter.post(StringFormatter.concat(endpoint, "/notifications/", notification.getId()).getValue(), notificationJSON);
+            adapter.post((endpoint + "/notifications/" + notification.getId()), notificationJSON);
         }
 
     }
 
     public void updateNotification(Notification notification) throws ConnectionException {
         String notificationJSON = JsonUtil.toJSON(notification);
-        adapter.post(StringFormatter.concat(endpoint, "/notifications/", notification.getId()).getValue(), notificationJSON);
+        adapter.post((endpoint + "/notifications/" + notification.getId()), notificationJSON);
     }
 
     public void deleteNotification(String id) throws ConnectionException {
-        adapter.delete(StringFormatter.concat(endpoint, "/notifications/", id).getValue());
+        adapter.delete((endpoint + "/notifications/" +  id));
     }
 
 }

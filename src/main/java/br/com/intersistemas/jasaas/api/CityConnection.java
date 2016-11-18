@@ -1,11 +1,9 @@
 package br.com.intersistemas.jasaas.api;
 
 import br.com.intersistemas.jasaas.entity.City;
-import br.com.intersistemas.jasaas.entity.meta.ContentPayment;
 import br.com.intersistemas.jasaas.exception.ConnectionException;
 import br.com.intersistemas.jasaas.util.HttpParamsUtil;
 import br.com.intersistemas.jasaas.util.JsonUtil;
-import com.sun.javafx.binding.StringFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -38,16 +36,16 @@ public class CityConnection extends AbstractConnection{
     
     public List<City> getAll(CityFilter cityFilter,Integer limit, Integer offset) throws ConnectionException {        
         try {
-            String url;
+            String url = "";
             
             if(limit == null) limit = 10;
             if(offset == null) offset = 0;
             
             String params = HttpParamsUtil.parse(cityFilter);            
-            if(params != null){
-                url = StringFormatter.concat(endpoint,"/cities",params,"&limit=",limit,"&offset=",offset).getValue();
+            if(params != null){                
+                url = (endpoint + "/cities" + params + "&limit=" + limit + "&offset=" + offset);
             }else{
-                url = StringFormatter.concat(endpoint,"/cities","?limit=",limit,"&offset=",offset).getValue();
+                url = (endpoint + "/cities" + "?limit=" + limit + "&offset=" + offset);
             }
             
             lastResponseJson = adapter.get(url);
@@ -72,7 +70,7 @@ public class CityConnection extends AbstractConnection{
     }
     
     public City getById(Integer id) throws ConnectionException{
-        lastResponseJson = adapter.get(StringFormatter.concat(endpoint,"/cities/",id).getValue());
+        lastResponseJson = adapter.get(endpoint + "/cities/" + id);
         return (City) JsonUtil.parse(lastResponseJson, City.class);
     }
     

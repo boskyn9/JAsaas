@@ -5,7 +5,6 @@ package br.com.intersistemas.jasaas.api;
 import br.com.intersistemas.jasaas.exception.ConnectionException;
 import br.com.intersistemas.jasaas.util.HttpParamsUtil;
 import br.com.intersistemas.jasaas.util.JsonUtil;
-import com.sun.javafx.binding.StringFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -13,7 +12,6 @@ import java.util.logging.Logger;
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 import br.com.intersistemas.jasaas.entity.Subscription;
 import br.com.intersistemas.jasaas.entity.filter.SubscriptionFilter;
-import br.com.intersistemas.jasaas.entity.meta.ContentPayment;
 import br.com.intersistemas.jasaas.entity.meta.ContentSubscription;
 import br.com.intersistemas.jasaas.entity.meta.MetaSubscription;
 
@@ -51,9 +49,9 @@ public class SubscriptionConnection extends AbstractConnection {
 
             String params = HttpParamsUtil.parse(subscriptionFilter);
             if (params != null) {
-                url = StringFormatter.concat(endpoint, "/subscriptions", params, "&limit=", limit, "&offset=", offset).getValue();
+                url = (endpoint + "/subscriptions" + params + "&limit=" + limit + "&offset="+ offset);
             } else {
-                url = StringFormatter.concat(endpoint, "/subscriptions", "?limit=", limit, "&offset=", offset).getValue();
+                url = (endpoint + "/subscriptions" + "?limit=" + limit + "&offset=" + offset);
             }
 
             lastResponseJson = adapter.get(url);
@@ -78,12 +76,12 @@ public class SubscriptionConnection extends AbstractConnection {
     }
 
     public Subscription getById(String id) throws ConnectionException {
-        lastResponseJson = adapter.get(StringFormatter.concat(endpoint, "/subscriptions/", id).getValue());
+        lastResponseJson = adapter.get((endpoint + "/subscriptions/" + id));
         return (Subscription) JsonUtil.parse(lastResponseJson, Subscription.class);
     }
 
     public List<Subscription> getByCustomer(String customer_id) throws ConnectionException {
-        lastResponseJson = adapter.get(StringFormatter.concat(endpoint, "/customers/", customer_id,"/subscriptions").getValue());
+        lastResponseJson = adapter.get((endpoint + "/customers/" + customer_id +"/subscriptions"));
         MetaSubscription meta = (MetaSubscription) JsonUtil.parse(lastResponseJson, MetaSubscription.class);
 
             setHasMore(meta.getHasMore());
@@ -101,7 +99,7 @@ public class SubscriptionConnection extends AbstractConnection {
     public void createSubscription(Subscription subscription) throws ConnectionException {
         String subscriptionJSON = JsonUtil.toJSON(subscription);
         if (subscription.getId() == null) {
-            adapter.post(StringFormatter.concat(endpoint, "/subscriptions/").getValue(), subscriptionJSON);
+            adapter.post((endpoint + "/subscriptions/"), subscriptionJSON);
         } else {
             updateSubscription(subscription);
         }
@@ -110,20 +108,20 @@ public class SubscriptionConnection extends AbstractConnection {
     public void saveOrUpdateSubscription(Subscription subscription) throws ConnectionException {
         String subscriptionJSON = JsonUtil.toJSON(subscription);
         if (subscription.getId() == null) {
-            adapter.post(StringFormatter.concat(endpoint, "/subscriptions/").getValue(), subscriptionJSON);
+            adapter.post((endpoint + "/subscriptions/"), subscriptionJSON);
         } else {
-            adapter.post(StringFormatter.concat(endpoint, "/subscriptions/", subscription.getId()).getValue(), subscriptionJSON);
+            adapter.post((endpoint + "/subscriptions/" + subscription.getId()), subscriptionJSON);
         }
 
     }
 
     public void updateSubscription(Subscription subscription) throws ConnectionException {
         String subscriptionJSON = JsonUtil.toJSON(subscription);
-        adapter.post(StringFormatter.concat(endpoint, "/subscriptions/", subscription.getId()).getValue(), subscriptionJSON);
+        adapter.post((endpoint + "/subscriptions/" + subscription.getId()), subscriptionJSON);
     }
 
     public void deleteSubscription(String id) throws ConnectionException {
-        adapter.delete(StringFormatter.concat(endpoint, "/subscriptions/", id).getValue());
+        adapter.delete((endpoint + "/subscriptions/" + id));
     }
 
 }

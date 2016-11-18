@@ -1,7 +1,7 @@
 package br.com.intersistemas.jasaas.util;
 
 import java.lang.reflect.Field;
-import java.util.StringJoiner;
+import org.apache.http.client.utils.URIBuilder;
 
 /**
  *
@@ -12,7 +12,8 @@ public class HttpParamsUtil {
     public static String parse(Object obj) throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException {
         if(obj == null)
             return null;
-        StringJoiner params = new StringJoiner("&", "?", "");
+        
+        URIBuilder uriBuilder = new URIBuilder();       
         
         Class c = obj.getClass();
         Field[] fields = c.getDeclaredFields();
@@ -20,8 +21,12 @@ public class HttpParamsUtil {
             field.setAccessible(true);
             Object valueObject = field.get(obj);
             if(valueObject != null)
-                params.add(field.getName()+"="+valueObject.toString());
+                uriBuilder.addParameter(field.getName(), valueObject.toString());
         }
-        return params.toString();
+        
+        
+        
+        
+        return uriBuilder.toString();
     }
 }

@@ -5,7 +5,6 @@ import br.com.intersistemas.jasaas.entity.meta.MetaCustomer;
 import br.com.intersistemas.jasaas.exception.ConnectionException;
 import br.com.intersistemas.jasaas.util.HttpParamsUtil;
 import br.com.intersistemas.jasaas.util.JsonUtil;
-import com.sun.javafx.binding.StringFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -48,9 +47,9 @@ public class CustomerConnection extends AbstractConnection {
 
             String params = HttpParamsUtil.parse(customerFilter);
             if (params != null) {
-                url = StringFormatter.concat(endpoint, "/customers", params, "&limit=", limit, "&offset=", offset).getValue();
+                url = (endpoint + "/customers" + params + "&limit=" + limit + "&offset=" + offset);
             } else {
-                url = StringFormatter.concat(endpoint, "/customers", "?limit=", limit, "&offset=", offset).getValue();
+                url = (endpoint + "/customers" + "?limit=" + limit + "&offset=" + offset);
             }
 
             lastResponseJson = adapter.get(url);
@@ -78,12 +77,12 @@ public class CustomerConnection extends AbstractConnection {
     }
 
     public Customer getById(String id) throws ConnectionException {
-        lastResponseJson = adapter.get(StringFormatter.concat(endpoint, "/customers/", id).getValue());
+        lastResponseJson = adapter.get(endpoint + "/customers/" + id);
         return (Customer) JsonUtil.parse(lastResponseJson, Customer.class);
     }
     
     public Customer getByEmail(String email) throws ConnectionException {
-        lastResponseJson = adapter.get(StringFormatter.concat(endpoint, "/customers?email=", email).getValue());
+        lastResponseJson = adapter.get(endpoint + "/customers?email=" + email);
         MetaCustomer meta = (MetaCustomer) JsonUtil.parse(lastResponseJson, MetaCustomer.class);
 
         setHasMore(meta.getHasMore());
@@ -100,7 +99,7 @@ public class CustomerConnection extends AbstractConnection {
     public void createCustomer(Customer customer) throws ConnectionException {
         String customerJSON = JsonUtil.toJSON(customer);
         if(customer.getId() == null)
-            adapter.post(StringFormatter.concat(endpoint, "/customers/").getValue(), customerJSON);
+            adapter.post((endpoint + "/customers/") , customerJSON);
         else
             updateCustomer(customer);
     }
@@ -108,19 +107,19 @@ public class CustomerConnection extends AbstractConnection {
     public void saveOrUpdateCustomer(Customer customer) throws ConnectionException {
         String customerJSON = JsonUtil.toJSON(customer);
         if(customer.getId() == null)
-            adapter.post(StringFormatter.concat(endpoint, "/customers/").getValue(), customerJSON);
+            adapter.post((endpoint + "/customers/"), customerJSON);
         else
-            adapter.post(StringFormatter.concat(endpoint, "/customers/",customer.getId()).getValue(), customerJSON);
+            adapter.post((endpoint + "/customers/" + customer.getId()), customerJSON);
             
     }
     
     public void updateCustomer(Customer customer) throws ConnectionException {
         String customerJSON = JsonUtil.toJSON(customer);
-        adapter.post(StringFormatter.concat(endpoint, "/customers/",customer.getId()).getValue(), customerJSON);
+        adapter.post((endpoint +  "/customers/" + customer.getId()), customerJSON);
     }
 
   public void deleteCustomer(String id) throws ConnectionException {
-        adapter.delete(StringFormatter.concat(endpoint, "/customers/", id).getValue());
+        adapter.delete((endpoint + "/customers/" + id));
     }
     
 }
