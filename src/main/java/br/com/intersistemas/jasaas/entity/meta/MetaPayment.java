@@ -8,11 +8,11 @@ import com.google.gson.annotations.Expose;
  * @author bosco
  */
 public class MetaPayment {
-    
+
     @Expose private Integer limit;
     @Expose private Integer offset;
     @Expose private Boolean hasMore;
-    
+
     // Na homologação foi identificado que o content não possue um objeto payment
     @Expose private Payment[] data;
 
@@ -46,6 +46,6 @@ public class MetaPayment {
 
     public void setData(Payment[] data) {
         this.data = data;
-    }   
-    
+    }
+
 }

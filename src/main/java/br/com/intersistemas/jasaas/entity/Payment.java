@@ -48,6 +48,8 @@ public final class Payment {
     private Date dueDate;
     @Expose
     private Date originalDueDate;
+    @Expose(serialize = false)
+    private Date paymentDate;
     @Expose
     private String status;
     @Expose
@@ -697,6 +699,10 @@ public final class Payment {
     @Override
     public String toString() {
         return "Payment{" + "id=" + id + ", customer=" + customer + ", subscription=" + subscription + ", installment=" + installment + ", billingType=" + billingType + ", value=" + value + ", netValue=" + netValue + ", originalValue=" + originalValue + ", interestValue=" + interestValue + ", grossValue=" + grossValue + ", dueDate=" + dueDate + ", originalDueDate=" + originalDueDate + ", status=" + status + ", nossoNumero=" + nossoNumero + ", description=" + description + ", invoiceUrl=" + invoiceUrl + ", boletoUrl=" + boletoUrl + ", invoiceNumber=" + invoiceNumber + ", installmentCount=" + installmentCount + ", installmentValue=" + installmentValue + ", externalReference=" + externalReference + ", creditCardHolderName=" + creditCardHolderName + ", creditCardNumber=" + creditCardNumber + ", creditCardExpiryMonth=" + creditCardExpiryMonth + ", creditCardExpiryYear=" + creditCardExpiryYear + ", creditCardCcv=" + creditCardCcv + ", creditCardHolderFullName=" + creditCardHolderFullName + ", creditCardHolderEmail=" + creditCardHolderEmail + ", creditCardHolderCpfCnpj=" + creditCardHolderCpfCnpj + ", creditCardHolderAddress=" + creditCardHolderAddress + ", creditCardHolderAddressNumber=" + creditCardHolderAddressNumber + ", creditCardHolderAddressComplement=" + creditCardHolderAddressComplement + ", creditCardHolderProvince=" + creditCardHolderProvince + ", creditCardHolderCity=" + creditCardHolderCity + ", creditCardHolderUf=" + creditCardHolderUf + ", creditCardHolderPostalCode=" + creditCardHolderPostalCode + ", creditCardHolderPhone=" + creditCardHolderPhone + ", creditCardHolderPhoneDDD=" + creditCardHolderPhoneDDD + ", creditCardHolderMobilePhone=" + creditCardHolderMobilePhone + ", creditCardHolderMobilePhoneDDD=" + creditCardHolderMobilePhoneDDD + '}';
+    }
+
+    public Date getPaymentDate() {
+        return paymentDate;
     }
 
     public void validate() {
