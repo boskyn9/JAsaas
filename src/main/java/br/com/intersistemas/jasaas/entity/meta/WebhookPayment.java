@@ -17,8 +17,8 @@ public class WebhookPayment {
     public static final String PAYMENT_CREATED = "PAYMENT_CREATED"; //"Geração de nova cobrança"
     public static final String PAYMENT_UPDATED = "PAYMENT_UPDATED"; //"Alteração no vencimento ou valor de cobrança existente."
     public static final String PAYMENT_CONFIRMED = "PAYMENT_CONFIRMED"; //"Cobrança autorizada pela adquirente (somente cartão de crédito)"
-    public static final String PAYMENT_RECEIVED = "PAYMENT_RECEIVED "; //"Cobrança recebida."
-    public static final String PAYMENT_OVERDUE = "PAYMENT_OVERDUE "; //"Cobrança vencida"
+    public static final String PAYMENT_RECEIVED = "PAYMENT_RECEIVED"; //"Cobrança recebida."
+    public static final String PAYMENT_OVERDUE = "PAYMENT_OVERDUE"; //"Cobrança vencida"
     public static final String PAYMENT_DELETED = "PAYMENT_DELETED"; //"Cobrança removida"
     public static final String PAYMENT_REFUNDED = "PAYMENT_REFUNDED"; //"Cobrança estornada (somente cartão de crédito)"
 
