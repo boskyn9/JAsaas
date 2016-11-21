@@ -26,87 +26,50 @@ public final class Payment {
     @Expose(serialize = false)
     private String id;
 
-    @Expose
-    private String customer;
-    @Expose
-    private String subscription;
-    @Expose
-    private Integer installment;
-    @Expose
-    private String billingType;
-    @Expose
-    private BigDecimal value;
-    @Expose
-    private BigDecimal netValue;
-    @Expose
-    private BigDecimal originalValue;
-    @Expose
-    private BigDecimal interestValue;
-    @Expose
-    private BigDecimal grossValue;
-    @Expose
-    private Date dueDate;
-    @Expose
-    private Date originalDueDate;
+    @Expose private String customer;
+    @Expose private String subscription;
+    @Expose private Integer installment;
+    @Expose private String billingType;
+    @Expose private BigDecimal value;
+    @Expose private BigDecimal netValue;
+    @Expose private BigDecimal originalValue;
+    @Expose private BigDecimal interestValue;
+    @Expose private BigDecimal grossValue;
+    @Expose private Date dueDate;
+    @Expose private Date originalDueDate;
     @Expose(serialize = false)
     private Date paymentDate;
-    @Expose
-    private String status;
-    @Expose
-    private String nossoNumero;
-    @Expose
-    private String description;
-    @Expose
-    private String invoiceUrl;
-    @Expose
-    private String boletoUrl;
-    @Expose
-    private String invoiceNumber;
-    @Expose
-    private Integer installmentCount;
-    @Expose
-    private BigDecimal installmentValue;
-    @Expose
-    private String externalReference;
+    @Expose private String status;
+    @Expose private String nossoNumero;
+    @Expose private String description;
+    @Expose private String invoiceUrl;
+    @Expose private String boletoUrl;
+    @Expose private String invoiceNumber;
+    @Expose private Integer installmentCount;
+    @Expose private BigDecimal installmentValue;
+    @Expose private String externalReference;
+    @Expose(serialize = false)
+    private Boolean deleted;
 
-    @Expose
-    private String creditCardHolderName;
-    @Expose
-    private String creditCardNumber;
-    @Expose
-    private String creditCardExpiryMonth;
-    @Expose
-    private String creditCardExpiryYear;
-    @Expose
-    private String creditCardCcv;
-    @Expose
-    private String creditCardHolderFullName;
-    @Expose
-    private String creditCardHolderEmail;
-    @Expose
-    private String creditCardHolderCpfCnpj;
-    @Expose
-    private String creditCardHolderAddress;
-    @Expose
-    private String creditCardHolderAddressNumber;
-    @Expose
-    private String creditCardHolderAddressComplement;
-    @Expose
-    private String creditCardHolderProvince;
-    @Expose
-    private String creditCardHolderCity;
-    @Expose
-    private String creditCardHolderUf;
-    @Expose
-    private String creditCardHolderPostalCode;
-    @Expose
-    private String creditCardHolderPhone;
-    @Expose
-    private String creditCardHolderPhoneDDD;
-    @Expose
-    private String creditCardHolderMobilePhone;
-    @Expose
-    private String creditCardHolderMobilePhoneDDD;
+    @Expose private String creditCardHolderName;
+    @Expose private String creditCardNumber;
+    @Expose private String creditCardExpiryMonth;
+    @Expose private String creditCardExpiryYear;
+    @Expose private String creditCardCcv;
+    @Expose private String creditCardHolderFullName;
+    @Expose private String creditCardHolderEmail;
+    @Expose private String creditCardHolderCpfCnpj;
+    @Expose private String creditCardHolderAddress;
+    @Expose private String creditCardHolderAddressNumber;
+    @Expose private String creditCardHolderAddressComplement;
+    @Expose private String creditCardHolderProvince;
+    @Expose private String creditCardHolderCity;
+    @Expose private String creditCardHolderUf;
+    @Expose private String creditCardHolderPostalCode;
+    @Expose private String creditCardHolderPhone;
+    @Expose private String creditCardHolderPhoneDDD;
+    @Expose private String creditCardHolderMobilePhone;
+    @Expose private String creditCardHolderMobilePhoneDDD;
 
     /**
      *
@@ -703,6 +666,10 @@ public final class Payment {
 
     public Date getPaymentDate() {
         return paymentDate;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
     }
 
     public void validate() {
