@@ -1,7 +1,9 @@
 package br.com.intersistemas.jasaas.entity;
 
+import br.com.intersistemas.jasaas.exception.PaymentException;
 import com.google.gson.annotations.Expose;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -24,46 +26,85 @@ public final class Payment {
     @Expose(serialize = false)
     private String id;
 
-    @Expose private String customer;
-    @Expose private String subscription;
-    @Expose private Integer installment;
-    @Expose private String billingType;
-    @Expose private BigDecimal value;
-    @Expose private BigDecimal netValue;
-    @Expose private BigDecimal originalValue;
-    @Expose private BigDecimal interestValue;
-    @Expose private BigDecimal grossValue;
-    @Expose private Date dueDate;
-    @Expose private Date originalDueDate;
-    @Expose private String status;
-    @Expose private String nossoNumero;
-    @Expose private String description;
-    @Expose private String invoiceUrl;
-    @Expose private String boletoUrl;
-    @Expose private String invoiceNumber;
-    @Expose private Integer installmentCount;
-    @Expose private BigDecimal installmentValue;
-    @Expose private String externalReference;
+    @Expose
+    private String customer;
+    @Expose
+    private String subscription;
+    @Expose
+    private Integer installment;
+    @Expose
+    private String billingType;
+    @Expose
+    private BigDecimal value;
+    @Expose
+    private BigDecimal netValue;
+    @Expose
+    private BigDecimal originalValue;
+    @Expose
+    private BigDecimal interestValue;
+    @Expose
+    private BigDecimal grossValue;
+    @Expose
+    private Date dueDate;
+    @Expose
+    private Date originalDueDate;
+    @Expose
+    private String status;
+    @Expose
+    private String nossoNumero;
+    @Expose
+    private String description;
+    @Expose
+    private String invoiceUrl;
+    @Expose
+    private String boletoUrl;
+    @Expose
+    private String invoiceNumber;
+    @Expose
+    private Integer installmentCount;
+    @Expose
+    private BigDecimal installmentValue;
+    @Expose
+    private String externalReference;
 
-    @Expose private String creditCardHolderName;
-    @Expose private String creditCardNumber;
-    @Expose private String creditCardExpiryMonth;
-    @Expose private String creditCardExpiryYear;
-    @Expose private String creditCardCcv;
-    @Expose private String creditCardHolderFullName;
-    @Expose private String creditCardHolderEmail;
-    @Expose private String creditCardHolderCpfCnpj;
-    @Expose private String creditCardHolderAddress;
-    @Expose private String creditCardHolderAddressNumber;
-    @Expose private String creditCardHolderAddressComplement;
-    @Expose private String creditCardHolderProvince;
-    @Expose private String creditCardHolderCity;
-    @Expose private String creditCardHolderUf;
-    @Expose private String creditCardHolderPostalCode;
-    @Expose private String creditCardHolderPhone;
-    @Expose private String creditCardHolderPhoneDDD;
-    @Expose private String creditCardHolderMobilePhone;
-    @Expose private String creditCardHolderMobilePhoneDDD;
+    @Expose
+    private String creditCardHolderName;
+    @Expose
+    private String creditCardNumber;
+    @Expose
+    private String creditCardExpiryMonth;
+    @Expose
+    private String creditCardExpiryYear;
+    @Expose
+    private String creditCardCcv;
+    @Expose
+    private String creditCardHolderFullName;
+    @Expose
+    private String creditCardHolderEmail;
+    @Expose
+    private String creditCardHolderCpfCnpj;
+    @Expose
+    private String creditCardHolderAddress;
+    @Expose
+    private String creditCardHolderAddressNumber;
+    @Expose
+    private String creditCardHolderAddressComplement;
+    @Expose
+    private String creditCardHolderProvince;
+    @Expose
+    private String creditCardHolderCity;
+    @Expose
+    private String creditCardHolderUf;
+    @Expose
+    private String creditCardHolderPostalCode;
+    @Expose
+    private String creditCardHolderPhone;
+    @Expose
+    private String creditCardHolderPhoneDDD;
+    @Expose
+    private String creditCardHolderMobilePhone;
+    @Expose
+    private String creditCardHolderMobilePhoneDDD;
 
     /**
      *
@@ -658,4 +699,23 @@ public final class Payment {
         return "Payment{" + "id=" + id + ", customer=" + customer + ", subscription=" + subscription + ", installment=" + installment + ", billingType=" + billingType + ", value=" + value + ", netValue=" + netValue + ", originalValue=" + originalValue + ", interestValue=" + interestValue + ", grossValue=" + grossValue + ", dueDate=" + dueDate + ", originalDueDate=" + originalDueDate + ", status=" + status + ", nossoNumero=" + nossoNumero + ", description=" + description + ", invoiceUrl=" + invoiceUrl + ", boletoUrl=" + boletoUrl + ", invoiceNumber=" + invoiceNumber + ", installmentCount=" + installmentCount + ", installmentValue=" + installmentValue + ", externalReference=" + externalReference + ", creditCardHolderName=" + creditCardHolderName + ", creditCardNumber=" + creditCardNumber + ", creditCardExpiryMonth=" + creditCardExpiryMonth + ", creditCardExpiryYear=" + creditCardExpiryYear + ", creditCardCcv=" + creditCardCcv + ", creditCardHolderFullName=" + creditCardHolderFullName + ", creditCardHolderEmail=" + creditCardHolderEmail + ", creditCardHolderCpfCnpj=" + creditCardHolderCpfCnpj + ", creditCardHolderAddress=" + creditCardHolderAddress + ", creditCardHolderAddressNumber=" + creditCardHolderAddressNumber + ", creditCardHolderAddressComplement=" + creditCardHolderAddressComplement + ", creditCardHolderProvince=" + creditCardHolderProvince + ", creditCardHolderCity=" + creditCardHolderCity + ", creditCardHolderUf=" + creditCardHolderUf + ", creditCardHolderPostalCode=" + creditCardHolderPostalCode + ", creditCardHolderPhone=" + creditCardHolderPhone + ", creditCardHolderPhoneDDD=" + creditCardHolderPhoneDDD + ", creditCardHolderMobilePhone=" + creditCardHolderMobilePhone + ", creditCardHolderMobilePhoneDDD=" + creditCardHolderMobilePhoneDDD + '}';
     }
 
+    public void validate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        System.out.println("dueDate: " + dueDate);
+        System.out.println("dueDate: " + dueDate.getTime());
+        System.out.println("calendar.getTime(): " + calendar.getTime());
+        System.out.println("calendar.getTime(): " + calendar.getTime().getTime());
+        if (dueDate.before(calendar.getTime())) {
+            throw new PaymentException(500, "Data de vencimento inválida. A data de vencimento deve ser maior ou igual a hoje. Data informada: " + dueDate);
+        }
+
+        if (description.length() > 255) {
+            System.out.println("description: " + description);
+            throw new PaymentException(500, "O campo descrição possui limite de 255 caracteres. Tamanho informado: " + description.length());
+        }
+    }
 }
