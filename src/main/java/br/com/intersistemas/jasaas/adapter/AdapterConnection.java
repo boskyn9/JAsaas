@@ -22,9 +22,10 @@ public interface AdapterConnection {
      * DELETE Request
      *
      * @param url
+     * @return String contendo JSON com o objeto deletado ou um objeto de erro
      * @throws ConnectionException
      */
-    public void delete(String url);
+    public String delete(String url);
 
     /**
      * PUT Request
@@ -41,8 +42,9 @@ public interface AdapterConnection {
      *
      * @param url URL do serviço para comunicação
      * @param contentJSON Conteúdo da comunicação
+     * @return String contendo JSON com o objeto gerado ou um objeto de erro
      * @throws ConnectionException
      */
-    public void post(String url, String contentJSON);
+    public String post(String url, String contentJSON);
 
 }

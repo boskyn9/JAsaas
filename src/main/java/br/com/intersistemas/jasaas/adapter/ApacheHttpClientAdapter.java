@@ -4,6 +4,7 @@ import br.com.intersistemas.jasaas.exception.ConnectionException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -53,7 +54,7 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
     }
 
     @Override
-    public void delete(String url) throws ConnectionException {
+    public String delete(String url) throws ConnectionException {
         try {
             HttpDelete httpDelete = new HttpDelete(url);
             httpDelete.addHeader("access_token", accessToken);
@@ -63,6 +64,10 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             if (status.getStatusCode() != 200) {
                 throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase());
             }
+            HttpEntity entity = response.getEntity();
+            String retorno = EntityUtils.toString(entity);
+            System.out.println(retorno);
+            return retorno;
         } catch (IOException ex) {
             Logger.getLogger(ApacheHttpClientAdapter.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());
@@ -74,7 +79,7 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }*/
     @Override
-    public void post(String url, String contentJSON) throws ConnectionException {
+    public String post(String url, String contentJSON) throws ConnectionException {
         try {
             System.out.println(url);
             System.out.println(contentJSON);
@@ -86,15 +91,21 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
 
             CloseableHttpResponse response = httpclient.execute(httpPost);
             System.out.println("CloseableHttpResponse");
-            for (int i = 0; i < response.getAllHeaders().length; i++) {
-                System.out.println(response.getAllHeaders()[i].toString());
+            for (Header allHeader : response.getAllHeaders()) {
+                System.out.println(allHeader.toString());
             }
             StatusLine status = response.getStatusLine();
-            System.out.println(status.getStatusCode());
-            if (status.getStatusCode() != 200) {
+            System.out.println("Status: " + status.getStatusCode());
+            if (status.getStatusCode() != 200 && status.getStatusCode() != 400) {
                 System.out.println(status.getReasonPhrase());
                 throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase());
             }
+            
+            HttpEntity entidade = response.getEntity();
+            String retorno = EntityUtils.toString(entidade);
+            System.out.println("retorno");
+            System.out.println(retorno);
+            return retorno;
         } catch (IOException ex) {
             Logger.getLogger(ApacheHttpClientAdapter.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());

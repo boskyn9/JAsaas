@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 import br.com.intersistemas.jasaas.entity.Payment;
 import br.com.intersistemas.jasaas.entity.filter.PaymentFilter;
+import br.com.intersistemas.jasaas.entity.meta.DeletedEntityReturn;
 import br.com.intersistemas.jasaas.entity.meta.MetaPayment;
 import java.util.Arrays;
 
@@ -135,54 +136,43 @@ public class PaymentConnection extends AbstractConnection {
         return Arrays.asList(contentList);
     }
 
-    public void createPayment(Payment payment) throws ConnectionException {
+    public Payment createPayment(Payment payment) throws ConnectionException {
         String paymentJSON = JsonUtil.toJSON(payment);
         if (payment.getId() == null) {
             try {
                 System.out.println("createPayment");
                 payment.validate();
-                adapter.post((endpoint + "/payments/"), paymentJSON);
+                String data = adapter.post((endpoint + "/payments/"), paymentJSON);
+                Payment paymentCreated = (Payment) JsonUtil.parse(data, Payment.class);
+                return paymentCreated;
             } catch (Exception ex) {
                 Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
                 throw new ConnectionException(500, ex.getMessage());
             }
-        } else {
-            updatePayment(payment);
         }
+        return null;
     }
 
-    public void saveOrUpdatePayment(Payment payment) throws ConnectionException {
-        try {
-            System.out.println("saveOrUpdatePayment");
-            String paymentJSON = JsonUtil.toJSON(payment);
-            payment.validate();
-            if (payment.getId() == null) {
-                adapter.post((endpoint + "/payments/"), paymentJSON);
-            } else {
-                adapter.post((endpoint + "/payments/" + payment.getId()), paymentJSON);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ConnectionException(500, ex.getMessage());
-        }
-    }
-
-    public void updatePayment(Payment payment) throws ConnectionException {
+    public Payment updatePayment(Payment payment) throws ConnectionException {
         try {
             System.out.println("updatePayment");
             String paymentJSON = JsonUtil.toJSON(payment);
             payment.validate();
-            adapter.post((endpoint + "/payments/" + payment.getId()), paymentJSON);
+            String data = adapter.post((endpoint + "/payments/" + payment.getId()), paymentJSON);
+            Payment paymentUpdated = (Payment) JsonUtil.parse(data, Payment.class);
+            return paymentUpdated;
         } catch (Exception ex) {
             Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());
         }
     }
 
-    public void deletePayment(String id) throws ConnectionException {
+    public boolean deletePayment(String id) throws ConnectionException {
         try {
             System.out.println("deletePayment");
-            adapter.delete((endpoint + "/payments/" + id));
+            String data = adapter.delete((endpoint + "/payments/" + id));
+            DeletedEntityReturn deleted = (DeletedEntityReturn) JsonUtil.parse(data, DeletedEntityReturn.class);
+            return deleted.getDeleted();
         } catch (Exception ex) {
             Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());

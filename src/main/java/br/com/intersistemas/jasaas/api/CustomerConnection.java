@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 import br.com.intersistemas.jasaas.entity.filter.CustomerFilter;
 import br.com.intersistemas.jasaas.entity.meta.ContentCustomer;
+import br.com.intersistemas.jasaas.entity.meta.DeletedEntityReturn;
 
 /**
  *
@@ -96,50 +97,40 @@ public class CustomerConnection extends AbstractConnection {
         return contentList[0].getCustomer();
     }
 
-    public void createCustomer(Customer customer) throws ConnectionException {
+    public Customer createCustomer(Customer customer) throws ConnectionException {
         String customerJSON = JsonUtil.toJSON(customer);
         if (customer.getId() == null) {
             try {
                 System.out.println("createCustomer");
-                adapter.post((endpoint + "/customers/"), customerJSON);
+                String data = adapter.post((endpoint + "/customers/"), customerJSON);
+                Customer customerCreated = (Customer) JsonUtil.parse(data, Customer.class);
+                return customerCreated;
             } catch (Exception ex) {
                 Logger.getLogger(CustomerConnection.class.getName()).log(Level.SEVERE, null, ex);
                 throw new ConnectionException(500, ex.getMessage());
             }
-        } else {
-            updateCustomer(customer);
         }
+        return null;
     }
 
-    public void saveOrUpdateCustomer(Customer customer) throws ConnectionException {
-        try {
-            System.out.println("saveOrUpdateCustomer");
-            String customerJSON = JsonUtil.toJSON(customer);
-            if (customer.getId() == null) {
-                adapter.post((endpoint + "/customers/"), customerJSON);
-            } else {
-                adapter.post((endpoint + "/customers/" + customer.getId()), customerJSON);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(CustomerConnection.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ConnectionException(500, ex.getMessage());
-        }
-    }
-
-    public void updateCustomer(Customer customer) throws ConnectionException {
+    public Customer updateCustomer(Customer customer) throws ConnectionException {
         try {
             System.out.println("updateCustomer");
             String customerJSON = JsonUtil.toJSON(customer);
-            adapter.post((endpoint + "/customers/" + customer.getId()), customerJSON);
+            String data = adapter.post((endpoint + "/customers/" + customer.getId()), customerJSON);
+            Customer customerUpdated = (Customer) JsonUtil.parse(data, Customer.class);
+            return customerUpdated;
         } catch (Exception ex) {
             Logger.getLogger(CustomerConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());
         }
     }
 
-    public void deleteCustomer(String id) throws ConnectionException {
+    public boolean deleteCustomer(String id) throws ConnectionException {
         try {
-            adapter.delete((endpoint + "/customers/" + id));
+            String data = adapter.delete((endpoint + "/customers/" + id));
+            DeletedEntityReturn deleted = (DeletedEntityReturn) JsonUtil.parse(data, DeletedEntityReturn.class);
+            return deleted.getDeleted();
         } catch (Exception ex) {
             Logger.getLogger(CustomerConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());

@@ -58,16 +58,16 @@ customer.setAddressNumber("858");
 customer.setProvince("Pitimbu");
 customer.setCity("3550308");
 
-conn.createCustomer(customer);
+Customer cCreated = conn.createCustomer(customer);
 
 // Atualiza os dados do cliente
 CustomerConnection conn = asaas.customer();
 customer.setEmail("bosc@liamg.moc.rb");
-conn.updateCustomer(customer);
+Customer cUpdated = conn.updateCustomer(customer);
 
 // Deleta uma cliente
 CustomerConnection conn = asaas.customer();
-conn.deleteCustomer("cus_uiqd7mD1OFE0");
+Boolean deleted = conn.deleteCustomer("cus_uiqd7mD1OFE0");
 
 ```
 
@@ -102,16 +102,16 @@ p.setValue(new BigDecimal(100));
 p.setDueDate(new Date());
 p.setDescription("Cobrança INTERPLACAS");        
 p.setExternalReference("15");        
-conn.createPayment(p);
+Payment pCreated = conn.createPayment(p);
 
 // Atualiza os dados da cobrança
 PaymentConnection conn = asaas.payment();
 p.setValue(new BigDecimal(150));
-conn.updatePayment(p);
+Payment pUpdated = conn.updatePayment(p);
 
 // Deleta uma cobrança
 PaymentConnection conn = asaas.payment();
-conn.deletePayment("pay_495842931739");
+Boolean deleted = conn.deletePayment("pay_495842931739");
 
 ```
 

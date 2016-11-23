@@ -673,6 +673,7 @@ public final class Payment {
     }
 
     public void validate() {
+        System.out.println("VALIDACAO DO PAYMENT ANTES DO ENVIO");
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
