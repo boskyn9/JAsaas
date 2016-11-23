@@ -174,6 +174,13 @@ Obs.: Esta é uma API não oficial. Foi feita com base na documentação disponi
 
 Créditos
 --------
+Intersistemas Serviços em Tecnologia - LTDA
+Desenvolvedores:
+João Bosco CM Filho
+Jefferson Willian da C Lucena
+Marcio Davi MM
+
+site: http://intersistemas.com.br/
 
 Licença
 -------
