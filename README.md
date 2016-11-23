@@ -189,7 +189,7 @@ Créditos
 
 Licença
 -------
-&copy;Copyright [2016] [Intersistemas Serviços em Tecnologia LTDA]
+Copyright &copy; 2016 Intersistemas Serviços em Tecnologia LTDA
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
