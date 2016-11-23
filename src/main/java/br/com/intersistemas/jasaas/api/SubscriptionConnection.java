@@ -10,9 +10,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
+import br.com.intersistemas.jasaas.entity.Notification;
 import br.com.intersistemas.jasaas.entity.Subscription;
 import br.com.intersistemas.jasaas.entity.filter.SubscriptionFilter;
 import br.com.intersistemas.jasaas.entity.meta.ContentSubscription;
+import br.com.intersistemas.jasaas.entity.meta.DeletedEntityReturn;
 import br.com.intersistemas.jasaas.entity.meta.MetaSubscription;
 
 /**
@@ -96,32 +98,46 @@ public class SubscriptionConnection extends AbstractConnection {
             return subscriptions;
     }
 
-    public void createSubscription(Subscription subscription) throws ConnectionException {
+    public Subscription createSubscription(Subscription subscription) throws ConnectionException {
         String subscriptionJSON = JsonUtil.toJSON(subscription);
         if (subscription.getId() == null) {
-            adapter.post((endpoint + "/subscriptions/"), subscriptionJSON);
-        } else {
-            updateSubscription(subscription);
+            try {
+                System.out.println("createSubscription");
+                String data = adapter.post((endpoint + "/subscriptions/"), subscriptionJSON);
+                Subscription subscriptionsCreated = (Subscription) JsonUtil.parse(data, Subscription.class);
+                return subscriptionsCreated;
+            } catch (Exception ex) {
+                Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
+                throw new ConnectionException(500, ex.getMessage());
+            }
+        }else{
+            throw new ConnectionException(500, "You should not enter the id in the entity to create it.");
+        }   
+    }    
+
+    public Subscription updateSubscription(Subscription subscription) throws ConnectionException {
+        try {
+            System.out.println("updateSubscription");
+            String subscriptionJSON = JsonUtil.toJSON(subscription);
+            String data = adapter.post((endpoint + "/subscriptions/" + subscription.getId()), subscriptionJSON);
+            Subscription subscriptionUpdated = (Subscription) JsonUtil.parse(data, Subscription.class);
+            return subscriptionUpdated;
+        } catch (Exception ex) {
+            Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ConnectionException(500, ex.getMessage());
         }
     }
 
-    public void saveOrUpdateSubscription(Subscription subscription) throws ConnectionException {
-        String subscriptionJSON = JsonUtil.toJSON(subscription);
-        if (subscription.getId() == null) {
-            adapter.post((endpoint + "/subscriptions/"), subscriptionJSON);
-        } else {
-            adapter.post((endpoint + "/subscriptions/" + subscription.getId()), subscriptionJSON);
+    public boolean deleteSubscription(String id) throws ConnectionException {
+        try {
+            System.out.println("deleteSubscriptions");
+            String data = adapter.delete((endpoint + "/subscriptions/" + id));
+            DeletedEntityReturn deleted = (DeletedEntityReturn) JsonUtil.parse(data, DeletedEntityReturn.class);
+            return deleted.getDeleted();
+        } catch (Exception ex) {
+            Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ConnectionException(500, ex.getMessage());
         }
-
-    }
-
-    public void updateSubscription(Subscription subscription) throws ConnectionException {
-        String subscriptionJSON = JsonUtil.toJSON(subscription);
-        adapter.post((endpoint + "/subscriptions/" + subscription.getId()), subscriptionJSON);
-    }
-
-    public void deleteSubscription(String id) throws ConnectionException {
-        adapter.delete((endpoint + "/subscriptions/" + id));
     }
 
 }

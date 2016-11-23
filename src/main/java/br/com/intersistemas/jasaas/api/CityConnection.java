@@ -36,7 +36,7 @@ public class CityConnection extends AbstractConnection{
     
     public List<City> getAll(CityFilter cityFilter,Integer limit, Integer offset) throws ConnectionException {        
         try {
-            String url = "";
+            String url;
             
             if(limit == null) limit = 10;
             if(offset == null) offset = 0;

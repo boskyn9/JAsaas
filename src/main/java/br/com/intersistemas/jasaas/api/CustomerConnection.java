@@ -109,8 +109,9 @@ public class CustomerConnection extends AbstractConnection {
                 Logger.getLogger(CustomerConnection.class.getName()).log(Level.SEVERE, null, ex);
                 throw new ConnectionException(500, ex.getMessage());
             }
-        }
-        return null;
+        }else{
+            throw new ConnectionException(500, "You should not enter the id in the entity to create it.");
+        }        
     }
 
     public Customer updateCustomer(Customer customer) throws ConnectionException {

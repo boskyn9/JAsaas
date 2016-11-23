@@ -10,7 +10,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 import br.com.intersistemas.jasaas.entity.Notification;
+import br.com.intersistemas.jasaas.entity.Payment;
 import br.com.intersistemas.jasaas.entity.meta.ContentNotification;
+import br.com.intersistemas.jasaas.entity.meta.DeletedEntityReturn;
 import br.com.intersistemas.jasaas.entity.meta.MetaNotification;
 import javax.management.NotificationFilter;
 
@@ -97,32 +99,46 @@ public class NotificationConnection extends AbstractConnection {
         
     }
     
-    public void createNotification(Notification notification) throws ConnectionException {
+    public Notification createNotification(Notification notification) throws ConnectionException {
         String notificationJSON = JsonUtil.toJSON(notification);
         if (notification.getId() == null) {
-            adapter.post((endpoint + "/notifications/"), notificationJSON);
-        } else {
-            updateNotification(notification);
+            try {
+                System.out.println("createNotification");
+                String data = adapter.post((endpoint + "/notifications/"), notificationJSON);
+                Notification notificationCreated = (Notification) JsonUtil.parse(data, Notification.class);
+                return notificationCreated;
+            } catch (Exception ex) {
+                Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
+                throw new ConnectionException(500, ex.getMessage());
+            }
+        }else{
+            throw new ConnectionException(500, "You should not enter the id in the entity to create it.");
+        }        
+    }
+
+    public Notification updateNotification(Notification notification) throws ConnectionException {
+        try {
+            System.out.println("updateNotification");
+            String notificationJSON = JsonUtil.toJSON(notification);
+            String data = adapter.post((endpoint + "/notifications/" + notification.getId()), notificationJSON);
+            Notification notificationUpdated = (Notification) JsonUtil.parse(data, Notification.class);
+            return notificationUpdated;
+        } catch (Exception ex) {
+            Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ConnectionException(500, ex.getMessage());
         }
     }
 
-    public void saveOrUpdateNotification(Notification notification) throws ConnectionException {
-        String notificationJSON = JsonUtil.toJSON(notification);
-        if (notification.getId() == null) {
-            adapter.post((endpoint + "/notifications/"), notificationJSON);
-        } else {
-            adapter.post((endpoint + "/notifications/" + notification.getId()), notificationJSON);
+    public boolean deleteNotification(String id) throws ConnectionException {
+        try {
+            System.out.println("deleteNotification");
+            String data = adapter.delete((endpoint + "/notifications/" +  id));
+            DeletedEntityReturn deleted = (DeletedEntityReturn) JsonUtil.parse(data, DeletedEntityReturn.class);
+            return deleted.getDeleted();
+        } catch (Exception ex) {
+            Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ConnectionException(500, ex.getMessage());
         }
-
-    }
-
-    public void updateNotification(Notification notification) throws ConnectionException {
-        String notificationJSON = JsonUtil.toJSON(notification);
-        adapter.post((endpoint + "/notifications/" + notification.getId()), notificationJSON);
-    }
-
-    public void deleteNotification(String id) throws ConnectionException {
-        adapter.delete((endpoint + "/notifications/" +  id));
     }
 
 }
