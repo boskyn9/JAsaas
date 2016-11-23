@@ -169,22 +169,27 @@ List<City> cities = conn.getyId(7637);
 Documentação Oficial
 --------------------
 
-Obs.: Esta é uma API não oficial. Foi feita com base na documentação disponibilizada [neste link](https://docs.google.com/document/d/1XUJRHY_0nd45CzFK5EmjDK92qgaQJGMxT0rjZriTk-g).
+Obs.: Esta é uma API não oficial. Foi feita com base na documentação disponibilizada  [neste link](https://docs.google.com/document/d/1XUJRHY_0nd45CzFK5EmjDK92qgaQJGMxT0rjZriTk-g).
 
 
 Créditos
 --------
-Intersistemas Serviços em Tecnologia - LTDA
-Desenvolvedores:
-João Bosco CM Filho
-Jefferson Willian da C Lucena
-Marcio Davi MM
 
-site: http://intersistemas.com.br/
+
+#### [Intersistemas Serviços em Tecnologia - LTDA](http://intersistemas.com.br/ "Intersistemas Serviços em Tecnologia - LTDA")
+
+
+
+** Desenvolvedores:**
+
+* João Bosco C M Filho
+* Jefferson Willian da C Lucena
+* Marcio Davi M M
+
 
 Licença
 -------
-Copyright [2016] [Intersistemas Serviços em Tecnologia LTDA]
+&copy;Copyright [2016] [Intersistemas Serviços em Tecnologia LTDA]
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
