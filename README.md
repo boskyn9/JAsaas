@@ -180,7 +180,7 @@ Créditos
 
 
 
-** Desenvolvedores:**
+##### Desenvolvedores:
 
 * João Bosco C M Filho
 * Jefferson Willian da C Lucena
