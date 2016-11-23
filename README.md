@@ -175,11 +175,6 @@ Obs.: Esta é uma API não oficial. Foi feita com base na documentação disponi
 Créditos
 --------
 
-
-Suporte
--------
-https://issues.sonatype.org/browse/OSSRH-26410
-
 Licença
 -------
 Copyright [2016] [Intersistemas Serviços em Tecnologia LTDA]
