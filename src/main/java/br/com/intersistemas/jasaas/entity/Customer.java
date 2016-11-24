@@ -5,7 +5,6 @@ import br.com.intersistemas.jasaas.entity.meta.MetaPayment;
 import br.com.intersistemas.jasaas.entity.meta.MetaSubscription;
 import com.google.gson.annotations.Expose;
 import java.util.Date;
-import java.util.List;
 
 /**
  *
@@ -21,6 +20,7 @@ public final class Customer {
 
     @Expose private String name;
     @Expose private String email;
+    @Expose private String additionalEmails;
     @Expose private String company;
     @Expose private String phone;
     @Expose private String mobilePhone;
@@ -37,6 +37,8 @@ public final class Customer {
     @Expose private String cpfCnpj;
     @Expose private String personType;
     @Expose private String externalReference;
+    @Expose(serialize = false)
+    private Boolean deleted;
 
     @Expose private MetaSubscription subscriptions;
     @Expose private MetaPayment payments;
@@ -391,9 +393,17 @@ public final class Customer {
         this.externalReference = externalReference;
     }
 
+    public String getAdditionalEmails() {
+        return additionalEmails;
+    }
+
+    public void setAdditionalEmails(String additionalEmails) {
+        this.additionalEmails = additionalEmails;
+    }
+
     @Override
     public String toString() {
-        return "Customer{" + "id=" + id + ", name=" + name + ", email=" + email + ", company=" + company + ", phone=" + phone + ", mobilePhone=" + mobilePhone + ", address=" + address + ", addressNumber=" + addressNumber + ", complement=" + complement + ", province=" + province + ", foreignCustomer=" + foreignCustomer + ", notificationDisabled=" + notificationDisabled + ", city=" + city + ", state=" + state + ", country=" + country + ", postalCode=" + postalCode + ", cpfCnpj=" + cpfCnpj + ", personType=" + personType + ", subscriptions=" + subscriptions + ", payments=" + payments + ", notifications=" + notifications + '}';
+        return "Customer{" + "id=" + id + ", name=" + name + ", email=" + email + ", additionalEmails=" + additionalEmails + ", company=" + company + ", phone=" + phone + ", mobilePhone=" + mobilePhone + ", address=" + address + ", addressNumber=" + addressNumber + ", complement=" + complement + ", province=" + province + ", foreignCustomer=" + foreignCustomer + ", notificationDisabled=" + notificationDisabled + ", city=" + city + ", state=" + state + ", country=" + country + ", postalCode=" + postalCode + ", cpfCnpj=" + cpfCnpj + ", personType=" + personType + ", externalReference=" + externalReference + ", subscriptions=" + subscriptions + ", payments=" + payments + ", notifications=" + notifications + ", dateCreated=" + dateCreated + '}';
     }
 
 }

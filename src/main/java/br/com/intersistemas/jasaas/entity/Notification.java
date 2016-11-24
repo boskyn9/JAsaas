@@ -187,4 +187,9 @@ public final class Notification {
         this.deleted = deleted;
     }
 
+    @Override
+    public String toString() {
+        return "Notification{" + "id=" + id + ", customer=" + customer + ", enabled=" + enabled + ", emailEnabledForProvider=" + emailEnabledForProvider + ", smsEnabledForProvider=" + smsEnabledForProvider + ", emailEnabledForCustomer=" + emailEnabledForCustomer + ", smsEnabledForCustomer=" + smsEnabledForCustomer + ", event=" + event + ", scheduleOffset=" + scheduleOffset + ", deleted=" + deleted + '}';
+    }
+
 }

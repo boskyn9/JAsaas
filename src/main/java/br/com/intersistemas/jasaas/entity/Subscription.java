@@ -28,40 +28,40 @@ public final class Subscription {
     public static String WEEKLY = "WEEKLY";
     public static String BIWEEKLY = "BIWEEKLY";
     
-    @Expose  private String id;
-    @Expose  private String customer;
-    @Expose  private BigDecimal value;
-    @Expose  private BigDecimal grossValue;
-    @Expose  private Date nextDueDate;
-    @Expose  private String cycle;
-    @Expose  private String billingType;
-    @Expose  private String description;
-    @Expose  private Boolean updatePendingPayments;
-    @Expose  private String status;
-    @Expose  private List<MetaPayment> payments = new ArrayList<>();
-    @Expose  private Integer maxPayments;
-    @Expose  private Date endDate;
+    @Expose private String id;
+    @Expose private String customer;
+    @Expose private BigDecimal value;
+    @Expose private BigDecimal grossValue;
+    @Expose private Date nextDueDate;
+    @Expose private String cycle;
+    @Expose private String billingType;
+    @Expose private String description;
+    @Expose private Boolean updatePendingPayments;
+    @Expose private String status;
+    @Expose private List<MetaPayment> payments = new ArrayList<>();
+    @Expose private Integer maxPayments;
+    @Expose private Date endDate;
 
     // É necessário informar os atributos abaixo somente caso você queira que o processamento via cartão de crédito ocorra no momento da criação da assinatura
-    @Expose  private String creditCardHolderName;
-    @Expose  private String creditCardNumber;
-    @Expose  private String creditCardExpiryMonth;
-    @Expose  private String creditCardExpiryYear;
-    @Expose  private String creditCardCcv;
-    @Expose  private String creditCardHolderFullName;
-    @Expose  private String creditCardHolderEmail;
-    @Expose  private String creditCardHolderCpfCnpj;
-    @Expose  private String creditCardHolderAddress;
-    @Expose  private String creditCardHolderAddressNumber;
-    @Expose  private String creditCardHolderAddressComplement;
-    @Expose  private String creditCardHolderProvince;
-    @Expose  private String creditCardHolderCity;
-    @Expose  private String creditCardHolderUf;
-    @Expose  private String creditCardHolderPostalCode;
-    @Expose  private String creditCardHolderPhone;
-    @Expose  private String creditCardHolderPhoneDDD;
-    @Expose  private String creditCardHolderMobilePhone;
-    @Expose  private String creditCardHolderMobilePhoneDDD;
+    @Expose private String creditCardHolderName;
+    @Expose private String creditCardNumber;
+    @Expose private String creditCardExpiryMonth;
+    @Expose private String creditCardExpiryYear;
+    @Expose private String creditCardCcv;
+    @Expose private String creditCardHolderFullName;
+    @Expose private String creditCardHolderEmail;
+    @Expose private String creditCardHolderCpfCnpj;
+    @Expose private String creditCardHolderAddress;
+    @Expose private String creditCardHolderAddressNumber;
+    @Expose private String creditCardHolderAddressComplement;
+    @Expose private String creditCardHolderProvince;
+    @Expose private String creditCardHolderCity;
+    @Expose private String creditCardHolderUf;
+    @Expose private String creditCardHolderPostalCode;
+    @Expose private String creditCardHolderPhone;
+    @Expose private String creditCardHolderPhoneDDD;
+    @Expose private String creditCardHolderMobilePhone;
+    @Expose private String creditCardHolderMobilePhoneDDD;
 
     /**
      *
@@ -566,5 +566,9 @@ public final class Subscription {
     public void setStatus(String status) {
         this.status = status;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Subscription{" + "id=" + id + ", customer=" + customer + ", value=" + value + ", grossValue=" + grossValue + ", nextDueDate=" + nextDueDate + ", cycle=" + cycle + ", billingType=" + billingType + ", description=" + description + ", updatePendingPayments=" + updatePendingPayments + ", status=" + status + ", payments=" + payments + ", maxPayments=" + maxPayments + ", endDate=" + endDate + ", creditCardHolderName=" + creditCardHolderName + ", creditCardNumber=" + creditCardNumber + ", creditCardExpiryMonth=" + creditCardExpiryMonth + ", creditCardExpiryYear=" + creditCardExpiryYear + ", creditCardCcv=" + creditCardCcv + ", creditCardHolderFullName=" + creditCardHolderFullName + ", creditCardHolderEmail=" + creditCardHolderEmail + ", creditCardHolderCpfCnpj=" + creditCardHolderCpfCnpj + ", creditCardHolderAddress=" + creditCardHolderAddress + ", creditCardHolderAddressNumber=" + creditCardHolderAddressNumber + ", creditCardHolderAddressComplement=" + creditCardHolderAddressComplement + ", creditCardHolderProvince=" + creditCardHolderProvince + ", creditCardHolderCity=" + creditCardHolderCity + ", creditCardHolderUf=" + creditCardHolderUf + ", creditCardHolderPostalCode=" + creditCardHolderPostalCode + ", creditCardHolderPhone=" + creditCardHolderPhone + ", creditCardHolderPhoneDDD=" + creditCardHolderPhoneDDD + ", creditCardHolderMobilePhone=" + creditCardHolderMobilePhone + ", creditCardHolderMobilePhoneDDD=" + creditCardHolderMobilePhoneDDD + '}';
+    }
 }
