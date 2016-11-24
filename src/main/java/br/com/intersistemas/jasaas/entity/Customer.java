@@ -1,5 +1,8 @@
 package br.com.intersistemas.jasaas.entity;
 
+import br.com.intersistemas.jasaas.entity.meta.MetaNotification;
+import br.com.intersistemas.jasaas.entity.meta.MetaPayment;
+import br.com.intersistemas.jasaas.entity.meta.MetaSubscription;
 import com.google.gson.annotations.Expose;
 import java.util.Date;
 import java.util.List;
@@ -35,9 +38,9 @@ public final class Customer {
     @Expose private String personType;
     @Expose private String externalReference;
 
-    private List<Subscription> subscriptions;
-    private List<Payment> payments;
-    private List<Notification> notifications;
+    @Expose private MetaSubscription subscriptions;
+    @Expose private MetaPayment payments;
+    @Expose private MetaNotification notifications;
 
     @Expose(serialize = false)
     private Date dateCreated;
@@ -324,49 +327,49 @@ public final class Customer {
 
     /**
      * @return subscriptions Lista de assinaturas do cliente, caso exista.
-     * Verificar objeto “subscription”.
+     * Verificar objeto Meta “subscription”.
      */
-    public List<Subscription> getSubscriptions() {
+    public MetaSubscription getSubscriptions() {
         return subscriptions;
     }
 
     /**
      * @param subscriptions Lista de assinaturas do cliente, caso exista.
-     * Verificar objeto “subscription”.
+     * Verificar objeto Meta “subscription”.
      */
-    public void setSubscriptions(List<Subscription> subscriptions) {
+    public void setSubscriptions(MetaSubscription subscriptions) {
         this.subscriptions = subscriptions;
     }
 
     /**
      * @return payments Lista de cobranças do cliente, caso exista. Verificar
-     * objeto “payment”
+     * objeto Meta “payment”
      */
-    public List<Payment> getPayments() {
+    public MetaPayment getPayments() {
         return payments;
     }
 
     /**
      * @param payments Lista de cobranças do cliente, caso exista. Verificar
-     * objeto “payment”
+     * objeto Meta “payment”
      */
-    public void setPayments(List<Payment> payments) {
+    public void setPayments(MetaPayment payments) {
         this.payments = payments;
     }
 
     /**
      * @return notifications Lista de notificações do cliente, caso exista.
-     * Verificar objeto “notification”
+     * Verificar objeto Meta “notification”
      */
-    public List<Notification> getNotifications() {
+    public MetaNotification getNotifications() {
         return notifications;
     }
 
     /**
      * @param notifications Lista de notificações do cliente, caso exista.
-     * Verificar objeto “notification”
+     * Verificar objeto Meta “notification”
      */
-    public void setNotifications(List<Notification> notifications) {
+    public void setNotifications(MetaNotification notifications) {
         this.notifications = notifications;
     }
 

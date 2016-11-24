@@ -1,5 +1,6 @@
 package br.com.intersistemas.jasaas.entity;
 
+import br.com.intersistemas.jasaas.entity.meta.MetaPayment;
 import com.google.gson.annotations.Expose;
 
 import java.math.BigDecimal;
@@ -36,7 +37,8 @@ public final class Subscription {
     @Expose  private String billingType;
     @Expose  private String description;
     @Expose  private Boolean updatePendingPayments;
-    @Expose  private List<Payment> payments = new ArrayList<>();
+    @Expose  private String status;
+    @Expose  private List<MetaPayment> payments = new ArrayList<>();
     @Expose  private Integer maxPayments;
     @Expose  private Date endDate;
 
@@ -199,17 +201,17 @@ public final class Subscription {
 
     /**
      *
-     * @return Status da assinatura. Valores válidos: ACTIVE, INACTIVE
+     * @return Lista de cobranças da assinatura
      */
-    public List<Payment> getPayments() {
+    public List<MetaPayment> getPayments() {
         return payments;
     }
 
     /**
      *
-     * @param payments Status da assinatura. Valores válidos: ACTIVE, INACTIVE
+     * @param payments Lista de cobranças da assinatura
      */
-    public void setPayments(List<Payment> payments) {
+    public void setPayments(List<MetaPayment> payments) {
         this.payments = payments;
     }
 
@@ -548,4 +550,21 @@ public final class Subscription {
     public void setCreditCardHolderMobilePhoneDDD(String creditCardHolderMobilePhoneDDD) {
         this.creditCardHolderMobilePhoneDDD = creditCardHolderMobilePhoneDDD;
     }
+
+    /**
+     * 
+     * @return Status da assinatura. Valores válidos: ACTIVE, INACTIVE
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * 
+     * @param status Status da assinatura. Valores válidos: ACTIVE, INACTIVE
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
 }
