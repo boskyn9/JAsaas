@@ -20,4 +20,9 @@ public class ContentCustomer {
         this.customer = customer;
     }
 
+    @Override
+    public String toString() {
+        return "ContentCustomer{" + "customer=" + customer + '}';
+    }
+  
 }

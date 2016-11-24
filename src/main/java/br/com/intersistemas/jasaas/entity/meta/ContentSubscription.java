@@ -19,4 +19,8 @@ public class ContentSubscription {
         this.subscription = subscription;
     }
 
+    @Override
+    public String toString() {
+        return "ContentSubscription{" + "subscription=" + subscription + '}';
+    }
 }

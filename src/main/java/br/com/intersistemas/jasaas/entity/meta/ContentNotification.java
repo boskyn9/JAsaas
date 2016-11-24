@@ -19,4 +19,8 @@ public class ContentNotification {
         this.notification = notification;
     }
 
+    @Override
+    public String toString() {
+        return "ContentNotification{" + "notification=" + notification + '}';
+    }
 }

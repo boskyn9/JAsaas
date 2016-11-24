@@ -19,5 +19,8 @@ public class ContentPayment {
         this.payment = payment;
     }
 
-        
+    @Override
+    public String toString() {
+        return "ContentPayment{" + "payment=" + payment + '}';
+    }
 }

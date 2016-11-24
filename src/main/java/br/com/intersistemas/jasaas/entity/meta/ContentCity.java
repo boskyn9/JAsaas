@@ -19,4 +19,8 @@ public class ContentCity {
         this.city = city;
     }
 
+    @Override
+    public String toString() {
+        return "ContentCity{" + "city=" + city + '}';
+    }
 }
