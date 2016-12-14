@@ -1,20 +1,15 @@
 package br.com.intersistemas.jasaas.api;
 
-
 import br.com.intersistemas.jasaas.exception.ConnectionException;
-import br.com.intersistemas.jasaas.util.HttpParamsUtil;
 import br.com.intersistemas.jasaas.util.JsonUtil;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 import br.com.intersistemas.jasaas.entity.Notification;
-import br.com.intersistemas.jasaas.entity.Payment;
-import br.com.intersistemas.jasaas.entity.meta.ContentNotification;
-import br.com.intersistemas.jasaas.entity.meta.DeletedEntityReturn;
 import br.com.intersistemas.jasaas.entity.meta.MetaNotification;
-import javax.management.NotificationFilter;
+import br.com.intersistemas.jasaas.entity.meta.DeletedEntityReturn;
+import java.util.Arrays;
 
 /**
  *
@@ -30,17 +25,14 @@ public class NotificationConnection extends AbstractConnection {
     }
 
     public List<Notification> getAll() throws ConnectionException {
-        return getAll(null, null, null);
+        return getAll(null, null);
     }
 
-    public List<Notification> getAll(NotificationFilter notificationFilter) throws ConnectionException {
-        return getAll(notificationFilter, null, null);
-    }
-
-    public List<Notification> getAll(NotificationFilter notificationFilter, Integer limit, Integer offset) throws ConnectionException {
+//    public List<Notification> getAll(NotificationFilter notificationFilter) throws ConnectionException {
+//        return getAll(notificationFilter, null, null);
+//    }
+    public List<Notification> getAll(Integer limit, Integer offset) throws ConnectionException {
         try {
-            String url;
-
             if (limit == null) {
                 limit = 10;
             }
@@ -48,12 +40,12 @@ public class NotificationConnection extends AbstractConnection {
                 offset = 0;
             }
 
-            String params = HttpParamsUtil.parse(notificationFilter);
-            if (params != null) {
-                url = (endpoint + "/notifications" + params + "&limit=" + limit + "&offset="+ offset);
-            } else {
-                url = (endpoint + "/notifications" + "?limit=" + limit + "&offset=" + offset);
-            }
+            //String params = HttpParamsUtil.parse(notificationFilter);
+//            if (params != null) {
+//                url = (endpoint + "/notifications" + params + "&limit=" + limit + "&offset=" + offset);
+//            } else {
+//            }
+            String url = (endpoint + "/notifications" + "?limit=" + limit + "&offset=" + offset);
 
             lastResponseJson = adapter.get(url);
 
@@ -63,13 +55,8 @@ public class NotificationConnection extends AbstractConnection {
             setLimit(meta.getLimit());
             setOffset(meta.getOffset());
 
-            ContentNotification[] contentList = meta.getData();
-            List<Notification> notifications = new ArrayList<>();
-            for (ContentNotification content : contentList) {
-                notifications.add(content.getNotification());
-            }
-            return notifications;
-        } catch (IllegalArgumentException | ClassNotFoundException | IllegalAccessException ex) {
+            return Arrays.asList(meta.getData());
+        } catch (IllegalArgumentException ex) {
             Logger.getLogger(NotificationConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -82,23 +69,17 @@ public class NotificationConnection extends AbstractConnection {
     }
 
     public List<Notification> getByCustomer(String customer_id) throws ConnectionException {
-        lastResponseJson = adapter.get((endpoint + "/customers/"  +customer_id  + "/notifications"));
-            
+        lastResponseJson = adapter.get((endpoint + "/customers/" + customer_id + "/notifications"));
+
         MetaNotification meta = (MetaNotification) JsonUtil.parse(lastResponseJson, MetaNotification.class);
 
         setHasMore(meta.getHasMore());
         setLimit(meta.getLimit());
         setOffset(meta.getOffset());
 
-        ContentNotification[] contentList = meta.getData();
-        List<Notification> notifications = new ArrayList<>();
-        for (ContentNotification content : contentList) {
-            notifications.add(content.getNotification());
-        }
-        return notifications;
-        
+        return Arrays.asList(meta.getData());
     }
-    
+
     public Notification createNotification(Notification notification) throws ConnectionException {
         String notificationJSON = JsonUtil.toJSON(notification);
         if (notification.getId() == null) {
@@ -108,12 +89,12 @@ public class NotificationConnection extends AbstractConnection {
                 Notification notificationCreated = (Notification) JsonUtil.parse(data, Notification.class);
                 return notificationCreated;
             } catch (Exception ex) {
-                Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(NotificationConnection.class.getName()).log(Level.SEVERE, null, ex);
                 throw new ConnectionException(500, ex.getMessage());
             }
-        }else{
+        } else {
             throw new ConnectionException(500, "You should not enter the id in the entity to create it.");
-        }        
+        }
     }
 
     public Notification updateNotification(Notification notification) throws ConnectionException {
@@ -124,7 +105,7 @@ public class NotificationConnection extends AbstractConnection {
             Notification notificationUpdated = (Notification) JsonUtil.parse(data, Notification.class);
             return notificationUpdated;
         } catch (Exception ex) {
-            Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificationConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());
         }
     }
@@ -132,11 +113,11 @@ public class NotificationConnection extends AbstractConnection {
     public boolean deleteNotification(String id) throws ConnectionException {
         try {
             System.out.println("deleteNotification");
-            String data = adapter.delete((endpoint + "/notifications/" +  id));
+            String data = adapter.delete((endpoint + "/notifications/" + id));
             DeletedEntityReturn deleted = (DeletedEntityReturn) JsonUtil.parse(data, DeletedEntityReturn.class);
             return deleted.getDeleted();
         } catch (Exception ex) {
-            Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificationConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());
         }
     }

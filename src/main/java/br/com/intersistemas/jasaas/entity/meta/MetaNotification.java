@@ -1,5 +1,6 @@
 package br.com.intersistemas.jasaas.entity.meta;
 
+import br.com.intersistemas.jasaas.entity.Notification;
 import com.google.gson.annotations.Expose;
 
 /**
@@ -12,7 +13,7 @@ public class MetaNotification {
     @Expose private Integer offset;
     @Expose private Boolean hasMore;
 
-    @Expose private ContentNotification[] data;
+    @Expose private Notification[] data;
 
     public Integer getLimit() {
         return limit;
@@ -38,11 +39,11 @@ public class MetaNotification {
         this.hasMore = hasMore;
     }
 
-    public ContentNotification[] getData() {
+    public Notification[] getData() {
         return data;
     }
 
-    public void setData(ContentNotification[] data) {
+    public void setData(Notification[] data) {
         this.data = data;
     }
 

@@ -673,22 +673,22 @@ public final class Payment {
     }
 
     public void validate() {
-        System.out.println("VALIDACAO DO PAYMENT ANTES DO ENVIO");
+        //System.out.println("VALIDACAO DO PAYMENT ANTES DO ENVIO");
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        System.out.println("dueDate: " + dueDate);
-        System.out.println("dueDate: " + dueDate.getTime());
-        System.out.println("calendar.getTime(): " + calendar.getTime());
-        System.out.println("calendar.getTime(): " + calendar.getTime().getTime());
+//        System.out.println("dueDate: " + dueDate);
+//        System.out.println("dueDate: " + dueDate.getTime());
+//        System.out.println("calendar.getTime(): " + calendar.getTime());
+//        System.out.println("calendar.getTime(): " + calendar.getTime().getTime());
         if (dueDate.before(calendar.getTime())) {
             throw new PaymentException(500, "Data de vencimento inválida. A data de vencimento deve ser maior ou igual a hoje. Data informada: " + dueDate);
         }
 
         if (description.length() > 255) {
-            System.out.println("description: " + description);
+            //System.out.println("description: " + description);
             throw new PaymentException(500, "O campo descrição possui limite de 255 caracteres. Tamanho informado: " + description.length());
         }
     }

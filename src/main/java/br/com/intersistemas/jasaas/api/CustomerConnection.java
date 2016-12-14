@@ -53,9 +53,9 @@ public class CustomerConnection extends AbstractConnection {
                 url = (endpoint + "/customers" + "?limit=" + limit + "&offset=" + offset);
             }
 
-            System.out.println(url);
+            //System.out.println(url);
             lastResponseJson = adapter.get(url);
-            System.out.println(lastResponseJson);
+            //System.out.println(lastResponseJson);
 
             MetaCustomer meta = (MetaCustomer) JsonUtil.parse(lastResponseJson, MetaCustomer.class);
 
@@ -129,6 +129,7 @@ public class CustomerConnection extends AbstractConnection {
 
     public boolean deleteCustomer(String id) throws ConnectionException {
         try {
+            System.out.println("deleteCustomer");
             String data = adapter.delete((endpoint + "/customers/" + id));
             DeletedEntityReturn deleted = (DeletedEntityReturn) JsonUtil.parse(data, DeletedEntityReturn.class);
             return deleted.getDeleted();

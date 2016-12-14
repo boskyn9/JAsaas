@@ -66,7 +66,7 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             }
             HttpEntity entity = response.getEntity();
             String retorno = EntityUtils.toString(entity);
-            System.out.println(retorno);
+            //System.out.println(retorno);
             return retorno;
         } catch (IOException ex) {
             Logger.getLogger(ApacheHttpClientAdapter.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,8 +81,8 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
     @Override
     public String post(String url, String contentJSON) throws ConnectionException {
         try {
-            System.out.println(url);
-            System.out.println(contentJSON);
+            //System.out.println(url);
+            //System.out.println(contentJSON);
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("access_token", accessToken);
 
@@ -90,10 +90,10 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             httpPost.setEntity(entity);
 
             CloseableHttpResponse response = httpclient.execute(httpPost);
-            System.out.println("CloseableHttpResponse");
-            for (Header allHeader : response.getAllHeaders()) {
-                System.out.println(allHeader.toString());
-            }
+            //System.out.println("CloseableHttpResponse");
+//            for (Header allHeader : response.getAllHeaders()) {
+//                System.out.println(allHeader.toString());
+//            }
             StatusLine status = response.getStatusLine();
             System.out.println("Status: " + status.getStatusCode());
             if (status.getStatusCode() != 200 && status.getStatusCode() != 400) {
@@ -103,8 +103,8 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             
             HttpEntity entidade = response.getEntity();
             String retorno = EntityUtils.toString(entidade);
-            System.out.println("retorno");
-            System.out.println(retorno);
+//            System.out.println("retorno");
+//            System.out.println(retorno);
             return retorno;
         } catch (IOException ex) {
             Logger.getLogger(ApacheHttpClientAdapter.class.getName()).log(Level.SEVERE, null, ex);
