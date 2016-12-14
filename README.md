@@ -176,7 +176,7 @@ Créditos
 --------
 
 
-#### [Intersistemas Serviços em Tecnologia - LTDA](http://intersistemas.com.br/ "Intersistemas Serviços em Tecnologia - LTDA")
+#### [Intersistemas Serviços em Tecnologia LTDA - EPP](http://intersistemas.com.br/ "Intersistemas Serviços em Tecnologia LTDA - EPP")
 
 
 
@@ -189,7 +189,7 @@ Créditos
 
 Licença
 -------
-Copyright &copy; 2016 Intersistemas Serviços em Tecnologia LTDA
+Copyright &copy; 2016 Intersistemas Serviços em Tecnologia LTDA - EPP
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
