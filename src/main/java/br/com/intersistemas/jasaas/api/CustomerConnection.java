@@ -13,6 +13,7 @@ import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 import br.com.intersistemas.jasaas.entity.filter.CustomerFilter;
 import br.com.intersistemas.jasaas.entity.meta.ContentCustomer;
 import br.com.intersistemas.jasaas.entity.meta.DeletedEntityReturn;
+import br.com.intersistemas.jasaas.entity.meta.MetaError;
 
 /**
  *
@@ -104,14 +105,19 @@ public class CustomerConnection extends AbstractConnection {
                 System.out.println("createCustomer");
                 String data = adapter.post((endpoint + "/customers/"), customerJSON);
                 Customer customerCreated = (Customer) JsonUtil.parse(data, Customer.class);
+                if (customerCreated.getId() == null) {
+                    MetaError error = (MetaError) JsonUtil.parse(data, MetaError.class);
+                    //System.out.println(error);
+                    throw new ConnectionException(500, error.toString());
+                }
                 return customerCreated;
             } catch (Exception ex) {
                 Logger.getLogger(CustomerConnection.class.getName()).log(Level.SEVERE, null, ex);
                 throw new ConnectionException(500, ex.getMessage());
             }
-        }else{
+        } else {
             throw new ConnectionException(500, "You should not enter the id in the entity to create it.");
-        }        
+        }
     }
 
     public Customer updateCustomer(Customer customer) throws ConnectionException {
@@ -120,6 +126,11 @@ public class CustomerConnection extends AbstractConnection {
             String customerJSON = JsonUtil.toJSON(customer);
             String data = adapter.post((endpoint + "/customers/" + customer.getId()), customerJSON);
             Customer customerUpdated = (Customer) JsonUtil.parse(data, Customer.class);
+            if (customerUpdated.getId() == null) {
+                MetaError error = (MetaError) JsonUtil.parse(data, MetaError.class);
+                //System.out.println(error);
+                throw new ConnectionException(500, error.toString());
+            }
             return customerUpdated;
         } catch (Exception ex) {
             Logger.getLogger(CustomerConnection.class.getName()).log(Level.SEVERE, null, ex);

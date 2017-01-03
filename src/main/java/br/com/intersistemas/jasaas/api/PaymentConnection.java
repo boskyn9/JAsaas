@@ -10,6 +10,7 @@ import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 import br.com.intersistemas.jasaas.entity.Payment;
 import br.com.intersistemas.jasaas.entity.filter.PaymentFilter;
 import br.com.intersistemas.jasaas.entity.meta.DeletedEntityReturn;
+import br.com.intersistemas.jasaas.entity.meta.MetaError;
 import br.com.intersistemas.jasaas.entity.meta.MetaPayment;
 import java.util.Arrays;
 
@@ -143,15 +144,21 @@ public class PaymentConnection extends AbstractConnection {
                 System.out.println("createPayment");
                 payment.validate();
                 String data = adapter.post((endpoint + "/payments/"), paymentJSON);
+                //System.out.println(data);
                 Payment paymentCreated = (Payment) JsonUtil.parse(data, Payment.class);
+                if (paymentCreated.getId() == null) {
+                    MetaError error = (MetaError) JsonUtil.parse(data, MetaError.class);
+                    //System.out.println(error);
+                    throw new ConnectionException(500, error.toString());
+                }
                 return paymentCreated;
             } catch (Exception ex) {
                 Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
                 throw new ConnectionException(500, ex.getMessage());
             }
-        }else{
+        } else {
             throw new ConnectionException(500, "You should not enter the id in the entity to create it.");
-        }        
+        }
     }
 
     public Payment updatePayment(Payment payment) throws ConnectionException {
@@ -161,6 +168,11 @@ public class PaymentConnection extends AbstractConnection {
             payment.validate();
             String data = adapter.post((endpoint + "/payments/" + payment.getId()), paymentJSON);
             Payment paymentUpdated = (Payment) JsonUtil.parse(data, Payment.class);
+            if (paymentUpdated.getId() == null) {
+                MetaError error = (MetaError) JsonUtil.parse(data, MetaError.class);
+                //System.out.println(error);
+                throw new ConnectionException(500, error.toString());
+            }
             return paymentUpdated;
         } catch (Exception ex) {
             Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
