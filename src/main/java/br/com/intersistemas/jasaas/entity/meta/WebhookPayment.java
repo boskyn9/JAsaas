@@ -6,6 +6,7 @@
 package br.com.intersistemas.jasaas.entity.meta;
 
 import br.com.intersistemas.jasaas.entity.Payment;
+import br.com.intersistemas.jasaas.util.PaymentEvent;
 import com.google.gson.annotations.Expose;
 
 /**
@@ -14,24 +15,16 @@ import com.google.gson.annotations.Expose;
  */
 public class WebhookPayment {
 
-    public static final String PAYMENT_CREATED = "PAYMENT_CREATED"; //"Geração de nova cobrança"
-    public static final String PAYMENT_UPDATED = "PAYMENT_UPDATED"; //"Alteração no vencimento ou valor de cobrança existente."
-    public static final String PAYMENT_CONFIRMED = "PAYMENT_CONFIRMED"; //"Cobrança autorizada pela adquirente (somente cartão de crédito)"
-    public static final String PAYMENT_RECEIVED = "PAYMENT_RECEIVED"; //"Cobrança recebida."
-    public static final String PAYMENT_OVERDUE = "PAYMENT_OVERDUE"; //"Cobrança vencida"
-    public static final String PAYMENT_DELETED = "PAYMENT_DELETED"; //"Cobrança removida"
-    public static final String PAYMENT_REFUNDED = "PAYMENT_REFUNDED"; //"Cobrança estornada (somente cartão de crédito)"
-
     @Expose
-    private String event;
+    private PaymentEvent event;
     @Expose
     private Payment payment;
 
-    public String getEvent() {
+    public PaymentEvent getEvent() {
         return event;
     }
 
-    public void setEvent(String event) {
+    public void setEvent(PaymentEvent event) {
         this.event = event;
     }
 

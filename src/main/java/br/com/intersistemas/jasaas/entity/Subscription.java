@@ -1,67 +1,60 @@
 package br.com.intersistemas.jasaas.entity;
 
-import br.com.intersistemas.jasaas.entity.meta.MetaPayment;
+import br.com.intersistemas.jasaas.util.BillingType;
+import br.com.intersistemas.jasaas.util.Ciclo;
+import br.com.intersistemas.jasaas.util.SubscriptionStatus;
 import com.google.gson.annotations.Expose;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  *
  * @author bosco
  */
 public final class Subscription {
-    
-    public static String BILLINGTYPE_BOLETO = "BOLETO";
-    public static String BILLINGTYPE_CREDIT_CARD = "CREDIT_CARD";
-    public static String BILLINGTYPE_UNDEFINED  = "UNDEFINED ";
-    
-    public static String STATUS_ACTIVE  = "ACTIVE";
-    public static String STATUS_INACTIVE  = "INACTIVE";
 
-    public static String MONTHLY = "MONTHLY";
-    public static String QUARTERLY = "QUARTERLY";
-    public static String SEMIANNUALLY = "SEMIANNUALLY";
-    public static String YEARLY = "YEARLY";
-    public static String WEEKLY = "WEEKLY";
-    public static String BIWEEKLY = "BIWEEKLY";
-    
-    @Expose private String id;
-    @Expose private String customer;
-    @Expose private BigDecimal value;
-    @Expose private BigDecimal grossValue;
-    @Expose private Date nextDueDate;
-    @Expose private String cycle;
-    @Expose private String billingType;
-    @Expose private String description;
-    @Expose private Boolean updatePendingPayments;
-    @Expose private String status;
-    @Expose private List<MetaPayment> payments = new ArrayList<>();
-    @Expose private Integer maxPayments;
-    @Expose private Date endDate;
+    @Expose
+    private String id;
+    @Expose
+    private String customer;
+    @Expose
+    private BillingType billingType;
+    @Expose
+    private BigDecimal value;
+    @Expose
+    private Date nextDueDate;
+    @Expose
+    private Discount discount;
+    @Expose
+    private Interest interest;
+    @Expose
+    private Fine fine;
+    @Expose
+    private Ciclo cycle;
+    @Expose
+    private String description;
+    @Expose
+    private Date endDate;
+    @Expose
+    private Integer maxPayments;
 
-    // É necessário informar os atributos abaixo somente caso você queira que o processamento via cartão de crédito ocorra no momento da criação da assinatura
-    @Expose private String creditCardHolderName;
-    @Expose private String creditCardNumber;
-    @Expose private String creditCardExpiryMonth;
-    @Expose private String creditCardExpiryYear;
-    @Expose private String creditCardCcv;
-    @Expose private String creditCardHolderFullName;
-    @Expose private String creditCardHolderEmail;
-    @Expose private String creditCardHolderCpfCnpj;
-    @Expose private String creditCardHolderAddress;
-    @Expose private String creditCardHolderAddressNumber;
-    @Expose private String creditCardHolderAddressComplement;
-    @Expose private String creditCardHolderProvince;
-    @Expose private String creditCardHolderCity;
-    @Expose private String creditCardHolderUf;
-    @Expose private String creditCardHolderPostalCode;
-    @Expose private String creditCardHolderPhone;
-    @Expose private String creditCardHolderPhoneDDD;
-    @Expose private String creditCardHolderMobilePhone;
-    @Expose private String creditCardHolderMobilePhoneDDD;
+    @Expose(serialize = false)
+    private Date dateCreated;
+    @Expose(serialize = false)
+    private SubscriptionStatus status;
+
+    @Expose
+    private Boolean updatePendingPayments;
+
+//    @Expose
+//    private List<MetaPayment> payments = new ArrayList<>();
+    @Expose
+    private CreditCard creditCard;
+    @Expose
+    private CreditCardHolderInfo creditCardHolderInfo;
+    @Expose
+    private String remoteIp;
 
     /**
      *
@@ -105,22 +98,6 @@ public final class Subscription {
 
     /**
      *
-     * @return Valor bruto da assinatura. É válido somente se a opção de utilização do valor bruto esteja habilitada.
-     */
-    public BigDecimal getGrossValue() {
-        return grossValue;
-    }
-
-    /**
-     *
-     * @param grossValue Valor bruto da assinatura. É válido somente se a opção de utilização do valor bruto esteja habilitada.
-     */
-    public void setGrossValue(BigDecimal grossValue) {
-        this.grossValue = grossValue;
-    }
-
-    /**
-     *
      * @return Data de vencimento da próxima cobrança
      */
     public Date getNextDueDate() {
@@ -139,7 +116,7 @@ public final class Subscription {
      *
      * @return Intervalo de cobrança. Verificar tabela de intervalos.
      */
-    public String getCycle() {
+    public Ciclo getCycle() {
         return cycle;
     }
 
@@ -147,23 +124,23 @@ public final class Subscription {
      *
      * @param cycle Intervalo de cobrança. Verificar tabela de intervalos.
      */
-    public void setCycle(String cycle) {
+    public void setCycle(Ciclo cycle) {
         this.cycle = cycle;
     }
 
     /**
      *
-     * @return Forma de pagamento.. Valores válidos: BOLETO, CREDIT_CARD, UNDEFINED (Pergunte ao cliente)
+     * @return Forma de pagamento.
      */
-    public String getBillingType() {
+    public BillingType getBillingType() {
         return billingType;
     }
 
     /**
      *
-     * @param billingType Forma de pagamento.. Valores válidos: BOLETO, CREDIT_CARD, UNDEFINED (Pergunte ao cliente)
+     * @param billingType Forma de pagamento.
      */
-    public void setBillingType(String billingType) {
+    public void setBillingType(BillingType billingType) {
         this.billingType = billingType;
     }
 
@@ -185,7 +162,8 @@ public final class Subscription {
 
     /**
      *
-     * @return Somente para atualização. Caso true, atualiza as cobranças pendentes da assinatura como o novo valor e/ou forma de pagamento
+     * @return Somente para atualização. Caso true, atualiza as cobranças
+     * pendentes da assinatura como o novo valor e/ou forma de pagamento
      */
     public Boolean getUpdatePendingPayments() {
         return updatePendingPayments;
@@ -193,26 +171,12 @@ public final class Subscription {
 
     /**
      *
-     * @param updatePendingPayments Somente para atualização. Caso true, atualiza as cobranças pendentes da assinatura como o novo valor e/ou forma de pagamento
+     * @param updatePendingPayments Somente para atualização. Caso true,
+     * atualiza as cobranças pendentes da assinatura como o novo valor e/ou
+     * forma de pagamento
      */
     public void setUpdatePendingPayments(Boolean updatePendingPayments) {
         this.updatePendingPayments = updatePendingPayments;
-    }
-
-    /**
-     *
-     * @return Lista de cobranças da assinatura
-     */
-    public List<MetaPayment> getPayments() {
-        return payments;
-    }
-
-    /**
-     *
-     * @param payments Lista de cobranças da assinatura
-     */
-    public void setPayments(List<MetaPayment> payments) {
-        this.payments = payments;
     }
 
     /**
@@ -249,326 +213,78 @@ public final class Subscription {
 
     /**
      *
-     * @return Data limite da assinatura
-     */
-    public String getCreditCardHolderName() {
-        return creditCardHolderName;
-    }
-
-    /**
-     *
-     * @param creditCardHolderName Data limite da assinatura
-     */
-    public void setCreditCardHolderName(String creditCardHolderName) {
-        this.creditCardHolderName = creditCardHolderName;
-    }
-
-    /**
-     *
-     * @return Nome impresso no cartão de crédito
-     */
-    public String getCreditCardNumber() {
-        return creditCardNumber;
-    }
-
-    /**
-     *
-     * @param creditCardNumber Nome impresso no cartão de crédito
-     */
-    public void setCreditCardNumber(String creditCardNumber) {
-        this.creditCardNumber = creditCardNumber;
-    }
-
-    /**
-     *
-     * @return Número do cartão de crédito
-     */
-    public String getCreditCardExpiryMonth() {
-        return creditCardExpiryMonth;
-    }
-
-    /**
-     *
-     * @param creditCardExpiryMonth Número do cartão de crédito
-     */
-    public void setCreditCardExpiryMonth(String creditCardExpiryMonth) {
-        this.creditCardExpiryMonth = creditCardExpiryMonth;
-    }
-
-    /**
-     *
-     * @return Mês de vencimento do cartão (01, 02, 03,..., 12)
-     */
-    public String getCreditCardExpiryYear() {
-        return creditCardExpiryYear;
-    }
-
-    /**
-     *
-     * @param creditCardExpiryYear Mês de vencimento do cartão (01, 02, 03,..., 12)
-     */
-    public void setCreditCardExpiryYear(String creditCardExpiryYear) {
-        this.creditCardExpiryYear = creditCardExpiryYear;
-    }
-
-    /**
-     *
-     * @return Ano de vencimento do cartão, com 2 dígitos (14, 15, 16, ...)
-     */
-    public String getCreditCardCcv() {
-        return creditCardCcv;
-    }
-
-    /**
-     *
-     * @param creditCardCcv Ano de vencimento do cartão, com 2 dígitos (14, 15, 16, ...)
-     */
-    public void setCreditCardCcv(String creditCardCcv) {
-        this.creditCardCcv = creditCardCcv;
-    }
-
-    /**
-     *
-     * @return Código de segurança do cartão de crédito
-     */
-    public String getCreditCardHolderFullName() {
-        return creditCardHolderFullName;
-    }
-
-    /**
-     *
-     * @param creditCardHolderFullName Código de segurança do cartão de crédito
-     */
-    public void setCreditCardHolderFullName(String creditCardHolderFullName) {
-        this.creditCardHolderFullName = creditCardHolderFullName;
-    }
-
-    /**
-     *
-     * @return Nome completo do dono do cartão de crédito
-     */
-    public String getCreditCardHolderEmail() {
-        return creditCardHolderEmail;
-    }
-
-    /**
-     *
-     * @param creditCardHolderEmail Nome completo do dono do cartão de crédito
-     */
-    public void setCreditCardHolderEmail(String creditCardHolderEmail) {
-        this.creditCardHolderEmail = creditCardHolderEmail;
-    }
-
-    /**
-     *
-     * @return E-mail do dono do cartão de crédito
-     */
-    public String getCreditCardHolderCpfCnpj() {
-        return creditCardHolderCpfCnpj;
-    }
-
-    /**
-     *
-     * @param creditCardHolderCpfCnpj E-mail do dono do cartão de crédito
-     */
-    public void setCreditCardHolderCpfCnpj(String creditCardHolderCpfCnpj) {
-        this.creditCardHolderCpfCnpj = creditCardHolderCpfCnpj;
-    }
-
-    /**
-     *
-     * @return CPF ou CNPJ do dono do cartão de crédito
-     */
-    public String getCreditCardHolderAddress() {
-        return creditCardHolderAddress;
-    }
-
-    /**
-     *
-     * @param creditCardHolderAddress CPF ou CNPJ do dono do cartão de crédito
-     */
-    public void setCreditCardHolderAddress(String creditCardHolderAddress) {
-        this.creditCardHolderAddress = creditCardHolderAddress;
-    }
-
-    /**
-     *
-     * @return Endereço do dono do cartão de crédito (Ex.: Rua, Av.)
-     */
-    public String getCreditCardHolderAddressNumber() {
-        return creditCardHolderAddressNumber;
-    }
-
-    /**
-     *
-     * @param creditCardHolderAddressNumber Endereço do dono do cartão de crédito (Ex.: Rua, Av.)
-     */
-    public void setCreditCardHolderAddressNumber(String creditCardHolderAddressNumber) {
-        this.creditCardHolderAddressNumber = creditCardHolderAddressNumber;
-    }
-
-    /**
-     *
-     * @return Número do endereço do dono do cartão de crédito
-     */
-    public String getCreditCardHolderAddressComplement() {
-        return creditCardHolderAddressComplement;
-    }
-
-    /**
-     *
-     * @param creditCardHolderAddressComplement Número do endereço do dono do cartão de crédito
-     */
-    public void setCreditCardHolderAddressComplement(String creditCardHolderAddressComplement) {
-        this.creditCardHolderAddressComplement = creditCardHolderAddressComplement;
-    }
-
-    /**
-     *
-     * @return Complemento do endereço do dono do cartão de crédito
-     */
-    public String getCreditCardHolderProvince() {
-        return creditCardHolderProvince;
-    }
-
-    /**
-     *
-     * @param creditCardHolderProvince Complemento do endereço do dono do cartão de crédito
-     */
-    public void setCreditCardHolderProvince(String creditCardHolderProvince) {
-        this.creditCardHolderProvince = creditCardHolderProvince;
-    }
-
-    /**
-     *
-     * @return Bairro do dono do cartão de crédito
-     */
-    public String getCreditCardHolderCity() {
-        return creditCardHolderCity;
-    }
-
-    /**
-     *
-     * @param creditCardHolderCity Bairro do dono do cartão de crédito
-     */
-    public void setCreditCardHolderCity(String creditCardHolderCity) {
-        this.creditCardHolderCity = creditCardHolderCity;
-    }
-
-    /**
-     *
-     * @return Cidade do dono do cartão de crédito
-     */
-    public String getCreditCardHolderUf() {
-        return creditCardHolderUf;
-    }
-
-    /**
-     *
-     * @param creditCardHolderUf Cidade do dono do cartão de crédito
-     */
-    public void setCreditCardHolderUf(String creditCardHolderUf) {
-        this.creditCardHolderUf = creditCardHolderUf;
-    }
-
-    /**
-     *
-     * @return UF do dono do cartão de crédito. (Ex: SC, SP, RJ)
-     */
-    public String getCreditCardHolderPostalCode() {
-        return creditCardHolderPostalCode;
-    }
-
-    /**
-     *
-     * @param creditCardHolderPostalCode UF do dono do cartão de crédito. (Ex: SC, SP, RJ)
-     */
-    public void setCreditCardHolderPostalCode(String creditCardHolderPostalCode) {
-        this.creditCardHolderPostalCode = creditCardHolderPostalCode;
-    }
-
-    /**
-     *
-     * @return CEP do dono do cartão de crédito
-     */
-    public String getCreditCardHolderPhone() {
-        return creditCardHolderPhone;
-    }
-
-    /**
-     *
-     * @param creditCardHolderPhone CEP do dono do cartão de crédito
-     */
-    public void setCreditCardHolderPhone(String creditCardHolderPhone) {
-        this.creditCardHolderPhone = creditCardHolderPhone;
-    }
-
-    /**
-     *
-     * @return Telefone do dono do cartão de crédito
-     */
-    public String getCreditCardHolderPhoneDDD() {
-        return creditCardHolderPhoneDDD;
-    }
-
-    /**
-     *
-     * @param creditCardHolderPhoneDDD Telefone do dono do cartão de crédito
-     */
-    public void setCreditCardHolderPhoneDDD(String creditCardHolderPhoneDDD) {
-        this.creditCardHolderPhoneDDD = creditCardHolderPhoneDDD;
-    }
-
-    /**
-     *
-     * @return DDD do telefone do dono do cartão de crédito
-     */
-    public String getCreditCardHolderMobilePhone() {
-        return creditCardHolderMobilePhone;
-    }
-
-    /**
-     *
-     * @param creditCardHolderMobilePhone DDD do telefone do dono do cartão de crédito
-     */
-    public void setCreditCardHolderMobilePhone(String creditCardHolderMobilePhone) {
-        this.creditCardHolderMobilePhone = creditCardHolderMobilePhone;
-    }
-
-    /**
-     *
-     * @return Celular do dono do cartão de crédito
-     */
-    public String getCreditCardHolderMobilePhoneDDD() {
-        return creditCardHolderMobilePhoneDDD;
-    }
-
-    /**
-     *
-     * @param creditCardHolderMobilePhoneDDD Celular do dono do cartão de crédito
-     */
-    public void setCreditCardHolderMobilePhoneDDD(String creditCardHolderMobilePhoneDDD) {
-        this.creditCardHolderMobilePhoneDDD = creditCardHolderMobilePhoneDDD;
-    }
-
-    /**
-     * 
      * @return Status da assinatura. Valores válidos: ACTIVE, INACTIVE
      */
-    public String getStatus() {
+    public SubscriptionStatus getStatus() {
         return status;
     }
 
     /**
-     * 
+     *
      * @param status Status da assinatura. Valores válidos: ACTIVE, INACTIVE
      */
-    public void setStatus(String status) {
+    public void setStatus(SubscriptionStatus status) {
         this.status = status;
+    }
+
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
+    }
+
+    public Interest getInterest() {
+        return interest;
+    }
+
+    public void setInterest(Interest interest) {
+        this.interest = interest;
+    }
+
+    public Fine getFine() {
+        return fine;
+    }
+
+    public void setFine(Fine fine) {
+        this.fine = fine;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
+
+    public CreditCardHolderInfo getCreditCardHolderInfo() {
+        return creditCardHolderInfo;
+    }
+
+    public void setCreditCardHolderInfo(CreditCardHolderInfo creditCardHolderInfo) {
+        this.creditCardHolderInfo = creditCardHolderInfo;
+    }
+
+    public String getRemoteIp() {
+        return remoteIp;
+    }
+
+    public void setRemoteIp(String remoteIp) {
+        this.remoteIp = remoteIp;
     }
 
     @Override
     public String toString() {
-        return "Subscription{" + "id=" + id + ", customer=" + customer + ", value=" + value + ", grossValue=" + grossValue + ", nextDueDate=" + nextDueDate + ", cycle=" + cycle + ", billingType=" + billingType + ", description=" + description + ", updatePendingPayments=" + updatePendingPayments + ", status=" + status + ", payments=" + payments + ", maxPayments=" + maxPayments + ", endDate=" + endDate + ", creditCardHolderName=" + creditCardHolderName + ", creditCardNumber=" + creditCardNumber + ", creditCardExpiryMonth=" + creditCardExpiryMonth + ", creditCardExpiryYear=" + creditCardExpiryYear + ", creditCardCcv=" + creditCardCcv + ", creditCardHolderFullName=" + creditCardHolderFullName + ", creditCardHolderEmail=" + creditCardHolderEmail + ", creditCardHolderCpfCnpj=" + creditCardHolderCpfCnpj + ", creditCardHolderAddress=" + creditCardHolderAddress + ", creditCardHolderAddressNumber=" + creditCardHolderAddressNumber + ", creditCardHolderAddressComplement=" + creditCardHolderAddressComplement + ", creditCardHolderProvince=" + creditCardHolderProvince + ", creditCardHolderCity=" + creditCardHolderCity + ", creditCardHolderUf=" + creditCardHolderUf + ", creditCardHolderPostalCode=" + creditCardHolderPostalCode + ", creditCardHolderPhone=" + creditCardHolderPhone + ", creditCardHolderPhoneDDD=" + creditCardHolderPhoneDDD + ", creditCardHolderMobilePhone=" + creditCardHolderMobilePhone + ", creditCardHolderMobilePhoneDDD=" + creditCardHolderMobilePhoneDDD + '}';
+        return "Subscription{" + "id=" + id + ", customer=" + customer + ", billingType=" + billingType + ", value=" + value + ", nextDueDate=" + nextDueDate + ", discount=" + discount + ", interest=" + interest + ", fine=" + fine + ", cycle=" + cycle + ", description=" + description + ", endDate=" + endDate + ", maxPayments=" + maxPayments + ", dateCreated=" + dateCreated + ", status=" + status + ", updatePendingPayments=" + updatePendingPayments + ", creditCard=" + creditCard + ", creditCardHolderInfo=" + creditCardHolderInfo + ", remoteIp=" + remoteIp + '}';
     }
 }

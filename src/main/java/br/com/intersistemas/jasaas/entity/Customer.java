@@ -1,8 +1,6 @@
 package br.com.intersistemas.jasaas.entity;
 
-import br.com.intersistemas.jasaas.entity.meta.MetaNotification;
-import br.com.intersistemas.jasaas.entity.meta.MetaPayment;
-import br.com.intersistemas.jasaas.entity.meta.MetaSubscription;
+import br.com.intersistemas.jasaas.exception.CustomerException;
 import com.google.gson.annotations.Expose;
 import java.util.Date;
 
@@ -12,61 +10,58 @@ import java.util.Date;
  */
 public final class Customer {
 
-    public static final String FISICA = "FISICA";
-    public static final String JURIDICA = "JURIDICA";
-
     @Expose(serialize = false)
     private String id;
+    @Expose
+    private String name;
+    @Expose
+    private String cpfCnpj;
+    @Expose
+    private String email;
+    @Expose
+    private String phone;
+    @Expose
+    private String mobilePhone;
+    @Expose
+    private String address;
+    @Expose
+    private String addressNumber;
+    @Expose
+    private String complement;
+    @Expose
+    private String province;
+    @Expose
+    private String postalCode;
+    @Expose
+    private String externalReference;
+    @Expose
+    private Boolean notificationDisabled;
+    @Expose
+    private String additionalEmails;
+    @Expose
+    private String municipalInscription;
+    @Expose
+    private String stateInscription;
+    @Expose
+    private String groupName;
 
-    @Expose private String name;
-    @Expose private String email;
-    @Expose private String additionalEmails;
-    @Expose private String company;
-    @Expose private String phone;
-    @Expose private String mobilePhone;
-    @Expose private String address;
-    @Expose private String addressNumber;
-    @Expose private String complement;
-    @Expose private String province;
-    @Expose private Boolean foreignCustomer;
-    @Expose private Boolean notificationDisabled;
-    @Expose private String city;
-    @Expose private String state;
-    @Expose private String country;
-    @Expose private String postalCode;
-    @Expose private String cpfCnpj;
-    @Expose private String personType;
-    @Expose private String externalReference;
+    @Expose(serialize = false)
+    private String city;
+    @Expose(serialize = false)
+    private String state;
+    @Expose(serialize = false)
+    private String country;
     @Expose(serialize = false)
     private Boolean deleted;
-
-    @Expose private MetaSubscription subscriptions;
-    @Expose private MetaPayment payments;
-    @Expose private MetaNotification notifications;
-
     @Expose(serialize = false)
     private Date dateCreated;
 
     public Customer() {
     }
 
-    public Customer(String name, String email, String company, String phone, String mobilePhone, String address, String addressNumber, String complement, String province, String city, String state, String country, String postalCode, String cpfCnpj, String personType, String externalReference) {
+    public Customer(String name, String cpfCnpj) {
         this.name = name;
-        this.email = email;
-        this.company = company;
-        this.phone = phone;
-        this.mobilePhone = mobilePhone;
-        this.address = address;
-        this.addressNumber = addressNumber;
-        this.complement = complement;
-        this.province = province;
-        this.city = city;
-        this.state = state;
-        this.country = country;
-        this.postalCode = postalCode;
         this.cpfCnpj = cpfCnpj;
-        this.personType = personType;
-        this.externalReference = externalReference;
     }
 
     /**
@@ -103,20 +98,6 @@ public final class Customer {
      */
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    /**
-     * @return company Nome da compania
-     */
-    public String getCompany() {
-        return company;
-    }
-
-    /**
-     * @param company Nome da compania
-     */
-    public void setCompany(String company) {
-        this.company = company;
     }
 
     /**
@@ -201,20 +182,6 @@ public final class Customer {
      */
     public void setProvince(String province) {
         this.province = province;
-    }
-
-    /**
-     * @return foreignCustomer Desabilita/habilita cliente estrangeiro
-     */
-    public Boolean getForeignCustomer() {
-        return foreignCustomer;
-    }
-
-    /**
-     * @param foreignCustomer Desabilita/habilita cliente estrangeiro
-     */
-    public void setForeignCustomer(Boolean foreignCustomer) {
-        this.foreignCustomer = foreignCustomer;
     }
 
     /**
@@ -311,70 +278,6 @@ public final class Customer {
         this.cpfCnpj = cpfCnpj;
     }
 
-    /**
-     * @return personType Define se cliente pessoa física ou juridica. Valores
-     * válidos: FISICA ou JURIDICA
-     */
-    public String getPersonType() {
-        return personType;
-    }
-
-    /**
-     * @param personType Define se cliente pessoa física ou juridica. Valores
-     * válidos: FISICA ou JURIDICA
-     */
-    public void setPersonType(String personType) {
-        this.personType = personType;
-    }
-
-    /**
-     * @return subscriptions Lista de assinaturas do cliente, caso exista.
-     * Verificar objeto Meta “subscription”.
-     */
-    public MetaSubscription getSubscriptions() {
-        return subscriptions;
-    }
-
-    /**
-     * @param subscriptions Lista de assinaturas do cliente, caso exista.
-     * Verificar objeto Meta “subscription”.
-     */
-    public void setSubscriptions(MetaSubscription subscriptions) {
-        this.subscriptions = subscriptions;
-    }
-
-    /**
-     * @return payments Lista de cobranças do cliente, caso exista. Verificar
-     * objeto Meta “payment”
-     */
-    public MetaPayment getPayments() {
-        return payments;
-    }
-
-    /**
-     * @param payments Lista de cobranças do cliente, caso exista. Verificar
-     * objeto Meta “payment”
-     */
-    public void setPayments(MetaPayment payments) {
-        this.payments = payments;
-    }
-
-    /**
-     * @return notifications Lista de notificações do cliente, caso exista.
-     * Verificar objeto Meta “notification”
-     */
-    public MetaNotification getNotifications() {
-        return notifications;
-    }
-
-    /**
-     * @param notifications Lista de notificações do cliente, caso exista.
-     * Verificar objeto Meta “notification”
-     */
-    public void setNotifications(MetaNotification notifications) {
-        this.notifications = notifications;
-    }
-
     public Date getDateCreated() {
         return dateCreated;
     }
@@ -393,17 +296,83 @@ public final class Customer {
         this.externalReference = externalReference;
     }
 
+    /**
+     * 
+     * @return additionalEmails Emails adicionais para envio de notificações de cobrança
+     * separados por ","
+     */
     public String getAdditionalEmails() {
         return additionalEmails;
     }
 
+    /**
+     * 
+     * @param additionalEmails Emails adicionais para envio de notificações de
+     * cobrança separados por ","
+     */
     public void setAdditionalEmails(String additionalEmails) {
         this.additionalEmails = additionalEmails;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" + "id=" + id + ", name=" + name + ", email=" + email + ", additionalEmails=" + additionalEmails + ", company=" + company + ", phone=" + phone + ", mobilePhone=" + mobilePhone + ", address=" + address + ", addressNumber=" + addressNumber + ", complement=" + complement + ", province=" + province + ", foreignCustomer=" + foreignCustomer + ", notificationDisabled=" + notificationDisabled + ", city=" + city + ", state=" + state + ", country=" + country + ", postalCode=" + postalCode + ", cpfCnpj=" + cpfCnpj + ", personType=" + personType + ", externalReference=" + externalReference + ", subscriptions=" + subscriptions + ", payments=" + payments + ", notifications=" + notifications + ", dateCreated=" + dateCreated + '}';
+    /**
+     * 
+     * @return municipalInscription Inscrição municipal do cliente
+     */
+    public String getMunicipalInscription() {
+        return municipalInscription;
     }
 
+    /**
+     * 
+     * @param municipalInscription Inscrição municipal do cliente
+     */
+    public void setMunicipalInscription(String municipalInscription) {
+        this.municipalInscription = municipalInscription;
+    }
+
+    /**
+     * 
+     * @return stateInscription Inscrição estadual do cliente
+     */
+    public String getStateInscription() {
+        return stateInscription;
+    }
+
+    /**
+     * 
+     * @param stateInscription Inscrição estadual do cliente
+     */
+    public void setStateInscription(String stateInscription) {
+        this.stateInscription = stateInscription;
+    }
+
+    /**
+     *
+     * @return groupName Nome do grupo ao qual o cliente pertence
+     */
+    public String getGroupName() {
+        return groupName;
+    }
+
+    /**
+     * 
+     * @param groupName Nome do grupo ao qual o cliente pertence
+     */
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+    
+    @Override
+    public String toString() {
+        return "Customer{" + "id=" + id + ", name=" + name + ", cpfCnpj=" + cpfCnpj + ", email=" + email + ", phone=" + phone + ", mobilePhone=" + mobilePhone + ", address=" + address + ", addressNumber=" + addressNumber + ", complement=" + complement + ", province=" + province + ", postalCode=" + postalCode + ", externalReference=" + externalReference + ", notificationDisabled=" + notificationDisabled + ", additionalEmails=" + additionalEmails + ", municipalInscription=" + municipalInscription + ", stateInscription=" + stateInscription + ", groupName=" + groupName + ", city=" + city + ", state=" + state + ", country=" + country + ", deleted=" + deleted + ", dateCreated=" + dateCreated + '}';
+    }
+
+    public void validate() {
+        if (name == null || "".equals(name)) {
+            throw new CustomerException(500, "Nome inválido");
+        }
+        if (cpfCnpj == null || "".equals(cpfCnpj)) {
+            throw new CustomerException(500, "CPF/CNPJ inválido");
+        }
+    }
 }

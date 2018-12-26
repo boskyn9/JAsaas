@@ -1,10 +1,15 @@
 package br.com.intersistemas.jasaas.entity;
 
+import br.com.intersistemas.jasaas.entity.meta.MetaPayment;
 import br.com.intersistemas.jasaas.exception.PaymentException;
+import br.com.intersistemas.jasaas.util.BillingType;
+import br.com.intersistemas.jasaas.util.PaymentStatus;
 import com.google.gson.annotations.Expose;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -12,64 +17,73 @@ import java.util.Date;
  */
 public final class Payment {
 
-    public static String BILLINGTYPE_BOLETO = "BOLETO";
-    public static String BILLINGTYPE_CREDIT_CARD = "CREDIT_CARD";
-    public static String BILLINGTYPE_UNDEFINED = "UNDEFINED";
-    public static String BILLINGTYPE_TRANSFER = "TRANSFER";
-    public static String BILLINGTYPE_DEPOSIT = "DEPOSIT";
-
-    public static final String PENDING = "PENDING"; //Aguardando pagamento
-    public static final String CONFIRMED = "CONFIRMED"; //Cobrança confirmada, porém com o saldo ainda não disponível. Válido somente para cartão de crédito
-    public static final String RECEIVED = "RECEIVED"; //Cobrança paga
-    public static final String OVERDUE = "OVERDUE"; //Cobrança atrasada
-
     @Expose(serialize = false)
     private String id;
 
-    @Expose private String customer;
-    @Expose private String subscription;
-    @Expose private Integer installment;
-    @Expose private String billingType;
-    @Expose private BigDecimal value;
-    @Expose private BigDecimal netValue;
-    @Expose private BigDecimal originalValue;
-    @Expose private BigDecimal interestValue;
-    @Expose private BigDecimal grossValue;
-    @Expose private Date dueDate;
-    @Expose private Date originalDueDate;
+    @Expose
+    private String customer;
+    @Expose
+    private BillingType billingType;
+    @Expose
+    private BigDecimal value;
+    @Expose
+    private Date dueDate;
+    @Expose
+    private String description;
+    @Expose
+    private String externalReference;
+    @Expose
+    private Integer installmentCount;
+    @Expose
+    private BigDecimal installmentValue;
+    @Expose
+    private Discount discount;
+    @Expose
+    private Interest interest;
+    @Expose
+    private Fine fine;
+
+    @Expose(serialize = false)
+    private Date dateCreated;
+    @Expose(serialize = false)
+    private String subscription;
+    @Expose(serialize = false)
+    private String installment;
+    @Expose(serialize = false)
+    private BigDecimal netValue;
+    @Expose(serialize = false)
+    private PaymentStatus status;
+
+    @Expose(serialize = false)
+    private Date originalDueDate;
+    @Expose(serialize = false)
+    private BigDecimal originalValue;
+    @Expose(serialize = false)
+    private BigDecimal interestValue;
+    @Expose(serialize = false)
+    private Date confirmedDate;
     @Expose(serialize = false)
     private Date paymentDate;
-    @Expose private String status;
-    @Expose private String nossoNumero;
-    @Expose private String description;
-    @Expose private String invoiceUrl;
-    @Expose private String boletoUrl;
-    @Expose private String invoiceNumber;
-    @Expose private Integer installmentCount;
-    @Expose private BigDecimal installmentValue;
-    @Expose private String externalReference;
+    @Expose(serialize = false)
+    private Date clientPaymentDate;
+    @Expose(serialize = false)
+    private String invoiceUrl;
+    @Expose(serialize = false)
+    private String bankSlipUrl;
+    @Expose(serialize = false)
+    private String invoiceNumber;
     @Expose(serialize = false)
     private Boolean deleted;
 
-    @Expose private String creditCardHolderName;
-    @Expose private String creditCardNumber;
-    @Expose private String creditCardExpiryMonth;
-    @Expose private String creditCardExpiryYear;
-    @Expose private String creditCardCcv;
-    @Expose private String creditCardHolderFullName;
-    @Expose private String creditCardHolderEmail;
-    @Expose private String creditCardHolderCpfCnpj;
-    @Expose private String creditCardHolderAddress;
-    @Expose private String creditCardHolderAddressNumber;
-    @Expose private String creditCardHolderAddressComplement;
-    @Expose private String creditCardHolderProvince;
-    @Expose private String creditCardHolderCity;
-    @Expose private String creditCardHolderUf;
-    @Expose private String creditCardHolderPostalCode;
-    @Expose private String creditCardHolderPhone;
-    @Expose private String creditCardHolderPhoneDDD;
-    @Expose private String creditCardHolderMobilePhone;
-    @Expose private String creditCardHolderMobilePhoneDDD;
+    @Expose
+    private CreditCard creditCard;
+    @Expose
+    private CreditCardHolderInfo creditCardHolderInfo;
+    @Expose
+    private String remoteIp;
+
+    @Expose
+    private List<Split> split;// = new ArrayList<>();
 
     /**
      *
@@ -113,38 +127,34 @@ public final class Payment {
 
     /**
      *
-     * @return Identificador único do parcelamento, quando a cobrança fizer
-     * parte de um.
+     * @return Identificador único do parcelamento (quando cobrança parcelada)
      */
-    public Integer getInstallment() {
+    public String getInstallment() {
         return installment;
     }
 
     /**
      *
-     * @param installment Identificador único do parcelamento, quando a cobrança
-     * fizer parte de um.
+     * @param installment Identificador único do parcelamento (quando cobrança
+     * parcelada)
      */
-    public void setInstallment(Integer installment) {
+    public void setInstallment(String installment) {
         this.installment = installment;
     }
 
     /**
      *
-     * @return Forma de pagamento.. Valores válidos: BOLETO, CREDIT_CARD,
-     * TRANSFER, DEPOSIT. Na criação, são aceitos somente BOLETO e CREDIT_CARD.
+     * @return Forma de pagamento.
      */
-    public String getBillingType() {
+    public BillingType getBillingType() {
         return billingType;
     }
 
     /**
      *
-     * @param billingType Forma de pagamento.. Valores válidos: BOLETO,
-     * CREDIT_CARD, TRANSFER, DEPOSIT. Na criação, são aceitos somente BOLETO e
-     * CREDIT_CARD.
+     * @param billingType Forma de pagamento.
      */
-    public void setBillingType(String billingType) {
+    public void setBillingType(BillingType billingType) {
         this.billingType = billingType;
     }
 
@@ -191,24 +201,6 @@ public final class Payment {
 
     /**
      *
-     * @return Valor bruto da cobrança. É válido somente se a opção de
-     * utilização do valor bruto estiver habilitada para a sua conta.
-     */
-    public BigDecimal getGrossValue() {
-        return grossValue;
-    }
-
-    /**
-     *
-     * @param grossValue Valor bruto da cobrança. É válido somente se a opção de
-     * utilização do valor bruto estiver habilitada para a sua conta.
-     */
-    public void setGrossValue(BigDecimal grossValue) {
-        this.grossValue = grossValue;
-    }
-
-    /**
-     *
      * @return Data de vencimento.
      */
     public Date getDueDate() {
@@ -244,16 +236,8 @@ public final class Payment {
      *
      * @return Status da cobrança (Verificar tabela de status) (somente leitura)
      */
-    public String getStatus() {
+    public PaymentStatus getStatus() {
         return status;
-    }
-
-    /**
-     *
-     * @return Identificador único do boleto bancário (somente leitura)
-     */
-    public String getNossoNumero() {
-        return nossoNumero;
     }
 
     /**
@@ -282,14 +266,6 @@ public final class Payment {
 
     /**
      *
-     * @return Link público para download do PDF do boleto (somente leitura)
-     */
-    public String getBoletoUrl() {
-        return boletoUrl;
-    }
-
-    /**
-     *
      * @return Número da fatura (único) (somente leitura)
      */
     public String getInvoiceNumber() {
@@ -298,7 +274,7 @@ public final class Payment {
 
     /**
      *
-     * @return Quantia de parcelas (opcional)
+     * @return Número de parcelas (somente no caso de cobrança parcelada)
      */
     public Integer getInstallmentCount() {
         return installmentCount;
@@ -306,7 +282,8 @@ public final class Payment {
 
     /**
      *
-     * @param installmentCount Quantia de parcelas (opcional)
+     * @param installmentCount Número de parcelas (somente no caso de cobrança
+     * parcelada)
      */
     public void setInstallmentCount(Integer installmentCount) {
         this.installmentCount = installmentCount;
@@ -346,330 +323,113 @@ public final class Payment {
         this.externalReference = externalReference;
     }
 
-    /**
-     *
-     * @return Nome impresso no cartão de crédito
-     */
-    public String getCreditCardHolderName() {
-        return creditCardHolderName;
+    public Discount getDiscount() {
+        return discount;
     }
 
-    /**
-     *
-     * @param creditCardHolderName Nome impresso no cartão de crédito
-     */
-    public void setCreditCardHolderName(String creditCardHolderName) {
-        this.creditCardHolderName = creditCardHolderName;
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
     }
 
-    /**
-     *
-     * @return Número do cartão de crédito
-     */
-    public String getCreditCardNumber() {
-        return creditCardNumber;
+    public Interest getInterest() {
+        return interest;
     }
 
-    /**
-     *
-     * @param creditCardNumber Número do cartão de crédito
-     */
-    public void setCreditCardNumber(String creditCardNumber) {
-        this.creditCardNumber = creditCardNumber;
+    public void setInterest(Interest interest) {
+        this.interest = interest;
     }
 
-    /**
-     *
-     * @return Mês de vencimento do cartão (01, 02, 03,..., 12
-     */
-    public String getCreditCardExpiryMonth() {
-        return creditCardExpiryMonth;
+    public Fine getFine() {
+        return fine;
     }
 
-    /**
-     *
-     * @param creditCardExpiryMonth Mês de vencimento do cartão (01, 02, 03,...,
-     * 12
-     */
-    public void setCreditCardExpiryMonth(String creditCardExpiryMonth) {
-        this.creditCardExpiryMonth = creditCardExpiryMonth;
+    public void setFine(Fine fine) {
+        this.fine = fine;
     }
 
-    /**
-     *
-     * @return Ano de vencimento do cartão, com 2 dígitos (14, 15, 16, ...)
-     */
-    public String getCreditCardExpiryYear() {
-        return creditCardExpiryYear;
+    public Date getDateCreated() {
+        return dateCreated;
     }
 
-    /**
-     *
-     * @param creditCardExpiryYear Ano de vencimento do cartão, com 2 dígitos
-     * (14, 15, 16, ...)
-     */
-    public void setCreditCardExpiryYear(String creditCardExpiryYear) {
-        this.creditCardExpiryYear = creditCardExpiryYear;
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
-    /**
-     *
-     * @return Código de segurança do cartão de crédito
-     */
-    public String getCreditCardCcv() {
-        return creditCardCcv;
+    public Date getConfirmedDate() {
+        return confirmedDate;
     }
 
-    /**
-     *
-     * @param creditCardCcv Código de segurança do cartão de crédito
-     */
-    public void setCreditCardCcv(String creditCardCcv) {
-        this.creditCardCcv = creditCardCcv;
+    public void setConfirmedDate(Date confirmedDate) {
+        this.confirmedDate = confirmedDate;
     }
 
-    /**
-     *
-     * @return Nome completo do dono do cartão de crédito
-     */
-    public String getCreditCardHolderFullName() {
-        return creditCardHolderFullName;
-    }
-
-    /**
-     *
-     * @param creditCardHolderFullName Nome completo do dono do cartão de
-     * crédito
-     */
-    public void setCreditCardHolderFullName(String creditCardHolderFullName) {
-        this.creditCardHolderFullName = creditCardHolderFullName;
-    }
-
-    /**
-     *
-     * @return E-mail do dono do cartão de crédito
-     */
-    public String getCreditCardHolderEmail() {
-        return creditCardHolderEmail;
-    }
-
-    /**
-     *
-     * @param creditCardHolderEmail E-mail do dono do cartão de crédito
-     */
-    public void setCreditCardHolderEmail(String creditCardHolderEmail) {
-        this.creditCardHolderEmail = creditCardHolderEmail;
-    }
-
-    /**
-     *
-     * @return CPF ou CNPJ do dono do cartão de crédito
-     */
-    public String getCreditCardHolderCpfCnpj() {
-        return creditCardHolderCpfCnpj;
-    }
-
-    /**
-     *
-     * @param creditCardHolderCpfCnpj CPF ou CNPJ do dono do cartão de crédito
-     */
-    public void setCreditCardHolderCpfCnpj(String creditCardHolderCpfCnpj) {
-        this.creditCardHolderCpfCnpj = creditCardHolderCpfCnpj;
-    }
-
-    /**
-     *
-     * @return Endereço do dono do cartão de crédito (Ex.: Rua, Av.)
-     */
-    public String getCreditCardHolderAddress() {
-        return creditCardHolderAddress;
-    }
-
-    /**
-     *
-     * @param creditCardHolderAddress Endereço do dono do cartão de crédito
-     * (Ex.: Rua, Av.)
-     */
-    public void setCreditCardHolderAddress(String creditCardHolderAddress) {
-        this.creditCardHolderAddress = creditCardHolderAddress;
-    }
-
-    /**
-     *
-     * @return Número do endereço do dono do cartão de crédito
-     */
-    public String getCreditCardHolderAddressNumber() {
-        return creditCardHolderAddressNumber;
-    }
-
-    /**
-     *
-     * @param creditCardHolderAddressNumber Número do endereço do dono do cartão
-     * de crédito
-     */
-    public void setCreditCardHolderAddressNumber(String creditCardHolderAddressNumber) {
-        this.creditCardHolderAddressNumber = creditCardHolderAddressNumber;
-    }
-
-    /**
-     *
-     * @return Complemento do endereço do dono do cartão de crédito
-     */
-    public String getCreditCardHolderAddressComplement() {
-        return creditCardHolderAddressComplement;
-    }
-
-    /**
-     *
-     * @param creditCardHolderAddressComplement Complemento do endereço do dono
-     * do cartão de crédito
-     */
-    public void setCreditCardHolderAddressComplement(String creditCardHolderAddressComplement) {
-        this.creditCardHolderAddressComplement = creditCardHolderAddressComplement;
-    }
-
-    /**
-     *
-     * @return Bairro do dono do cartão de crédito
-     */
-    public String getCreditCardHolderProvince() {
-        return creditCardHolderProvince;
-    }
-
-    /**
-     *
-     * @param creditCardHolderProvince Bairro do dono do cartão de crédito
-     */
-    public void setCreditCardHolderProvince(String creditCardHolderProvince) {
-        this.creditCardHolderProvince = creditCardHolderProvince;
-    }
-
-    /**
-     *
-     * @return Cidade do dono do cartão de crédito
-     */
-    public String getCreditCardHolderCity() {
-        return creditCardHolderCity;
-    }
-
-    /**
-     *
-     * @param creditCardHolderCity Cidade do dono do cartão de crédito
-     */
-    public void setCreditCardHolderCity(String creditCardHolderCity) {
-        this.creditCardHolderCity = creditCardHolderCity;
-    }
-
-    /**
-     *
-     * @return UF do dono do cartão de crédito. (Ex: SC, SP, RJ)
-     */
-    public String getCreditCardHolderUf() {
-        return creditCardHolderUf;
-    }
-
-    /**
-     *
-     * @param creditCardHolderUf UF do dono do cartão de crédito. (Ex: SC, SP,
-     * RJ)
-     */
-    public void setCreditCardHolderUf(String creditCardHolderUf) {
-        this.creditCardHolderUf = creditCardHolderUf;
-    }
-
-    /**
-     *
-     * @return CEP do dono do cartão de crédito
-     */
-    public String getCreditCardHolderPostalCode() {
-        return creditCardHolderPostalCode;
-    }
-
-    /**
-     *
-     * @param creditCardHolderPostalCode CEP do dono do cartão de crédito
-     */
-    public void setCreditCardHolderPostalCode(String creditCardHolderPostalCode) {
-        this.creditCardHolderPostalCode = creditCardHolderPostalCode;
-    }
-
-    /**
-     *
-     * @return Telefone do dono do cartão de crédito
-     */
-    public String getCreditCardHolderPhone() {
-        return creditCardHolderPhone;
-    }
-
-    /**
-     *
-     * @param creditCardHolderPhone Telefone do dono do cartão de crédito
-     */
-    public void setCreditCardHolderPhone(String creditCardHolderPhone) {
-        this.creditCardHolderPhone = creditCardHolderPhone;
-    }
-
-    /**
-     *
-     * @return DDD do telefone do dono do cartão de crédito
-     */
-    public String getCreditCardHolderPhoneDDD() {
-        return creditCardHolderPhoneDDD;
-    }
-
-    /**
-     *
-     * @param creditCardHolderPhoneDDD DDD do telefone do dono do cartão de
-     * crédito
-     */
-    public void setCreditCardHolderPhoneDDD(String creditCardHolderPhoneDDD) {
-        this.creditCardHolderPhoneDDD = creditCardHolderPhoneDDD;
-    }
-
-    /**
-     *
-     * @return Celular do dono do cartão de crédito
-     */
-    public String getCreditCardHolderMobilePhone() {
-        return creditCardHolderMobilePhone;
-    }
-
-    /**
-     *
-     * @param creditCardHolderMobilePhone Celular do dono do cartão de crédito
-     */
-    public void setCreditCardHolderMobilePhone(String creditCardHolderMobilePhone) {
-        this.creditCardHolderMobilePhone = creditCardHolderMobilePhone;
-    }
-
-    /**
-     *
-     * @return DDD do celular do dono do cartão de crédito
-     */
-    public String getCreditCardHolderMobilePhoneDDD() {
-        return creditCardHolderMobilePhoneDDD;
-    }
-
-    /**
-     *
-     * @param creditCardHolderMobilePhoneDDD DDD do celular do dono do cartão de
-     * crédito
-     */
-    public void setCreditCardHolderMobilePhoneDDD(String creditCardHolderMobilePhoneDDD) {
-        this.creditCardHolderMobilePhoneDDD = creditCardHolderMobilePhoneDDD;
-    }
-
-    @Override
-    public String toString() {
-        return "Payment{" + "id=" + id + ", customer=" + customer + ", subscription=" + subscription + ", installment=" + installment + ", billingType=" + billingType + ", value=" + value + ", netValue=" + netValue + ", originalValue=" + originalValue + ", interestValue=" + interestValue + ", grossValue=" + grossValue + ", dueDate=" + dueDate + ", originalDueDate=" + originalDueDate + ", paymentDate=" + paymentDate + ", status=" + status + ", nossoNumero=" + nossoNumero + ", description=" + description + ", invoiceUrl=" + invoiceUrl + ", boletoUrl=" + boletoUrl + ", invoiceNumber=" + invoiceNumber + ", installmentCount=" + installmentCount + ", installmentValue=" + installmentValue + ", externalReference=" + externalReference + ", deleted=" + deleted + ", creditCardHolderName=" + creditCardHolderName + ", creditCardNumber=" + creditCardNumber + ", creditCardExpiryMonth=" + creditCardExpiryMonth + ", creditCardExpiryYear=" + creditCardExpiryYear + ", creditCardCcv=" + creditCardCcv + ", creditCardHolderFullName=" + creditCardHolderFullName + ", creditCardHolderEmail=" + creditCardHolderEmail + ", creditCardHolderCpfCnpj=" + creditCardHolderCpfCnpj + ", creditCardHolderAddress=" + creditCardHolderAddress + ", creditCardHolderAddressNumber=" + creditCardHolderAddressNumber + ", creditCardHolderAddressComplement=" + creditCardHolderAddressComplement + ", creditCardHolderProvince=" + creditCardHolderProvince + ", creditCardHolderCity=" + creditCardHolderCity + ", creditCardHolderUf=" + creditCardHolderUf + ", creditCardHolderPostalCode=" + creditCardHolderPostalCode + ", creditCardHolderPhone=" + creditCardHolderPhone + ", creditCardHolderPhoneDDD=" + creditCardHolderPhoneDDD + ", creditCardHolderMobilePhone=" + creditCardHolderMobilePhone + ", creditCardHolderMobilePhoneDDD=" + creditCardHolderMobilePhoneDDD + '}';
-    }
-    
     public Date getPaymentDate() {
         return paymentDate;
     }
 
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public Date getClientPaymentDate() {
+        return clientPaymentDate;
+    }
+
+    public void setClientPaymentDate(Date clientPaymentDate) {
+        this.clientPaymentDate = clientPaymentDate;
+    }
+
+    public String getBankSlipUrl() {
+        return bankSlipUrl;
+    }
+
+    public void setBankSlipUrl(String bankSlipUrl) {
+        this.bankSlipUrl = bankSlipUrl;
+    }
+
     public Boolean getDeleted() {
         return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
+
+    public CreditCardHolderInfo getCreditCardHolderInfo() {
+        return creditCardHolderInfo;
+    }
+
+    public void setCreditCardHolderInfo(CreditCardHolderInfo creditCardHolderInfo) {
+        this.creditCardHolderInfo = creditCardHolderInfo;
+    }
+
+    public String getRemoteIp() {
+        return remoteIp;
+    }
+
+    public void setRemoteIp(String remoteIp) {
+        this.remoteIp = remoteIp;
+    }
+
+    public List<Split> getSplit() {
+        return split;
+    }
+
+    public void setSplit(List<Split> split) {
+        this.split = split;
+    }
+
+    @Override
+    public String toString() {
+        return "Payment{" + "id=" + id + ", customer=" + customer + ", billingType=" + billingType + ", value=" + value + ", dueDate=" + dueDate + ", description=" + description + ", externalReference=" + externalReference + ", installmentCount=" + installmentCount + ", installmentValue=" + installmentValue + ", discount=" + discount + ", interest=" + interest + ", fine=" + fine + ", dateCreated=" + dateCreated + ", subscription=" + subscription + ", installment=" + installment + ", netValue=" + netValue + ", status=" + status + ", originalDueDate=" + originalDueDate + ", originalValue=" + originalValue + ", interestValue=" + interestValue + ", confirmedDate=" + confirmedDate + ", paymentDate=" + paymentDate + ", clientPaymentDate=" + clientPaymentDate + ", invoiceUrl=" + invoiceUrl + ", bankSlipUrl=" + bankSlipUrl + ", invoiceNumber=" + invoiceNumber + ", deleted=" + deleted + ", creditCard=" + creditCard + ", creditCardHolderInfo=" + creditCardHolderInfo + ", remoteIp=" + remoteIp + ", split=" + split + '}';
     }
 
     public void validate() {
@@ -690,6 +450,18 @@ public final class Payment {
         if (description.length() > 255) {
             //System.out.println("description: " + description);
             throw new PaymentException(500, "O campo descrição possui limite de 255 caracteres. Tamanho informado: " + description.length());
+        }
+
+        if (customer == null || "".equals(customer)) {
+            throw new PaymentException(500, "Cliente inválido");
+        }
+
+        if (billingType == null) {
+            throw new PaymentException(500, "Tipo de cobrança inválido. Valores possíveis no Enum BillingType");
+        }
+
+        if (value == null) {
+            throw new PaymentException(500, "Valor para cobrança inválido");
         }
     }
 }

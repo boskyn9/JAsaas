@@ -1,5 +1,7 @@
 package br.com.intersistemas.jasaas.entity;
 
+import br.com.intersistemas.jasaas.util.NotificationEvent;
+import br.com.intersistemas.jasaas.util.ScheduleOffset;
 import com.google.gson.annotations.Expose;
 
 /**
@@ -8,12 +10,6 @@ import com.google.gson.annotations.Expose;
  */
 public final class Notification {
 
-    public static final String PAYMENT_CREATED = "PAYMENT_CREATED";
-    public static final String PAYMENT_UPDATED = "PAYMENT_UPDATED";
-    public static final String PAYMENT_RECEIVED = "PAYMENT_RECEIVED";
-    public static final String PAYMENT_OVERDUE = "PAYMENT_OVERDUE";
-    public static final String PAYMENT_DUEDATE_WARNING = "PAYMENT_DUEDATE_WARNING";
-
     @Expose private String id;
     @Expose private String customer;
     @Expose private Boolean enabled;
@@ -21,8 +17,8 @@ public final class Notification {
     @Expose private Boolean smsEnabledForProvider;
     @Expose private Boolean emailEnabledForCustomer;
     @Expose private Boolean smsEnabledForCustomer;
-    @Expose private String event;
-    @Expose private String scheduleOffset;
+    @Expose private NotificationEvent event;
+    @Expose private ScheduleOffset scheduleOffset;
     @Expose private Boolean deleted;
 
     /**
@@ -59,17 +55,17 @@ public final class Notification {
 
     /**
      *
-     * @return event Tipo de evento (Verificar tabela de eventos)
+     * @return event Tipo de evento 
      */
-    public String getEvent() {
+    public NotificationEvent getEvent() {
         return event;
     }
 
     /**
      *
-     * @param event Tipo de evento (Verificar tabela de eventos)
+     * @param event Tipo de evento
      */
-    public void setEvent(String event) {
+    public void setEvent(NotificationEvent event) {
         this.event = event;
     }
 
@@ -77,7 +73,7 @@ public final class Notification {
      *
      * @return scheduleOffset Somente para o evento PAYMENT_DUEDATE_WARNING.
      */
-    public String getScheduleOffset() {
+    public ScheduleOffset getScheduleOffset() {
         return scheduleOffset;
     }
 
@@ -85,7 +81,7 @@ public final class Notification {
      *
      * @param scheduleOffset Somente para o evento PAYMENT_DUEDATE_WARNING.
      */
-    public void setScheduleOffset(String scheduleOffset) {
+    public void setScheduleOffset(ScheduleOffset scheduleOffset) {
         this.scheduleOffset = scheduleOffset;
     }
 

@@ -15,7 +15,7 @@ public class JsonUtil {
         if(gson == null)
             gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
-                    .setDateFormat("dd/MM/yyyy").create();               
+                    .setDateFormat("yyyy-MM-dd").create();               
         return gson.fromJson(json, clazz);
     }
     
@@ -23,7 +23,7 @@ public class JsonUtil {
         if(gson == null)
             gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
-                    .setDateFormat("dd/MM/yyyy").create();
+                    .setDateFormat("yyyy-MM-dd").create();
         return gson.fromJson(json, type);
     }
 
@@ -31,7 +31,7 @@ public class JsonUtil {
         if(gson == null)
             gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
-                    .setDateFormat("dd/MM/yyyy").create();
+                    .setDateFormat("yyyy-MM-dd").create();
         return gson.toJson(obj);
     }
 
