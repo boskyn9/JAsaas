@@ -27,7 +27,7 @@ public class Teste {
 
     public static void main(String[] args) throws URISyntaxException, MalformedURLException, IOException, ClassNotFoundException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
 
-        String acessToken = "835f31a007d1e7cb2f1837dbc952eaf010d9e994ad3a83a5aba4e13d5bccb86e";
+        String acessToken = "";
         Asaas asaas = new Asaas(new ApacheHttpClientAdapter(acessToken), Asaas.AMBIENTE_HOMOLOGACAO);
         PaymentConnection connPay = asaas.payment();
         CustomerConnection conn = asaas.customer();
@@ -111,14 +111,8 @@ public class Teste {
             case 3:
                 Customer customer = new Customer();
                 customer.setName("J Willian");
-                customer.setCpfCnpj("07255816460");
-                customer.setEmail("jwillian.uern@gmail.com");
-                customer.setMobilePhone("8498659865");
-                customer.setPostalCode("59067-400");
-                customer.setAddress("Av. dos caiapós");
-                customer.setAddressNumber("2828");
-                customer.setProvince("Pitimbu");
-                customer.setCity("3550308");
+                customer.setCpfCnpj("99999999999");
+                customer.setEmail("jwillian@liamg.moc.rb");
                 Customer cCreated = conn.createCustomer(customer);
                 System.out.println("##################################");
                 System.out.println(cCreated);
