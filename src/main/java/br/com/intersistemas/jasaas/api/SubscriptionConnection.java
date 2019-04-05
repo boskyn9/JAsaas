@@ -1,7 +1,5 @@
 package br.com.intersistemas.jasaas.api;
 
-
-
 import br.com.intersistemas.jasaas.exception.ConnectionException;
 import br.com.intersistemas.jasaas.util.HttpParamsUtil;
 import br.com.intersistemas.jasaas.util.JsonUtil;
@@ -10,7 +8,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
-import br.com.intersistemas.jasaas.entity.Notification;
 import br.com.intersistemas.jasaas.entity.Subscription;
 import br.com.intersistemas.jasaas.entity.filter.SubscriptionFilter;
 import br.com.intersistemas.jasaas.entity.meta.ContentSubscription;
@@ -51,7 +48,7 @@ public class SubscriptionConnection extends AbstractConnection {
 
             String params = HttpParamsUtil.parse(subscriptionFilter);
             if (params != null) {
-                url = (endpoint + "/subscriptions" + params + "&limit=" + limit + "&offset="+ offset);
+                url = (endpoint + "/subscriptions" + params + "&limit=" + limit + "&offset=" + offset);
             } else {
                 url = (endpoint + "/subscriptions" + "?limit=" + limit + "&offset=" + offset);
             }
@@ -83,19 +80,19 @@ public class SubscriptionConnection extends AbstractConnection {
     }
 
     public List<Subscription> getByCustomer(String customer_id) throws ConnectionException {
-        lastResponseJson = adapter.get((endpoint + "/customers/" + customer_id +"/subscriptions"));
+        lastResponseJson = adapter.get((endpoint + "/customers/" + customer_id + "/subscriptions"));
         MetaSubscription meta = (MetaSubscription) JsonUtil.parse(lastResponseJson, MetaSubscription.class);
 
-            setHasMore(meta.getHasMore());
-            setLimit(meta.getLimit());
-            setOffset(meta.getOffset());
+        setHasMore(meta.getHasMore());
+        setLimit(meta.getLimit());
+        setOffset(meta.getOffset());
 
-            ContentSubscription[] contentList = meta.getData();
-            List<Subscription> subscriptions = new ArrayList<>();
-            for (ContentSubscription content : contentList) {
-                subscriptions.add(content.getSubscription());
-            }
-            return subscriptions;
+        ContentSubscription[] contentList = meta.getData();
+        List<Subscription> subscriptions = new ArrayList<>();
+        for (ContentSubscription content : contentList) {
+            subscriptions.add(content.getSubscription());
+        }
+        return subscriptions;
     }
 
     public Subscription createSubscription(Subscription subscription) throws ConnectionException {
@@ -107,13 +104,13 @@ public class SubscriptionConnection extends AbstractConnection {
                 Subscription subscriptionsCreated = (Subscription) JsonUtil.parse(data, Subscription.class);
                 return subscriptionsCreated;
             } catch (Exception ex) {
-                Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SubscriptionConnection.class.getName()).log(Level.SEVERE, null, ex);
                 throw new ConnectionException(500, ex.getMessage());
             }
-        }else{
+        } else {
             throw new ConnectionException(500, "You should not enter the id in the entity to create it.");
-        }   
-    }    
+        }
+    }
 
     public Subscription updateSubscription(Subscription subscription) throws ConnectionException {
         try {
@@ -123,7 +120,7 @@ public class SubscriptionConnection extends AbstractConnection {
             Subscription subscriptionUpdated = (Subscription) JsonUtil.parse(data, Subscription.class);
             return subscriptionUpdated;
         } catch (Exception ex) {
-            Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SubscriptionConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());
         }
     }
@@ -135,7 +132,7 @@ public class SubscriptionConnection extends AbstractConnection {
             DeletedEntityReturn deleted = (DeletedEntityReturn) JsonUtil.parse(data, DeletedEntityReturn.class);
             return deleted.getDeleted();
         } catch (Exception ex) {
-            Logger.getLogger(PaymentConnection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SubscriptionConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());
         }
     }

@@ -166,11 +166,32 @@ List<City> cities = conn.getyId(7637);
 
 ```
 
+
+Webhook para cobranças  
+------
+
+```java
+// Busca a configuração de webhook para notificações de cobranças.
+WebhookConfigConnection connWH = asaas.webhookConfig();
+WebhookConfig webhookConfig = connWH.get();
+        
+// Cria ou atualiza a configuração de webhook para notificações de cobranças.
+WebhookConfigConnection connWH = asaas.webhookConfig();
+WebhookConfig webhookConfig = connWH.get();
+webhookConfig.setInterrupted(Boolean.FALSE);
+webhookConfig.setEnabled(Boolean.TRUE);
+webhookConfig.setApiVersion(3);
+webhookConfig.setUrl("https://www.exemplo.com/webhook/asaas");
+connWH.updateWebhookConfig(webhookConfig);
+
+```
+
 Documentação Oficial
 --------------------
 
 Obs.: Esta é uma API não oficial. Foi feita com base na documentação disponibilizada  [neste link](https://docs.google.com/document/d/1XUJRHY_0nd45CzFK5EmjDK92qgaQJGMxT0rjZriTk-g).
 
+V3: https://asaasv3.docs.apiary.io
 
 Créditos
 --------
