@@ -6,7 +6,7 @@ package br.com.intersistemas.jasaas.util;
  *
  * @author willian
  */
-public enum Ciclo {
+public enum Cycle {
     WEEKLY, //Semanal
     BIWEEKLY, //Quinzenal(2 semanas)
     MONTHLY, //Mensal

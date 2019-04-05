@@ -1,7 +1,7 @@
 package br.com.intersistemas.jasaas.entity;
 
 import br.com.intersistemas.jasaas.util.BillingType;
-import br.com.intersistemas.jasaas.util.Ciclo;
+import br.com.intersistemas.jasaas.util.Cycle;
 import br.com.intersistemas.jasaas.util.SubscriptionStatus;
 import com.google.gson.annotations.Expose;
 
@@ -31,7 +31,7 @@ public final class Subscription {
     @Expose
     private Fine fine;
     @Expose
-    private Ciclo cycle;
+    private Cycle cycle;
     @Expose
     private String description;
     @Expose
@@ -116,7 +116,7 @@ public final class Subscription {
      *
      * @return Intervalo de cobrança. Verificar tabela de intervalos.
      */
-    public Ciclo getCycle() {
+    public Cycle getCycle() {
         return cycle;
     }
 
@@ -124,7 +124,7 @@ public final class Subscription {
      *
      * @param cycle Intervalo de cobrança. Verificar tabela de intervalos.
      */
-    public void setCycle(Ciclo cycle) {
+    public void setCycle(Cycle cycle) {
         this.cycle = cycle;
     }
 

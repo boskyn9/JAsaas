@@ -9,7 +9,11 @@ import br.com.intersistemas.jasaas.entity.meta.WebhookPayment;
 public class Webhook {
 
     public static WebhookPayment parseToPayment(String dataJson) {
-        WebhookPayment whPayment = (WebhookPayment) JsonUtil.parse(dataJson, WebhookPayment.class);
+        return parseToPayment(dataJson, false);
+    }
+    
+    public static WebhookPayment parseToPayment(String dataJson, Boolean showLog) {
+        WebhookPayment whPayment = (WebhookPayment) JsonUtil.parse(dataJson, WebhookPayment.class, showLog);
         return whPayment;
     }
 }
