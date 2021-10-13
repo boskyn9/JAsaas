@@ -7,9 +7,13 @@ import br.com.intersistemas.jasaas.api.PaymentConnection;
 import br.com.intersistemas.jasaas.entity.Customer;
 import br.com.intersistemas.jasaas.entity.Discount;
 import br.com.intersistemas.jasaas.entity.Payment;
+import br.com.intersistemas.jasaas.entity.filter.CustomerFilter;
+import br.com.intersistemas.jasaas.entity.meta.ContentCustomer;
+import br.com.intersistemas.jasaas.entity.meta.MetaCustomer;
 import br.com.intersistemas.jasaas.entity.meta.WebhookPayment;
 import br.com.intersistemas.jasaas.util.BillingType;
 import br.com.intersistemas.jasaas.util.DiscountType;
+import br.com.intersistemas.jasaas.util.JsonUtil;
 import br.com.intersistemas.jasaas.util.Webhook;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -19,6 +23,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * @author bosco
@@ -37,7 +42,7 @@ public class Teste {
 //        System.out.println(whp.getEvent());
 //        System.out.println(whp.getPayment().toString());      
         //tipos 0 getpayment, 1 payment create, 2 get customer, 3 creat customer
-        int tipo = 1;
+        int tipo = 2;
 
         switch (tipo) {
             case 0:
@@ -102,8 +107,20 @@ public class Teste {
                 break;
             case 2:
                 try {
-                    Customer custo = conn.getById("cus_000000064959");
-                    System.out.println(custo);
+//                    Customer custo = conn.getById("cus_000000064959");
+//                    CustomerFilter customerFilter = new CustomerFilter();
+//                    customerFilter.setCpfCnpj("66998940050");
+//                    List<Customer> customerList = conn.getAll(customerFilter);
+//
+//                    for (Customer customer : customerList) {
+//                        System.out.println(customer.getName());
+//                    }
+                    String json = "{\"object\":\"list\",\"hasMore\":false,\"totalCount\":1,\"limit\":10,\"offset\":0,\"data\":[{\"object\":\"customer\",\"id\":\"cus_000004744494\",\"dateCreated\":\"2021-10-13\",\"name\":\"Cliente de teste\",\"email\":\"pedroheavy87@gmail.com\",\"company\":null,\"phone\":null,\"mobilePhone\":null,\"address\":null,\"addressNumber\":null,\"complement\":null,\"province\":null,\"postalCode\":null,\"cpfCnpj\":\"66998940050\",\"personType\":\"FISICA\",\"deleted\":false,\"additionalEmails\":null,\"externalReference\":null,\"notificationDisabled\":false,\"observations\":null,\"city\":null,\"state\":null,\"country\":\"Brasil\",\"foreignCustomer\":false}]}";
+                    MetaCustomer meta = (MetaCustomer) JsonUtil.parse(json, MetaCustomer.class);
+                    for(Customer custo: meta.getData()){
+                        System.out.println(custo.getId());
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

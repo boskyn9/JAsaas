@@ -64,11 +64,11 @@ public class CustomerConnection extends AbstractConnection {
             setLimit(meta.getLimit());
             setOffset(meta.getOffset());
 
-            ContentCustomer[] contentList = meta.getData();
+            Customer[] contentList = meta.getData();
             List<Customer> customers = new ArrayList<>();
 
-            for (ContentCustomer content : contentList) {
-                customers.add(content.getCustomer());
+            for (Customer content : contentList) {
+                customers.add(content);
             }
             return customers;
         } catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException ex) {
@@ -91,11 +91,11 @@ public class CustomerConnection extends AbstractConnection {
         setLimit(meta.getLimit());
         setOffset(meta.getOffset());
 
-        ContentCustomer[] contentList = meta.getData();
+        Customer[] contentList = meta.getData();
         if (contentList.length == 0) {
             return null;
         }
-        return contentList[0].getCustomer();
+        return contentList[0];
     }
 
     public Customer createCustomer(Customer customer) throws ConnectionException {

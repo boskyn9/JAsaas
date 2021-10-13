@@ -1,5 +1,6 @@
 package br.com.intersistemas.jasaas.entity.meta;
 
+import br.com.intersistemas.jasaas.entity.City;
 import com.google.gson.annotations.Expose;
 
 /**
@@ -12,7 +13,7 @@ public class MetaCity {
     @Expose private Integer offset;
     @Expose private Boolean hasMore;
 
-    @Expose private ContentCity[] data;
+    @Expose private City[] data;
 
     public Integer getLimit() {
         return limit;
@@ -38,11 +39,11 @@ public class MetaCity {
         this.hasMore = hasMore;
     }
 
-    public ContentCity[] getData() {
+    public City[] getData() {
         return data;
     }
 
-    public void setData(ContentCity[] data) {
+    public void setData(City[] data) {
         this.data = data;
     }
 
