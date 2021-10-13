@@ -10,24 +10,22 @@ package br.com.intersistemas.jasaas.entity.filter;
 public class CustomerFilter {
 
     private String name;
+    private String email;
+    private String cpfCnpj;
+    private String groupName;
     private Boolean hasOverduePayments;
     private Boolean deletePendingPayments;
     private String externalReference;
 
-    public CustomerFilter() {
-    }
+    public CustomerFilter() {}
 
-    public CustomerFilter(String name, Boolean hasOverduePayments, Boolean deletePendingPayments) {
+    public CustomerFilter(String name, String email, String cpfCnpj, String groupName, Boolean hasOverduePayments, Boolean deletePendingPayments, String externalReference) {
         this.name = name;
+        this.email = email;
+        this.cpfCnpj = cpfCnpj;
+        this.groupName = groupName;
         this.hasOverduePayments = hasOverduePayments;
         this.deletePendingPayments = deletePendingPayments;
-    }
-
-    public String getExternalReference() {
-        return externalReference;
-    }
-
-    public void setExternalReference(String externalReference) {
         this.externalReference = externalReference;
     }
 
@@ -37,6 +35,30 @@ public class CustomerFilter {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCpfCnpj() {
+        return cpfCnpj;
+    }
+
+    public void setCpfCnpj(String cpfCnpj) {
+        this.cpfCnpj = cpfCnpj;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     public Boolean getHasOverduePayments() {
@@ -55,4 +77,11 @@ public class CustomerFilter {
         this.deletePendingPayments = deletePendingPayments;
     }
 
+    public String getExternalReference() {
+        return externalReference;
+    }
+
+    public void setExternalReference(String externalReference) {
+        this.externalReference = externalReference;
+    }
 }
