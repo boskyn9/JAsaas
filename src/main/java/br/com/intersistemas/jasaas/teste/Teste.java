@@ -7,14 +7,11 @@ import br.com.intersistemas.jasaas.api.PaymentConnection;
 import br.com.intersistemas.jasaas.entity.Customer;
 import br.com.intersistemas.jasaas.entity.Discount;
 import br.com.intersistemas.jasaas.entity.Payment;
-import br.com.intersistemas.jasaas.entity.filter.CustomerFilter;
-import br.com.intersistemas.jasaas.entity.meta.ContentCustomer;
 import br.com.intersistemas.jasaas.entity.meta.MetaCustomer;
-import br.com.intersistemas.jasaas.entity.meta.WebhookPayment;
 import br.com.intersistemas.jasaas.util.BillingType;
 import br.com.intersistemas.jasaas.util.DiscountType;
 import br.com.intersistemas.jasaas.util.JsonUtil;
-import br.com.intersistemas.jasaas.util.Webhook;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
@@ -23,7 +20,6 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * @author bosco

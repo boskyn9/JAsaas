@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 import br.com.intersistemas.jasaas.entity.Subscription;
 import br.com.intersistemas.jasaas.entity.filter.SubscriptionFilter;
-import br.com.intersistemas.jasaas.entity.meta.ContentSubscription;
 import br.com.intersistemas.jasaas.entity.meta.DeletedEntityReturn;
 import br.com.intersistemas.jasaas.entity.meta.MetaSubscription;
 
@@ -61,10 +60,10 @@ public class SubscriptionConnection extends AbstractConnection {
             setLimit(meta.getLimit());
             setOffset(meta.getOffset());
 
-            ContentSubscription[] contentList = meta.getData();
+            Subscription[] contentList = meta.getData();
             List<Subscription> subscriptions = new ArrayList<>();
-            for (ContentSubscription content : contentList) {
-                subscriptions.add(content.getSubscription());
+            for (Subscription content : contentList) {
+                subscriptions.add(content);
             }
             return subscriptions;
         } catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException ex) {
@@ -87,10 +86,10 @@ public class SubscriptionConnection extends AbstractConnection {
         setLimit(meta.getLimit());
         setOffset(meta.getOffset());
 
-        ContentSubscription[] contentList = meta.getData();
+        Subscription[] contentList = meta.getData();
         List<Subscription> subscriptions = new ArrayList<>();
-        for (ContentSubscription content : contentList) {
-            subscriptions.add(content.getSubscription());
+        for (Subscription content : contentList) {
+            subscriptions.add(content);
         }
         return subscriptions;
     }

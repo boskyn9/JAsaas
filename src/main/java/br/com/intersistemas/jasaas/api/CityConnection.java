@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 import br.com.intersistemas.jasaas.entity.filter.CityFilter;
-import br.com.intersistemas.jasaas.entity.meta.ContentCity;
 import br.com.intersistemas.jasaas.entity.meta.MetaCity;
 
 /**
@@ -56,10 +55,10 @@ public class CityConnection extends AbstractConnection{
             setLimit(meta.getLimit());
             setOffset(meta.getOffset());
             
-            ContentCity[] contentList = meta.getData();
+            City[] contentList = meta.getData();
             List<City> cities = new ArrayList<>();
-            for (ContentCity content : contentList) {
-                cities.add(content.getCity());
+            for (City content : contentList) {
+                cities.add(content);
             }           
             return cities;
         } catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException ex) {
