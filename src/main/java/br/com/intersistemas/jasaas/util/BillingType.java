@@ -12,5 +12,7 @@ public enum BillingType {
     UNDEFINED, //Perguntar ao Cliente
     //Apenas como retorno:
     TRANSFER,
-    DEPOSIT
+    DEPOSIT,
+    DEBIT_CARD,
+    PIX
 }
