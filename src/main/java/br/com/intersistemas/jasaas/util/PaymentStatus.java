@@ -8,8 +8,8 @@ package br.com.intersistemas.jasaas.util;
  */
 public enum PaymentStatus {
     PENDING,// - Aguardando pagamento
-    CONFIRMED,// - Cobrança Confirmada (Somente para cartão de crédito)
     RECEIVED,// - Recebida (saldo já creditado na conta)
+    CONFIRMED,// - Cobrança Confirmada (Somente para cartão de crédito)
     OVERDUE,// - Vencida
     REFUNDED,// - Estornada
     RECEIVED_IN_CASH,// - Recebida em dinheiro (não gera saldo na conta)
@@ -17,4 +17,7 @@ public enum PaymentStatus {
     CHARGEBACK_REQUESTED,// - Recebido chargeback
     CHARGEBACK_DISPUTE,// - Em disputa de chargeback (caso sejam apresentados documentos para contestação)
     AWAITING_CHARGEBACK_REVERSAL,// - Disputa vencida, aguardando repasse da adquirente 
+    DUNNING_REQUESTED,// - Em processo de negativação
+    DUNNING_RECEIVED,// - Recuperada
+    AWAITING_RISK_ANALYSIS // - Pagamento em análise
 }
