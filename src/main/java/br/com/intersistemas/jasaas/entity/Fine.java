@@ -1,5 +1,6 @@
 package br.com.intersistemas.jasaas.entity;
 
+import br.com.intersistemas.jasaas.util.TypeValue;
 import com.google.gson.annotations.Expose;
 import java.math.BigDecimal;
 
@@ -12,6 +13,8 @@ public class Fine {
 
     @Expose
     private BigDecimal value;
+    @Expose(serialize = false)
+    private TypeValue type;
 
     public Fine() {
     }

@@ -19,11 +19,11 @@ public class JsonUtil {
 
     public static Object parse(String json, Class clazz, Boolean showLog) {
         String dateFormat = "";
-        if (isDateBR(json)) {
             dateFormat = "dd/MM/yyyy";
+        /*if (isDateBR(json)) {
         } else {
             dateFormat = "yyyy-MM-dd";
-        }
+        }*/
         if (gson == null) {
             gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()

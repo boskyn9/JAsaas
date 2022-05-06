@@ -43,6 +43,8 @@ public final class Customer {
     @Expose
     private String stateInscription;
     @Expose
+    private String observations;
+    @Expose
     private String groupName;
 
     @Expose(serialize = false)
@@ -348,6 +350,22 @@ public final class Customer {
 
     /**
      *
+     * @return observations Observações adicionais
+     */
+    public String getObservations() {
+        return observations;
+    }
+
+    /**
+     * 
+     * @param observations Observações adicionais
+     */
+    public void setObservations(String observations) {
+        this.observations = observations;
+    }
+
+     /**
+     *
      * @return groupName Nome do grupo ao qual o cliente pertence
      */
     public String getGroupName() {
@@ -355,13 +373,13 @@ public final class Customer {
     }
 
     /**
-     * 
+     *
      * @param groupName Nome do grupo ao qual o cliente pertence
      */
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
-    
+
     @Override
     public String toString() {
         return "Customer{" + "id=" + id + ", name=" + name + ", cpfCnpj=" + cpfCnpj + ", email=" + email + ", phone=" + phone + ", mobilePhone=" + mobilePhone + ", address=" + address + ", addressNumber=" + addressNumber + ", complement=" + complement + ", province=" + province + ", postalCode=" + postalCode + ", externalReference=" + externalReference + ", notificationDisabled=" + notificationDisabled + ", additionalEmails=" + additionalEmails + ", municipalInscription=" + municipalInscription + ", stateInscription=" + stateInscription + ", groupName=" + groupName + ", city=" + city + ", state=" + state + ", country=" + country + ", deleted=" + deleted + ", dateCreated=" + dateCreated + '}';

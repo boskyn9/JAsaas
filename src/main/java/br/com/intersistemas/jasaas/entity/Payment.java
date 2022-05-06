@@ -42,13 +42,21 @@ public final class Payment {
     private Interest interest;
     @Expose
     private Fine fine;
+    @Expose
+    private Boolean postalService = false;
 
     @Expose(serialize = false)
     private Date dateCreated;
     @Expose(serialize = false)
+    private Date creditDate;
+    @Expose(serialize = false)
+    private Date estimatedCreditDate;
+    @Expose(serialize = false)
     private String subscription;
     @Expose(serialize = false)
     private String installment;
+    @Expose(serialize = false)
+    private String paymentLink;
     @Expose(serialize = false)
     private BigDecimal netValue;
     @Expose(serialize = false)
@@ -67,6 +75,10 @@ public final class Payment {
     @Expose(serialize = false)
     private Date clientPaymentDate;
     @Expose(serialize = false)
+    private Date lastInvoiceViewedDate;
+    @Expose(serialize = false)
+    private Date lastBankSlipViewedDate;
+    @Expose(serialize = false)
     private String invoiceUrl;
     @Expose(serialize = false)
     private String bankSlipUrl;
@@ -74,6 +86,8 @@ public final class Payment {
     private String invoiceNumber;
     @Expose(serialize = false)
     private Boolean deleted;
+    @Expose(serialize = false)
+    private String transactionReceiptUrl;
 
     @Expose
     private CreditCard creditCard;
@@ -81,6 +95,11 @@ public final class Payment {
     private CreditCardHolderInfo creditCardHolderInfo;
     @Expose
     private String remoteIp;
+
+    @Expose(serialize = false)
+    private ChargeBack chargeback;
+    @Expose(serialize = false)
+    private Refund refunds;
 
     @Expose
     private List<Split> split;// = new ArrayList<>();
