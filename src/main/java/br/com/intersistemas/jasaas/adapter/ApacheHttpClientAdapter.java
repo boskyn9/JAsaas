@@ -6,6 +6,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -26,7 +28,15 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
 
     public ApacheHttpClientAdapter(String acessToken) {
         this.accessToken = acessToken;
-        httpclient = HttpClients.createDefault();
+        httpclient = HttpClients
+            .custom()
+            .setDefaultRequestConfig(
+                RequestConfig
+                    .custom()
+                    .setCookieSpec(CookieSpecs.STANDARD)
+                    .build()
+            )
+            .build();
     }
 
     @Override
