@@ -6,6 +6,7 @@ import br.com.intersistemas.jasaas.api.CustomerConnection;
 import br.com.intersistemas.jasaas.api.PaymentConnection;
 import br.com.intersistemas.jasaas.entity.Customer;
 import br.com.intersistemas.jasaas.entity.Discount;
+import br.com.intersistemas.jasaas.entity.PixQrCode;
 import br.com.intersistemas.jasaas.entity.Payment;
 import br.com.intersistemas.jasaas.entity.meta.WebhookPayment;
 import br.com.intersistemas.jasaas.util.BillingType;
@@ -36,8 +37,15 @@ public class Teste {
 //        WebhookPayment whp = Webhook.parseToPayment(dataJson);
 //        System.out.println(whp.getEvent());
 //        System.out.println(whp.getPayment().toString());      
-        //tipos 0 getpayment, 1 payment create, 2 get customer, 3 creat customer
-        int tipo = 1;
+        // tipos:
+        // 0 getpayment,
+        // 1 payment create,
+        // 2 get customer,
+        // 3 creat customer,
+        // 4 create pix charge,
+        // 5 create pix key
+        // 6 get qrcode from payment
+        int tipo = 6;
 
         switch (tipo) {
             case 0:
@@ -80,15 +88,15 @@ public class Teste {
 //        }
             case 1:
                 Payment p = new Payment();
-                p.setCustomer("cus_000000064959");
+                p.setCustomer("cus_000005031717");
                 p.setBillingType(BillingType.BOLETO);
                 p.setValue(new BigDecimal("100.00"));
                 Calendar calendar = Calendar.getInstance();
                 //        calendar.set(Calendar.HOUR_OF_DAY, 0);
-//        calendar.set(Calendar.MINUTE, 0);
-//        calendar.set(Calendar.SECOND, 0);
-//        calendar.set(Calendar.MILLISECOND, 0);
-//        calendar.set(Calendar.DAY_OF_MONTH, 04);
+                //        calendar.set(Calendar.MINUTE, 0);
+                //        calendar.set(Calendar.SECOND, 0);
+                //        calendar.set(Calendar.MILLISECOND, 0);
+                //        calendar.set(Calendar.DAY_OF_MONTH, 04);
                 p.setDueDate(calendar.getTime());
                 p.setDescription("Teste boleto com desconto 20.0");
                 p.setDiscount(new Discount(new BigDecimal("20"), 0, DiscountType.FIXED));
@@ -102,7 +110,7 @@ public class Teste {
                 break;
             case 2:
                 try {
-                    Customer custo = conn.getById("cus_000000064959");
+                    Customer custo = conn.getById("cus_000005031717");
                     System.out.println(custo);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -117,6 +125,36 @@ public class Teste {
                 System.out.println("##################################");
                 System.out.println(cCreated);
                 System.out.println("##################################");
+                break;
+            case 4:
+                // create pix charge
+                Payment p2 = new Payment();
+                p2.setCustomer("cus_000005031717");
+                p2.setBillingType(BillingType.PIX);
+                p2.setValue(new BigDecimal("100.00"));
+                Calendar calendar2 = Calendar.getInstance();
+                //        calendar2.set(Calendar.HOUR_OF_DAY, 0);
+                //        calendar2.set(Calendar.MINUTE, 0);
+                //        calendar2.set(Calendar.SECOND, 0);
+                //        calendar2.set(Calendar.MILLISECOND, 0);
+                //        calendar2.set(Calendar.DAY_OF_MONTH, 04);
+                p2.setDueDate(calendar2.getTime());
+                p2.setDescription("Teste boleto com desconto 20.0");
+                p2.setDiscount(new Discount(new BigDecimal("20"), 0, DiscountType.FIXED));
+                p2.setExternalReference("bol_2020");
+                try {
+                    Payment pCreated = connPay.createPayment(p2);
+                    System.out.println(pCreated);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 5:
+                // create pix key
+                break;
+            case 6:
+                // get pix qrcode
+                PixQrCode pqc = connPay.getPixQrCodeByPaymentId("pay_9592606227139178");
                 break;
             default:
                 break;
