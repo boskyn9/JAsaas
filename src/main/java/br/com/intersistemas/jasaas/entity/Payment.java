@@ -42,6 +42,32 @@ public final class Payment {
     private Interest interest;
     @Expose
     private Fine fine;
+    @Expose
+    private String paymentLink;
+    @Expose
+    private String pixTransaction;
+    @Expose
+    private String installmentNumber;
+    @Expose
+    private Date creditDate;
+    @Expose
+    private Date estimatedCreditDate;
+    @Expose
+    private String transactionReceiptUrl;
+    @Expose
+    private Boolean anticipated;
+    @Expose
+    private Boolean anticipable;
+    @Expose
+    private Date lastInvoiceViewedDate;
+    @Expose
+    private Date lastBankSlipViewedDate;
+    @Expose
+    private Boolean postalService;
+    @Expose
+    private Chargeback chargeback;
+    @Expose
+    private List<Refund> refunds;
 
     @Expose(serialize = false)
     private Date dateCreated;
@@ -140,6 +166,221 @@ public final class Payment {
      */
     public void setInstallment(String installment) {
         this.installment = installment;
+    }
+
+    /**
+     *
+     * @return Identificador único do link de pagamentos ao qual a cobrança
+     * pertence
+     */
+    public String getPaymentLink() {
+        return paymentLink;
+    }
+
+    /**
+     *
+     * @param paymentLink Identificador único do link de pagamentos ao qual
+     * a cobrança pertence
+     */
+    public void setPaymentLink(String paymentLink) {
+        this.paymentLink = paymentLink;
+    }
+    
+    /**
+     *
+     * @return Identificador único da transação Pix à qual a cobrança pertence
+     */
+    public String getPixTransaction() {
+        return pixTransaction;
+    }
+
+    /**
+     *
+     * @param pixTransaction Identificador único da transação Pix à qual a
+     * cobrança pertence
+     */
+    public void setPixTransaction(String pixTransaction) {
+        this.pixTransaction = pixTransaction;
+    }
+
+    /**
+     *
+     * @return Número da parcela
+     */
+    public String getInstallmentNumber() {
+        return installmentNumber;
+    }
+
+    /**
+     *
+     * @param installmentNumber Número da parcela
+     */
+    public void setInstallmentNumber(String installmentNumber) {
+        this.installmentNumber = installmentNumber;
+    }
+
+    /**
+     *
+     * @return creditDate
+     */
+    public Date getCreditDate() {
+        return creditDate;
+    }
+
+    /**
+     *
+     * @param creditDate
+     */
+    public void setCreditDate(Date creditDate) {
+        this.creditDate = creditDate;
+    }
+
+    /**
+     *
+     * @return estimatedCreditDate
+     */
+    public Date getEstimatedCreditDate() {
+        return estimatedCreditDate;
+    }
+
+    /**
+     *
+     * @param estimatedCreditDate
+     */
+    public void setEstimatedCreditDate(Date estimatedCreditDate) {
+        this.estimatedCreditDate = estimatedCreditDate;
+    }
+
+    /**
+     *
+     * @return URL do comprovante de confirmação, recebimento, estorno ou
+     * remoção.
+     */
+    public String getTransactionReceiptUrl() {
+        return transactionReceiptUrl;
+    }
+
+    /**
+     *
+     * @param transactionReceiptUrl URL do comprovante de confirmação, recebimento,
+     * estorno ou remoção.
+     */
+    public void setTransactionReceiptUrl(String transactionReceiptUrl) {
+        this.transactionReceiptUrl = transactionReceiptUrl;
+    }
+
+    /**
+     *
+     * @return Se a cobrança foi antecipada ou está em processo de antecipação
+     * remoção.
+     */
+    public Boolean getAnticipated() {
+        return anticipated;
+    }
+
+    /**
+     *
+     * @param anticipated Define se a cobrança foi antecipada ou está em
+     * processo de antecipação
+     */
+    public void setAnticipated(Boolean anticipated) {
+        this.anticipated = anticipated;
+    }
+
+    /**
+     *
+     * @return Se a cobrança pode antecipada
+     */
+    public Boolean getAnticipable() {
+        return anticipable;
+    }
+
+    /**
+     *
+     * @param anticipable Define se a cobrança pode antecipada
+     */
+    public void setAnticipable(Boolean anticipable) {
+        this.anticipable = anticipable;
+    }
+
+    /**
+     *
+     * @return lastBankSlipViewedDate
+     */
+    public Date getLastBankSlipViewedDate() {
+        return lastBankSlipViewedDate;
+    }
+
+    /**
+     *
+     * @param lastBankSlipViewedDate
+     */
+    public void setLastBankSlipViewedDate(Date lastBankSlipViewedDate) {
+        this.lastBankSlipViewedDate = lastBankSlipViewedDate;
+    }
+
+    /**
+     *
+     * @return lastInvoiceViewedDate
+     */
+    public Date getLastInvoiceViewedDate() {
+        return lastInvoiceViewedDate;
+    }
+
+    /**
+     *
+     * @param lastInvoiceViewedDate
+     */
+    public void setLastInvoiceViewedDate(Date lastInvoiceViewedDate) {
+        this.lastInvoiceViewedDate = lastInvoiceViewedDate;
+    }
+
+    /**
+     *
+     * @return Se a cobrança será enviada via Correios
+     */
+    public Boolean getPostalService() {
+        return postalService;
+    }
+
+    /**
+     *
+     * @param postalService Define se a cobrança será enviada via Correios
+     */
+    public void setPostalService(Boolean postalService) {
+        this.postalService = postalService;
+    }
+
+    /**
+     *
+     * @return Informações de estorno se possuir
+     */
+    public Chargeback getChargeback() {
+        return chargeback;
+    }
+
+    /**
+     *
+     * @param chargeback Informações de estorno se possuir
+     */
+    public void setChargeback(Chargeback chargeback) {
+        this.chargeback = chargeback;
+    }
+
+    /**
+     *
+     * @return Estornos realizados
+     */
+    public List<Refund> getRefunds() {
+        return refunds;
+    }
+
+    /**
+     *
+     * @param refunds Estornos realizados
+     */
+    public void setRefunds(List<Refund> refunds) {
+        this.refunds = refunds;
     }
 
     /**
@@ -429,20 +670,60 @@ public final class Payment {
 
     @Override
     public String toString() {
-        return "Payment{" + "id=" + id + ", customer=" + customer + ", billingType=" + billingType + ", value=" + value + ", dueDate=" + dueDate + ", description=" + description + ", externalReference=" + externalReference + ", installmentCount=" + installmentCount + ", installmentValue=" + installmentValue + ", discount=" + discount + ", interest=" + interest + ", fine=" + fine + ", dateCreated=" + dateCreated + ", subscription=" + subscription + ", installment=" + installment + ", netValue=" + netValue + ", status=" + status + ", originalDueDate=" + originalDueDate + ", originalValue=" + originalValue + ", interestValue=" + interestValue + ", confirmedDate=" + confirmedDate + ", paymentDate=" + paymentDate + ", clientPaymentDate=" + clientPaymentDate + ", invoiceUrl=" + invoiceUrl + ", bankSlipUrl=" + bankSlipUrl + ", invoiceNumber=" + invoiceNumber + ", deleted=" + deleted + ", creditCard=" + creditCard + ", creditCardHolderInfo=" + creditCardHolderInfo + ", remoteIp=" + remoteIp + ", split=" + split + '}';
+        return "Payment{" +
+        "id=" + id +
+        ", customer=" + customer +
+        ", billingType=" + billingType +
+        ", value=" + value +
+        ", dueDate=" + dueDate +
+        ", description=" + description +
+        ", externalReference=" + externalReference +
+        ", installmentCount=" + installmentCount +
+        ", installmentValue=" + installmentValue +
+        ", discount=" + discount +
+        ", interest=" + interest +
+        ", fine=" + fine +
+        ", paymentLink=" + paymentLink +
+        ", pixTransaction=" + pixTransaction +
+        ", installmentNumber=" + installmentNumber +
+        ", creditDate=" + creditDate +
+        ", estimatedCreditDate=" + estimatedCreditDate +
+        ", transactionReceiptUrl=" + transactionReceiptUrl +
+        ", anticipated=" + anticipated +
+        ", anticipable=" + anticipable +
+        ", lastInvoiceViewedDate=" + lastInvoiceViewedDate +
+        ", lastBankSlipViewedDate=" + lastBankSlipViewedDate +
+        ", postalService=" + postalService +
+        ", chargeback=" + chargeback +
+        ", refunds=" + refunds +
+        ", dateCreated=" + dateCreated +
+        ", subscription=" + subscription +
+        ", installment=" + installment +
+        ", netValue=" + netValue +
+        ", status=" + status +
+        ", originalDueDate=" + originalDueDate +
+        ", originalValue=" + originalValue +
+        ", interestValue=" + interestValue +
+        ", confirmedDate=" + confirmedDate +
+        ", paymentDate=" + paymentDate +
+        ", clientPaymentDate=" + clientPaymentDate +
+        ", invoiceUrl=" + invoiceUrl +
+        ", bankSlipUrl=" + bankSlipUrl +
+        ", invoiceNumber=" + invoiceNumber +
+        ", deleted=" + deleted +
+        ", creditCard=" + creditCard +
+        ", creditCardHolderInfo=" + creditCardHolderInfo +
+        ", remoteIp=" + remoteIp +
+        ", split=" + split +
+        '}';
     }
 
     public void validate() {
-        //System.out.println("VALIDACAO DO PAYMENT ANTES DO ENVIO");
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-//        System.out.println("dueDate: " + dueDate);
-//        System.out.println("dueDate: " + dueDate.getTime());
-//        System.out.println("calendar.getTime(): " + calendar.getTime());
-//        System.out.println("calendar.getTime(): " + calendar.getTime().getTime());
         if (dueDate.before(calendar.getTime())) {
             throw new PaymentException(500, "Data de vencimento inválida. A data de vencimento deve ser maior ou igual a hoje. Data informada: " + dueDate);
         }
