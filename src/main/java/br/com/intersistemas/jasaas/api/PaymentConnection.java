@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 import br.com.intersistemas.jasaas.entity.Payment;
+import br.com.intersistemas.jasaas.entity.PixQrCode;
 import br.com.intersistemas.jasaas.entity.filter.PaymentFilter;
 import br.com.intersistemas.jasaas.entity.meta.DeletedEntityReturn;
 import br.com.intersistemas.jasaas.entity.meta.MetaError;
@@ -192,4 +193,8 @@ public class PaymentConnection extends AbstractConnection {
         }
     }
 
+    public PixQrCode getPixQrCodeByPaymentId(String paymentId) throws ConnectionException {
+        lastResponseJson = adapter.get(endpoint + "/payments/" + paymentId + "/pixQrCode");
+        return (PixQrCode) JsonUtil.parse(lastResponseJson, PixQrCode.class);
+    }
 }
