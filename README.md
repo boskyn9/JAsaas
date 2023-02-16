@@ -16,9 +16,9 @@ Endpoint
 Caso queira usar a API em modo teste basta especificar o `ambiente` no momento em que o cliente é instanciado.
 
 ```java
-Asaas asaas = new Asaas(new ApacheHttpClientAdapter(acessToken), Asaas.AMBIENTE_HOMOLOGACAO);
+Asaas asaas = new Asaas(Ambiente.SANDBOX, "YOUR_API_KEY_SANDBOX");
 ou
-Asaas asaas = new Asaas(new ApacheHttpClientAdapter(acessToken), Asaas.AMBIENTE_PRODUCAO);
+Asaas asaas = new Asaas(Ambiente.PRODUCTION, "YOUR_API_KEY_PRODUCTION");
 ```
 
 
