@@ -1,7 +1,6 @@
 package br.com.jasaas.teste;
 
 import br.com.jasaas.api.Asaas;
-import br.com.intersistemas.jasaas.entity.*;
 import br.com.jasaas.entity.Customer;
 import br.com.jasaas.entity.filter.PaymentFilter;
 import br.com.jasaas.enumeration.Ambiente;
