@@ -1,8 +1,8 @@
 package br.com.jasaas.entity;
 
-import br.com.jasaas.util.BillingType;
-import br.com.jasaas.util.Cycle;
-import br.com.jasaas.util.SubscriptionStatus;
+import br.com.jasaas.enumeration.BillingType;
+import br.com.jasaas.enumeration.Cycle;
+import br.com.jasaas.enumeration.SubscriptionStatus;
 import com.google.gson.annotations.Expose;
 
 import java.math.BigDecimal;
@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author bosco
  */
-public final class Subscription {
+public final class Subscription extends AsaasEntity<String> {
 
     @Expose
     private String id;
@@ -55,6 +55,11 @@ public final class Subscription {
     private CreditCardHolderInfo creditCardHolderInfo;
     @Expose
     private String remoteIp;
+
+    @Override
+    public boolean recordCreated() {
+        return id != null;
+    }
 
     /**
      *

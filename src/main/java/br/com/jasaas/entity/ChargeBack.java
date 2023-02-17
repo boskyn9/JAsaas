@@ -1,6 +1,6 @@
 package br.com.jasaas.entity;
 
-import br.com.jasaas.util.ChargeBackStatus;
+import br.com.jasaas.enumeration.ChargeBackStatus;
 import com.google.gson.annotations.Expose;
 
 /**

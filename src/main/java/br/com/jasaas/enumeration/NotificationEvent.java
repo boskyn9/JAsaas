@@ -1,4 +1,4 @@
-package br.com.jasaas.util;
+package br.com.jasaas.enumeration;
 
 /**
  * Tipo de evento

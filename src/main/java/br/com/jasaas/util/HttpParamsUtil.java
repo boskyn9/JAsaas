@@ -1,7 +1,8 @@
 package br.com.jasaas.util;
 
-import java.lang.reflect.Field;
 import org.apache.http.client.utils.URIBuilder;
+
+import java.lang.reflect.Field;
 
 /**
  *

@@ -1,75 +1,28 @@
 package br.com.jasaas.api;
 
+import br.com.jasaas.adapter.AdapterConnection;
+import br.com.jasaas.entity.Payment;
+import br.com.jasaas.entity.PaymentIdentificationField;
+import br.com.jasaas.entity.PaymentPixQrCode;
+import br.com.jasaas.entity.filter.PaymentFilter;
+import br.com.jasaas.entity.meta.MetaPayment;
 import br.com.jasaas.enumeration.Ambiente;
 import br.com.jasaas.enumeration.EndpointEnum;
 import br.com.jasaas.exception.ConnectionException;
-import br.com.jasaas.util.HttpParamsUtil;
 import br.com.jasaas.util.JsonUtil;
+
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import br.com.jasaas.adapter.AdapterConnection;
-import br.com.jasaas.entity.Payment;
-import br.com.jasaas.entity.filter.PaymentFilter;
-import br.com.jasaas.entity.meta.DeletedEntityReturn;
-import br.com.jasaas.entity.meta.MetaError;
-import br.com.jasaas.entity.meta.MetaPayment;
-
-import java.util.Arrays;
 
 /**
  *
  * @author bosco
  */
-public class PaymentConnection extends AbstractConnection {
-
-    private final AdapterConnection httpClient;
-    private final Logger logger = Logger.getLogger(PaymentConnection.class.getName());
+public class PaymentConnection extends AsaasConnection<Payment, PaymentFilter> {
 
     public PaymentConnection(AdapterConnection httpClient, Ambiente ambiente) {
-        super(ambiente);
-        this.httpClient = httpClient;
-    }
-
-    public List<Payment> getAll() throws ConnectionException {
-        return getAll(null, null, null);
-    }
-
-    public List<Payment> getAll(PaymentFilter paymentFilter) throws ConnectionException {
-        return getAll(paymentFilter, null, null);
-    }
-
-    public List<Payment> getAll(PaymentFilter paymentFilter, Integer limit, Integer offset) throws ConnectionException {
-        try {
-            if (limit == null) {
-                limit = 10;
-            }
-            if (offset == null) {
-                offset = 0;
-            }
-            String params = HttpParamsUtil.parse(paymentFilter);
-            String url = String.format(super.templateGet, this.ambiente.getEndpoint(), EndpointEnum.PAYMENT.getEndpoint(), params, limit, offset);
-            this.logger.log(Level.INFO, "GET URL: {0}", url);
-            lastResponseJson = httpClient.get(url);
-            this.logger.log(Level.INFO, "GET RESPONSE: {0}", lastResponseJson);
-            MetaPayment meta = (MetaPayment) JsonUtil.parse(lastResponseJson, MetaPayment.class);
-            setHasMore(meta.getHasMore());
-            setLimit(meta.getLimit());
-            setOffset(meta.getOffset());
-            List<Payment> payments = Arrays.asList(meta.getData());
-            return payments;
-        } catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException ex) {
-            this.logger.log(Level.SEVERE, null, ex);
-            throw new ConnectionException(500, ex.getMessage());
-        }
-    }
-
-    public Payment getById(String id) throws ConnectionException {
-        String url = String.format(super.templateGet, this.ambiente.getEndpoint(), EndpointEnum.PAYMENT.getEndpoint(), id);
-        this.logger.log(Level.INFO, "GET URL: {0}", url);
-        lastResponseJson = httpClient.get(url);
-        this.logger.log(Level.INFO, "GET RESPONSE: {0}", lastResponseJson);
-        return (Payment) JsonUtil.parse(lastResponseJson, Payment.class);
+        super(ambiente, httpClient, EndpointEnum.PAYMENT);
+        this.metaGenericClass = MetaPayment.class;
     }
 
     public List<Payment> getByPayment(String customer_id) throws ConnectionException {
@@ -82,11 +35,10 @@ public class PaymentConnection extends AbstractConnection {
         setHasMore(meta.getHasMore());
         setLimit(meta.getLimit());
         setOffset(meta.getOffset());
-        Payment[] contentList = meta.getData();
-        if (contentList.length == 0) {
+        if (meta.getData().isEmpty()) {
             return null;
         }
-        return Arrays.asList(contentList);
+        return meta.getData();
     }
 
     public List<Payment> getByExternalReference(String externalReference) throws ConnectionException {
@@ -95,11 +47,10 @@ public class PaymentConnection extends AbstractConnection {
         lastResponseJson = httpClient.get(url);
         this.logger.log(Level.INFO, "GET RESPONSE: {0}", lastResponseJson);
         MetaPayment meta = (MetaPayment) JsonUtil.parse(lastResponseJson, MetaPayment.class);
-        Payment[] contentList = meta.getData();
-        if (contentList.length == 0) {
+        if (meta.getData().isEmpty()) {
             return null;
         }
-        return Arrays.asList(contentList);
+        return meta.getData();
     }
 
     public List<Payment> getBySubscriptions(String subscription_id) throws ConnectionException {
@@ -112,11 +63,10 @@ public class PaymentConnection extends AbstractConnection {
         setHasMore(meta.getHasMore());
         setLimit(meta.getLimit());
         setOffset(meta.getOffset());
-        Payment[] contentList = meta.getData();
-        if (contentList.length == 0) {
+        if (meta.getData().isEmpty()) {
             return null;
         }
-        return Arrays.asList(contentList);
+        return meta.getData();
     }
 
     public List<Payment> getByInstallment(String installment) throws ConnectionException {
@@ -128,71 +78,68 @@ public class PaymentConnection extends AbstractConnection {
         setHasMore(meta.getHasMore());
         setLimit(meta.getLimit());
         setOffset(meta.getOffset());
-        Payment[] contentList = meta.getData();
-        if (contentList.length == 0) {
+        if (meta.getData().isEmpty()) {
             return null;
         }
-        return Arrays.asList(contentList);
+        return meta.getData();
     }
 
     public Payment createPayment(Payment payment) throws ConnectionException {
-        if (payment.getId() == null) {
-            try {
-                payment.validate();
-                String paymentJSON = JsonUtil.toJSON(payment);
-                String url = String.format(this.templateCreate, this.ambiente.getEndpoint(), EndpointEnum.PAYMENT.getEndpoint());
-                this.logger.log(Level.INFO, "POST URL: {0}", url);
-                this.logger.log(Level.INFO, "POST PAYLOAD: {0}", paymentJSON);
-                lastResponseJson = httpClient.post(url, paymentJSON);
-                this.logger.log(Level.INFO, "POST RESPONSE: {0}", lastResponseJson);
-                Payment paymentCreated = (Payment) JsonUtil.parse(lastResponseJson, Payment.class);
-                if (paymentCreated.getId() == null) {
-                    MetaError error = (MetaError) JsonUtil.parse(lastResponseJson, MetaError.class);
-                    throw new ConnectionException(500, error.toString());
-                }
-                return paymentCreated;
-            } catch (Exception ex) {
-                this.logger.log(Level.SEVERE, null, ex);
-                throw new ConnectionException(500, ex.getMessage());
-            }
-        } else {
-            throw new ConnectionException(500, "You should not enter the id in the entity to create it.");
-        }
+        return create(payment);
     }
 
     public Payment updatePayment(Payment payment) throws ConnectionException {
-        try {
-            String paymentJSON = JsonUtil.toJSON(payment);
-            payment.validate();
-            String url = String.format(this.templateUpdate, this.ambiente.getEndpoint(), EndpointEnum.PAYMENT.getEndpoint(), payment.getId());
-            this.logger.log(Level.INFO, "POST URL: {0}", url);
-            this.logger.log(Level.INFO, "POST PAYLOAD: {0}", paymentJSON);
-            lastResponseJson = httpClient.post(url, paymentJSON);
-            this.logger.log(Level.INFO, "POST RESPONSE: {0}", lastResponseJson);
-            Payment paymentUpdated = (Payment) JsonUtil.parse(lastResponseJson, Payment.class);
-            if (paymentUpdated.getId() == null) {
-                MetaError error = (MetaError) JsonUtil.parse(lastResponseJson, MetaError.class);
-                throw new ConnectionException(500, error.toString());
-            }
-            return paymentUpdated;
-        } catch (Exception ex) {
-            this.logger.log(Level.SEVERE, null, ex);
-            throw new ConnectionException(500, ex.getMessage());
-        }
+        return update(payment);
     }
 
     public boolean deletePayment(String id) throws ConnectionException {
-        try {
-            String url = String.format(this.templateDelete, this.ambiente.getEndpoint(), EndpointEnum.PAYMENT.getEndpoint(), id);
-            this.logger.log(Level.INFO, "DELETE URL: {0}", url);
-            lastResponseJson = httpClient.delete(url);
-            this.logger.log(Level.INFO, "DELETE RESPONSE: {0}", lastResponseJson);
-            DeletedEntityReturn deleted = (DeletedEntityReturn) JsonUtil.parse(lastResponseJson, DeletedEntityReturn.class);
-            return deleted.getDeleted();
-        } catch (Exception ex) {
-            this.logger.log(Level.SEVERE, null, ex);
-            throw new ConnectionException(500, ex.getMessage());
-        }
+        return delete(id);
+    }
+
+    public Payment refundPayment(String id) throws ConnectionException {
+        String url = String.format("%s/%s/%s/refund", this.ambiente.getEndpoint(), EndpointEnum.PAYMENT.getEndpoint(), id);
+        this.logger.log(Level.INFO, "POST URL: {0}", url);
+        lastResponseJson = httpClient.post(url, null);
+        this.logger.log(Level.INFO, "POST RESPONSE: {0}", lastResponseJson);
+        return (Payment) JsonUtil.parse(lastResponseJson, Payment.class);
+    }
+
+    public PaymentIdentificationField identificationField(String id) throws ConnectionException {
+        //todo: testar
+        String url = String.format("%s/%s/%s/identificationField", this.ambiente.getEndpoint(), EndpointEnum.PAYMENT.getEndpoint(), id);
+        this.logger.log(Level.INFO, "POST URL: {0}", url);
+        lastResponseJson = httpClient.post(url, null);
+        this.logger.log(Level.INFO, "POST RESPONSE: {0}", lastResponseJson);
+        return (PaymentIdentificationField) JsonUtil.parse(lastResponseJson, PaymentIdentificationField.class);
+    }
+
+    public PaymentPixQrCode pixQrCode(String id) throws ConnectionException {
+        //todo: testar
+        String url = String.format("%s/%s/%s/pixQrCode", this.ambiente.getEndpoint(), EndpointEnum.PAYMENT.getEndpoint(), id);
+        this.logger.log(Level.INFO, "POST URL: {0}", url);
+        lastResponseJson = httpClient.post(url, null);
+        this.logger.log(Level.INFO, "POST RESPONSE: {0}", lastResponseJson);
+        return (PaymentPixQrCode) JsonUtil.parse(lastResponseJson, PaymentPixQrCode.class);
+    }
+
+    public Object receiveInCash(Object entity) throws ConnectionException {
+        //todo: testar + impl
+        String url = String.format("%s/%s/%s/receiveInCash", this.ambiente.getEndpoint(), EndpointEnum.PAYMENT.getEndpoint(), entity);
+        String json = JsonUtil.toJSON(entity);
+        this.logger.log(Level.INFO, "POST URL: {0}", url);
+        this.logger.log(Level.INFO, "POST JSON: {0}", json);
+        lastResponseJson = httpClient.post(url, json);
+        this.logger.log(Level.INFO, "POST RESPONSE: {0}", lastResponseJson);
+        return JsonUtil.parse(lastResponseJson, Object.class);
+    }
+
+    public Payment undoReceivedInCash(String id) throws ConnectionException {
+        //todo: testar
+        String url = String.format("%s/%s/%s/undoReceivedInCash", this.ambiente.getEndpoint(), EndpointEnum.PAYMENT.getEndpoint(), id);
+        this.logger.log(Level.INFO, "POST URL: {0}", url);
+        lastResponseJson = httpClient.post(url, null);
+        this.logger.log(Level.INFO, "POST RESPONSE: {0}", lastResponseJson);
+        return (Payment) JsonUtil.parse(lastResponseJson, Payment.class);
     }
 
 }

@@ -13,20 +13,16 @@ import br.com.jasaas.exception.ConnectionException;
 import br.com.jasaas.util.JsonUtil;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author atendimento
  */
-public class WebhookConfigConnection extends AbstractConnection {
-
-    private final AdapterConnection httpClient;
-    private final Logger logger = Logger.getLogger(WebhookConfigConnection.class.getName());
+public class WebhookConfigConnection extends AsaasConnection<WebhookConfig, Object> {
 
     public WebhookConfigConnection(AdapterConnection httpClient, Ambiente ambiente) {
-        super(ambiente);
-        this.httpClient = httpClient;
+        super(ambiente, httpClient, EndpointEnum.WEBHOOK);
+        this.metaGenericClass = WebhookConfig.class;
     }
 
     public WebhookConfig get() throws ConnectionException {
@@ -38,22 +34,10 @@ public class WebhookConfigConnection extends AbstractConnection {
     }
 
     public WebhookConfig createWebhookConfig(WebhookConfig webhookConfig) throws ConnectionException {
-        return updateWebhookConfig(webhookConfig);
+        return create(webhookConfig);
     }
 
     public WebhookConfig updateWebhookConfig(WebhookConfig webhookConfig) throws ConnectionException {
-        try {
-            String webhookConfigJSON = JsonUtil.toJSON(webhookConfig);
-            String url = String.format(super.templateCreate, this.ambiente.getEndpoint(), EndpointEnum.WEBHOOK.getEndpoint());
-            this.logger.log(Level.INFO, "POST URL: {0}", url);
-            this.logger.log(Level.INFO, "POST DATA: {0}", webhookConfigJSON);
-            lastResponseJson = httpClient.post(url, webhookConfigJSON);
-            this.logger.log(Level.INFO, "POST RESPONSE: {0}", lastResponseJson);
-            WebhookConfig subscriptionUpdated = (WebhookConfig) JsonUtil.parse(lastResponseJson, WebhookConfig.class);
-            return subscriptionUpdated;
-        } catch (Exception ex) {
-            this.logger.log(Level.SEVERE, null, ex);
-            throw new ConnectionException(500, ex.getMessage());
-        }
+        return update(webhookConfig);
     }
 }

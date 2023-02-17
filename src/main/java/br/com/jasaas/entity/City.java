@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
  *
  * @author bosco
  */
-public final class City {
+public final class City extends AsaasEntity<Integer> {
 
      @Expose private Integer id;
      @Expose private Integer ibgeCode;
@@ -15,6 +15,11 @@ public final class City {
      @Expose private Integer districtCode;
      @Expose private String district;
      @Expose private String state;
+
+    @Override
+    public boolean recordCreated() {
+        return true;
+    }
 
     /**
      * @return id Identificador único da cidade

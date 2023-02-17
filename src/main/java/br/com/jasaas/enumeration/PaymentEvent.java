@@ -1,4 +1,4 @@
-package br.com.jasaas.util;
+package br.com.jasaas.enumeration;
 
 /**
  * É possível utilizar webhook para que seu sistema seja notificado sobre

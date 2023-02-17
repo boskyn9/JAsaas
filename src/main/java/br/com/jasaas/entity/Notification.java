@@ -1,14 +1,14 @@
 package br.com.jasaas.entity;
 
-import br.com.jasaas.util.NotificationEvent;
-import br.com.jasaas.util.ScheduleOffset;
+import br.com.jasaas.enumeration.NotificationEvent;
+import br.com.jasaas.enumeration.ScheduleOffset;
 import com.google.gson.annotations.Expose;
 
 /**
  *
  * @author bosco
  */
-public final class Notification {
+public final class Notification extends AsaasEntity<String> {
 
     @Expose private String id;
     @Expose private String customer;
@@ -20,6 +20,11 @@ public final class Notification {
     @Expose private NotificationEvent event;
     @Expose private ScheduleOffset scheduleOffset;
     @Expose private Boolean deleted;
+
+    @Override
+    public boolean recordCreated() {
+        return id != null;
+    }
 
     /**
      *

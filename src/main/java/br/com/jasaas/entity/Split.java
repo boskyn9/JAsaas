@@ -1,6 +1,7 @@
 package br.com.jasaas.entity;
 
 import com.google.gson.annotations.Expose;
+
 import java.math.BigDecimal;
 
 /**

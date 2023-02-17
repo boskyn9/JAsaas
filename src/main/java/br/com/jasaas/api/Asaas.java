@@ -26,6 +26,10 @@ public class Asaas {
         this.ambiente = ambiente;
     }
 
+    public AccountConnection account() {
+        return new AccountConnection(ambiente, httpClient);
+    }
+
     /**
      * @return CityConnection Classe responsável pela conexão com os serviços de "city".
      */
@@ -37,11 +41,19 @@ public class Asaas {
      * @return CustomerConnection Classe responsável pela conexão com os serviços de "customer". Clientes registrados no asaas.
      */
     public CustomerConnection customer(){
-        return new CustomerConnection(httpClient, ambiente);
+        return new CustomerConnection(ambiente, httpClient);
+    }
+
+    public InvoiceConnection invoce() {
+        return new InvoiceConnection(ambiente, httpClient);
     }
 
     public PaymentConnection payment(){
         return new PaymentConnection(httpClient, ambiente);
+    }
+
+    public PixConnection pix() {
+        return new PixConnection(httpClient, ambiente);
     }
 
     public NotificationConnection notification(){

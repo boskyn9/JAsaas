@@ -1,6 +1,6 @@
 package br.com.jasaas.entity;
 
-import br.com.jasaas.util.RefundStatus;
+import br.com.jasaas.enumeration.RefundStatus;
 import com.google.gson.annotations.Expose;
 
 import java.util.Date;

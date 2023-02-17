@@ -11,7 +11,7 @@ import com.google.gson.annotations.Expose;
  *
  * @author atendimento
  */
-public class WebhookConfig {
+public class WebhookConfig extends AsaasEntity<String> {
 
     @Expose
     String url;
@@ -23,6 +23,11 @@ public class WebhookConfig {
     Boolean enabled;
     @Expose
     Integer apiVersion;
+
+    @Override
+    public boolean recordCreated() {
+        return url != null;
+    }
 
     /**
      *
@@ -107,5 +112,10 @@ public class WebhookConfig {
     @Override
     public String toString() {
         return "WebhookConfig{" + "url=" + url + ", email=" + email + ", interrupted=" + interrupted + ", enabled=" + enabled + ", apiVersion=" + apiVersion + '}';
+    }
+
+    @Override
+    public String getId() {
+        return null;
     }
 }

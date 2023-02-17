@@ -1,9 +1,10 @@
 package br.com.jasaas.entity;
 
+import br.com.jasaas.enumeration.BillingType;
+import br.com.jasaas.enumeration.PaymentStatus;
 import br.com.jasaas.exception.PaymentException;
-import br.com.jasaas.util.BillingType;
-import br.com.jasaas.util.PaymentStatus;
 import com.google.gson.annotations.Expose;
+
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @author bosco
  */
-public final class Payment {
+public final class Payment extends AsaasEntity<String> {
 
     @Expose(serialize = false)
     private String id;
@@ -101,6 +102,11 @@ public final class Payment {
 
     @Expose
     private List<Split> split;// = new ArrayList<>();
+
+    @Override
+    public boolean recordCreated() {
+        return id != null;
+    }
 
     /**
      *

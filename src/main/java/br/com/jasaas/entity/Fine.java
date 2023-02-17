@@ -1,7 +1,8 @@
 package br.com.jasaas.entity;
 
-import br.com.jasaas.util.TypeValue;
+import br.com.jasaas.enumeration.TypeValue;
 import com.google.gson.annotations.Expose;
+
 import java.math.BigDecimal;
 
 /**

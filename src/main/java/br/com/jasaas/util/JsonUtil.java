@@ -2,6 +2,7 @@ package br.com.jasaas.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import java.lang.reflect.Type;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,11 +20,11 @@ public class JsonUtil {
 
     public static Object parse(String json, Class clazz, Boolean showLog) {
         String dateFormat = "";
+        if (isDateBR(json)) {
             dateFormat = "dd/MM/yyyy";
-        /*if (isDateBR(json)) {
         } else {
             dateFormat = "yyyy-MM-dd";
-        }*/
+        }
         if (gson == null) {
             gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()

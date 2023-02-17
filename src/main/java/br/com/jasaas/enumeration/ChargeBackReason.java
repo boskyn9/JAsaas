@@ -1,4 +1,4 @@
-package br.com.jasaas.util;
+package br.com.jasaas.enumeration;
 
 /**
  * Motivo do chargeback

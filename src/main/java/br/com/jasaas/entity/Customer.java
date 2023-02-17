@@ -2,13 +2,14 @@ package br.com.jasaas.entity;
 
 import br.com.jasaas.exception.CustomerException;
 import com.google.gson.annotations.Expose;
+
 import java.util.Date;
 
 /**
  *
  * @author bosco
  */
-public final class Customer {
+public final class Customer extends AsaasEntity<String> {
 
     @Expose(serialize = false)
     private String id;
@@ -64,6 +65,11 @@ public final class Customer {
     public Customer(String name, String cpfCnpj) {
         this.name = name;
         this.cpfCnpj = cpfCnpj;
+    }
+
+    @Override
+    public boolean recordCreated() {
+        return id != null;
     }
 
     /**

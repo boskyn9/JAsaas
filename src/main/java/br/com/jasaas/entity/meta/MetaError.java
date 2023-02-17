@@ -7,6 +7,7 @@ package br.com.jasaas.entity.meta;
 
 import br.com.jasaas.entity.Erro;
 import com.google.gson.annotations.Expose;
+
 import java.util.Arrays;
 
 /**
