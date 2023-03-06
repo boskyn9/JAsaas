@@ -14,4 +14,12 @@ public class ChargeBack {
     ChargeBackStatus status;
     @Expose(serialize = false)
     ChargeBackStatus reason;
+
+    public ChargeBackStatus getStatus() {
+        return status;
+    }
+
+    public ChargeBackStatus getReason() {
+        return reason;
+    }
 }

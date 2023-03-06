@@ -4,8 +4,8 @@ import br.com.jasaas.adapter.AdapterConnection;
 import br.com.jasaas.entity.Subscription;
 import br.com.jasaas.entity.filter.SubscriptionFilter;
 import br.com.jasaas.entity.meta.MetaSubscription;
-import br.com.jasaas.enumeration.Ambiente;
 import br.com.jasaas.enumeration.EndpointEnum;
+import br.com.jasaas.enumeration.EnvironmentAsaas;
 import br.com.jasaas.exception.ConnectionException;
 import br.com.jasaas.util.JsonUtil;
 
@@ -18,13 +18,13 @@ import java.util.logging.Level;
  */
 public class SubscriptionConnection extends AsaasConnection<Subscription, SubscriptionFilter> {
 
-    public SubscriptionConnection(AdapterConnection httpClient, Ambiente ambiente) {
-        super(ambiente, httpClient, EndpointEnum.SUBSCRIPTION);
+    public SubscriptionConnection(AdapterConnection httpClient, EnvironmentAsaas environmentAsaas) {
+        super(environmentAsaas, httpClient, EndpointEnum.SUBSCRIPTION);
         this.metaGenericClass = MetaSubscription.class;
     }
 
     public List<Subscription> getByCustomer(String customer_id) throws ConnectionException {
-        String url = String.format("%s/%s", this.ambiente.getEndpoint(), EndpointEnum.CUSTOMER_SUBSCRIPTION.getEndpoint());
+        String url = String.format("%s/%s", this.environmentAsaas.getEndpoint(), EndpointEnum.CUSTOMER_SUBSCRIPTION.getEndpoint());
         this.logger.log(Level.INFO, "GET URL: {0}", customer_id);
         lastResponseJson = httpClient.get(url);
         this.logger.log(Level.INFO, "GET RESPONSE: {0}", lastResponseJson);

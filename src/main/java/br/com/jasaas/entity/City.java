@@ -16,11 +16,6 @@ public final class City extends AsaasEntity<Integer> {
      @Expose private String district;
      @Expose private String state;
 
-    @Override
-    public boolean recordCreated() {
-        return true;
-    }
-
     /**
      * @return id Identificador único da cidade
      */

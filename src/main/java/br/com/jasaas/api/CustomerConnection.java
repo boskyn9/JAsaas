@@ -4,15 +4,15 @@ import br.com.jasaas.adapter.AdapterConnection;
 import br.com.jasaas.entity.Customer;
 import br.com.jasaas.entity.filter.CustomerFilter;
 import br.com.jasaas.entity.meta.MetaCustomer;
-import br.com.jasaas.enumeration.Ambiente;
 import br.com.jasaas.enumeration.EndpointEnum;
+import br.com.jasaas.enumeration.EnvironmentAsaas;
 import br.com.jasaas.exception.ConnectionException;
 
 import java.util.List;
 
 public class CustomerConnection extends AsaasConnection<Customer, CustomerFilter> {
-    public CustomerConnection(Ambiente ambiente, AdapterConnection httpClient) {
-        super(ambiente, httpClient, EndpointEnum.CUSTOMER);
+    public CustomerConnection(EnvironmentAsaas environmentAsaas, AdapterConnection httpClient) {
+        super(environmentAsaas, httpClient, EndpointEnum.CUSTOMER);
         this.metaGenericClass = MetaCustomer.class;
     }
 

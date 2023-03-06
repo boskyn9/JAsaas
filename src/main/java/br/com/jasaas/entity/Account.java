@@ -84,11 +84,6 @@ public class Account extends AsaasEntity<String> {
         this.apiKey = apiKey;
     }
 
-    @Override
-    public boolean recordCreated() {
-        return this.apiKey != null && !this.apiKey.isEmpty();
-    }
-
     public String getId() {
         return id;
     }

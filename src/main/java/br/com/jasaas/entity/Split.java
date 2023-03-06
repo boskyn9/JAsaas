@@ -17,6 +17,11 @@ public class Split {
     @Expose
     private BigDecimal percentualValue;
 
+    @Expose(serialize = false)
+    private String status;
+    @Expose(serialize = false)
+    private String refusalReason;
+
     /**
      *
      * @return Identificador da carteira (retornado no momento da criação da
@@ -71,4 +76,11 @@ public class Split {
         this.percentualValue = percentualValue;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public String getRefusalReason() {
+        return refusalReason;
+    }
 }

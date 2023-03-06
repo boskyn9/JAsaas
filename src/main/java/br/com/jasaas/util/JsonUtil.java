@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.Type;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,7 +36,7 @@ public class JsonUtil {
             return gson.fromJson(json, clazz);
         } catch (Exception e) {
             if (showLog) {
-                System.out.println("Error parse gson.fromJson\n" + json);
+                Logger.getLogger(JsonUtil.class.getName()).log(Level.SEVERE, "Error parse gson.fromJson\n" + json, e);
                 e.printStackTrace();
             }
             return null;

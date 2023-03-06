@@ -21,11 +21,6 @@ public final class Notification extends AsaasEntity<String> {
     @Expose private ScheduleOffset scheduleOffset;
     @Expose private Boolean deleted;
 
-    @Override
-    public boolean recordCreated() {
-        return id != null;
-    }
-
     /**
      *
      * @return id Identificador único da notificação

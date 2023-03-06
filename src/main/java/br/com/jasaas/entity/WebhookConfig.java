@@ -22,13 +22,9 @@ public class WebhookConfig extends AsaasEntity<String> {
     @Expose
     Boolean enabled;
     @Expose
-    Integer apiVersion;
-
-    @Override
-    public boolean recordCreated() {
-        return url != null;
-    }
-
+    Integer apiVersion = 3;
+    @Expose
+    String authToken;
     /**
      *
      * @return URL que receberá as informações de sincronização
@@ -117,5 +113,13 @@ public class WebhookConfig extends AsaasEntity<String> {
     @Override
     public String getId() {
         return null;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
     }
 }

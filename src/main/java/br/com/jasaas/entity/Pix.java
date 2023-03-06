@@ -41,11 +41,6 @@ public final class Pix extends AsaasEntity<String> {
     }
 
     @Override
-    public boolean recordCreated() {
-        return id != null;
-    }
-
-    @Override
     public String getId() {
         return id;
     }

@@ -10,6 +10,7 @@ public enum EndpointEnum {
     CUSTOMER_SUBSCRIPTION("customers/{id}/subscriptions"),
     NOTIFICATION("notifications"),
     INVOICE("invoices"),
+    CUSTOMER_FISCAL_INFO("customerFiscalInfo"),
     PAYMENT("payments"),
     PIX("pix/addressKeys"),
     SUBSCRIPTION("subscriptions"),

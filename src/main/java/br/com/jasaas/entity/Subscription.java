@@ -56,11 +56,6 @@ public final class Subscription extends AsaasEntity<String> {
     @Expose
     private String remoteIp;
 
-    @Override
-    public boolean recordCreated() {
-        return id != null;
-    }
-
     /**
      *
      * @return Identificar único da assinatura (Gerado pelo Asaas)

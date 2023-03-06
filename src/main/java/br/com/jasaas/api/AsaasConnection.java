@@ -10,8 +10,8 @@ import br.com.jasaas.entity.AsaasEntity;
 import br.com.jasaas.entity.meta.DeletedEntityReturn;
 import br.com.jasaas.entity.meta.MetaError;
 import br.com.jasaas.entity.meta.MetaGeneric;
-import br.com.jasaas.enumeration.Ambiente;
 import br.com.jasaas.enumeration.EndpointEnum;
+import br.com.jasaas.enumeration.EnvironmentAsaas;
 import br.com.jasaas.exception.ConnectionException;
 import br.com.jasaas.util.HttpParamsUtil;
 import br.com.jasaas.util.JsonUtil;
@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  */
 public abstract class AsaasConnection<T extends AsaasEntity, F> {
 
-    protected final Ambiente ambiente;
+    protected final EnvironmentAsaas environmentAsaas;
     protected final String templateGet = "%s/%s%slimit=%d&offset=%d";
     protected final String templateGetById = "%s/%s/%s";
     protected final String templateCreate = "%s/%s/";
@@ -44,8 +44,8 @@ public abstract class AsaasConnection<T extends AsaasEntity, F> {
     private Boolean hasMore;
     protected String lastResponseJson;
 
-    public AsaasConnection(Ambiente ambiente, AdapterConnection httpClient, EndpointEnum endpoint) {
-        this.ambiente = ambiente;
+    public AsaasConnection(EnvironmentAsaas environmentAsaas, AdapterConnection httpClient, EndpointEnum endpoint) {
+        this.environmentAsaas = environmentAsaas;
         this.httpClient = httpClient;
         this.endpoint = endpoint;
         this.persistentClass = (Class<T>) ((ParameterizedType) getClass()
@@ -98,7 +98,7 @@ public abstract class AsaasConnection<T extends AsaasEntity, F> {
                 offset = 0;
             }
             String params = HttpParamsUtil.parse(filter);
-            String url = String.format(this.templateGet, this.ambiente.getEndpoint(), this.endpoint.getEndpoint(), params, limit, offset);
+            String url = String.format(this.templateGet, this.environmentAsaas.getEndpoint(), this.endpoint.getEndpoint(), params, limit, offset);
             this.logger.log(Level.INFO, "GET URL: {0}", url);
             lastResponseJson = httpClient.get(url);
             this.logger.log(Level.INFO, "GET RESPONSE: {0}", lastResponseJson);
@@ -115,45 +115,73 @@ public abstract class AsaasConnection<T extends AsaasEntity, F> {
 
     public T getById(String id) throws ConnectionException {
         try {
-            String url = String.format(this.templateGetById, this.ambiente.getEndpoint(), this.endpoint.getEndpoint(), id);
+            String url = String.format(this.templateGetById, this.environmentAsaas.getEndpoint(), this.endpoint.getEndpoint(), id);
             this.logger.log(Level.INFO, "GET URL: {0}", url);
             lastResponseJson = httpClient.get(url);
             this.logger.log(Level.INFO, "GET RESPONSE: {0}", lastResponseJson);
             return (T) JsonUtil.parse(lastResponseJson, persistentClass.getClass());
         } catch (Exception ex) {
             this.logger.log(Level.SEVERE, null, ex);
+            if (ex instanceof ConnectionException) {
+                throw ex;
+            }
             throw new ConnectionException(500, ex.getMessage());
         }
     }
 
     public T create(T entity) throws ConnectionException {
-        if (entity.getId() == null) {
-            try {
-                String json = JsonUtil.toJSON(entity);
-                String url = String.format(this.templateCreate, this.ambiente.getEndpoint(), this.endpoint.getEndpoint());
-                this.logger.log(Level.INFO, "POST URL: {0}", url);
-                this.logger.log(Level.INFO, "POST PAYLOAD: {0}", json);
-                lastResponseJson = httpClient.post(url, json);
-                this.logger.log(Level.INFO, "POST RESPONSE: {0}", lastResponseJson);
-                T created = (T) JsonUtil.parse(lastResponseJson, persistentClass);
-                if (created.recordCreated()) {
-                    MetaError error = (MetaError) JsonUtil.parse(lastResponseJson, MetaError.class);
-                    throw new ConnectionException(500, error.toString());
-                }
-                return created;
-            } catch (Exception ex) {
-                this.logger.log(Level.SEVERE, null, ex);
-                throw new ConnectionException(500, ex.getMessage());
+        if (entity.getId() != null) {
+            throw new ConnectionException(500, "You should not enter the id in the entity to create it.", null);
+        }
+        try {
+            String json = JsonUtil.toJSON(entity);
+            String url = String.format(this.templateCreate, this.environmentAsaas.getEndpoint(), this.endpoint.getEndpoint());
+            this.logger.log(Level.INFO, "POST URL: {0}", url);
+            this.logger.log(Level.INFO, "POST PAYLOAD: {0}", json);
+            lastResponseJson = httpClient.post(url, json);
+            this.logger.log(Level.INFO, "POST RESPONSE: {0}", lastResponseJson);
+            T created = (T) JsonUtil.parse(lastResponseJson, persistentClass);
+            if (created.getId() == null) {
+                MetaError error = (MetaError) JsonUtil.parse(lastResponseJson, MetaError.class);
+                throw new ConnectionException(500, error.toString(), error);
             }
-        } else {
-            throw new ConnectionException(500, "You should not enter the id in the entity to create it.");
+            return created;
+        } catch (Exception ex) {
+            this.logger.log(Level.SEVERE, null, ex);
+            if (ex instanceof ConnectionException) {
+                throw ex;
+            }
+            throw new ConnectionException(500, ex.getMessage());
+        }
+    }
+
+    public T createOrUpdate(T entity) throws ConnectionException {
+        try {
+            String json = JsonUtil.toJSON(entity);
+            String url = String.format(this.templateCreate, this.environmentAsaas.getEndpoint(), this.endpoint.getEndpoint());
+            this.logger.log(Level.INFO, "POST URL: {0}", url);
+            this.logger.log(Level.INFO, "POST PAYLOAD: {0}", json);
+            lastResponseJson = httpClient.post(url, json);
+            this.logger.log(Level.INFO, "POST RESPONSE: {0}", lastResponseJson);
+            T created = (T) JsonUtil.parse(lastResponseJson, persistentClass);
+            if (created.getId() == null) {
+                MetaError error = (MetaError) JsonUtil.parse(lastResponseJson, MetaError.class);
+                throw new ConnectionException(500, error.toString(), error);
+            }
+            return created;
+        } catch (Exception ex) {
+            this.logger.log(Level.SEVERE, null, ex);
+            if (ex instanceof ConnectionException) {
+                throw ex;
+            }
+            throw new ConnectionException(500, ex.getMessage());
         }
     }
 
     public T update(T entity) throws ConnectionException {
         try {
             String json = JsonUtil.toJSON(entity);
-            String url = String.format(this.templateUpdate, this.ambiente.getEndpoint(), this.endpoint.getEndpoint(), entity.getId());
+            String url = String.format(this.templateUpdate, this.environmentAsaas.getEndpoint(), this.endpoint.getEndpoint(), entity.getId());
             this.logger.log(Level.INFO, "PUT URL: {0}", url);
             this.logger.log(Level.INFO, "PUT PAYLOAD: {0}", json);
             lastResponseJson = httpClient.post(url, json);
@@ -161,36 +189,65 @@ public abstract class AsaasConnection<T extends AsaasEntity, F> {
             T updated = (T) JsonUtil.parse(lastResponseJson, persistentClass);
             if (updated.getId() == null) {
                 MetaError error = (MetaError) JsonUtil.parse(lastResponseJson, MetaError.class);
-                throw new ConnectionException(500, error.toString());
+                throw new ConnectionException(500, error.toString(), error);
             }
             return updated;
         } catch (Exception ex) {
             this.logger.log(Level.SEVERE, null, ex);
+            if (ex instanceof ConnectionException) {
+                throw ex;
+            }
+            throw new ConnectionException(500, ex.getMessage());
+        }
+    }
+
+    public T updatePut(T entity) throws ConnectionException {
+        try {
+            String json = JsonUtil.toJSON(entity);
+            String url = String.format(this.templateUpdate, this.environmentAsaas.getEndpoint(), this.endpoint.getEndpoint(), entity.getId());
+            this.logger.log(Level.INFO, "PUT URL: {0}", url);
+            this.logger.log(Level.INFO, "PUT PAYLOAD: {0}", json);
+            lastResponseJson = httpClient.put(url, json);
+            this.logger.log(Level.INFO, "PUT RESPONSE: {0}", lastResponseJson);
+            T updated = (T) JsonUtil.parse(lastResponseJson, persistentClass);
+            if (updated.getId() == null) {
+                MetaError error = (MetaError) JsonUtil.parse(lastResponseJson, MetaError.class);
+                throw new ConnectionException(500, error.toString(), error);
+            }
+            return updated;
+        } catch (Exception ex) {
+            this.logger.log(Level.SEVERE, null, ex);
+            if (ex instanceof ConnectionException) {
+                throw ex;
+            }
             throw new ConnectionException(500, ex.getMessage());
         }
     }
 
     public T restore(String id) throws ConnectionException {
         try {
-            String url = String.format(String.format("%s/restore", this.templateUpdate), this.ambiente.getEndpoint(), this.endpoint.getEndpoint(), id);
+            String url = String.format(String.format("%s/restore", this.templateUpdate), this.environmentAsaas.getEndpoint(), this.endpoint.getEndpoint(), id);
             this.logger.log(Level.INFO, "RESTORE URL: {0}", url);
             lastResponseJson = httpClient.post(url, "");
             this.logger.log(Level.INFO, "RESTORE RESPONSE: {0}", lastResponseJson);
             T restored = (T) JsonUtil.parse(lastResponseJson, persistentClass);
             if (restored.getId() == null) {
                 MetaError error = (MetaError) JsonUtil.parse(lastResponseJson, MetaError.class);
-                throw new ConnectionException(500, error.toString());
+                throw new ConnectionException(500, error.toString(), error);
             }
             return restored;
         } catch (Exception ex) {
             this.logger.log(Level.SEVERE, null, ex);
+            if (ex instanceof ConnectionException) {
+                throw ex;
+            }
             throw new ConnectionException(500, ex.getMessage());
         }
     }
 
     public boolean delete(String id) throws ConnectionException {
         try {
-            String url = String.format(this.templateDelete, this.ambiente.getEndpoint(), this.endpoint.getEndpoint(), id);
+            String url = String.format(this.templateDelete, this.environmentAsaas.getEndpoint(), this.endpoint.getEndpoint(), id);
             this.logger.log(Level.INFO, "DELETE URL: {0}", url);
             lastResponseJson = httpClient.delete(url);
             this.logger.log(Level.INFO, "DELETE RESPONSE: {0}", lastResponseJson);
@@ -198,6 +255,9 @@ public abstract class AsaasConnection<T extends AsaasEntity, F> {
             return deleted.getDeleted();
         } catch (Exception ex) {
             this.logger.log(Level.SEVERE, null, ex);
+            if (ex instanceof ConnectionException) {
+                throw ex;
+            }
             throw new ConnectionException(500, ex.getMessage());
         }
     }

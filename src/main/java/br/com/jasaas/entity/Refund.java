@@ -14,6 +14,7 @@ public class Refund {
 
 	@Expose(serialize = false)
 	Date dateCreated;
+
 	@Expose(serialize = false)
 	String value;
 	@Expose(serialize = false)
@@ -23,4 +24,23 @@ public class Refund {
 	@Expose(serialize = false)
 	RefundStatus status;
 
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public String getTransactionReceiptUrl() {
+		return transactionReceiptUrl;
+	}
+
+	public RefundStatus getStatus() {
+		return status;
+	}
 }

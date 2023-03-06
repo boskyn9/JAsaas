@@ -13,7 +13,7 @@ Adicione o jar no classhpath da aplicação.
 Endpoint
 --------
 
-Caso queira usar a API em modo teste basta especificar o `ambiente` no momento em que o cliente é instanciado.
+Caso queira usar a API em modo teste basta especificar o `environmentAsaas` no momento em que o cliente é instanciado.
 
 ```java
 Asaas asaas = new Asaas(Ambiente.SANDBOX, "YOUR_API_KEY_SANDBOX");

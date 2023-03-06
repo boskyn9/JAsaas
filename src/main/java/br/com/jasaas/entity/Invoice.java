@@ -89,12 +89,6 @@ public class Invoice extends AsaasEntity<String> {
         this.municipalServiceName = municipalServiceName;
         this.taxes = taxes;
     }
-
-    @Override
-    public boolean recordCreated() {
-        return id != null;
-    }
-
     @Override
     public String getId() {
         return id;

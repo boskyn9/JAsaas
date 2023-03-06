@@ -67,11 +67,6 @@ public final class Customer extends AsaasEntity<String> {
         this.cpfCnpj = cpfCnpj;
     }
 
-    @Override
-    public boolean recordCreated() {
-        return id != null;
-    }
-
     /**
      * @return id Identificador único do cliente (gerado pelo Asaas, somente
      * leitura))

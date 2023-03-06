@@ -3,10 +3,7 @@ package br.com.jasaas.adapter;
 import br.com.jasaas.exception.ConnectionException;
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -39,7 +36,7 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             CloseableHttpResponse response = httpclient.execute(httpGet);
             StatusLine status = response.getStatusLine();
             if (status.getStatusCode() != 200) {
-                throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase());
+                throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase(), null);
             }
             HttpEntity entity = response.getEntity();
             String retorno = EntityUtils.toString(entity);
@@ -47,7 +44,7 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             return retorno;
         } catch (IOException ex) {
             this.logger.log(Level.SEVERE, null, ex);
-            throw new ConnectionException(500, ex.getMessage());
+            throw new ConnectionException(500, ex.getMessage(), null);
         }
     }
 
@@ -59,7 +56,7 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             CloseableHttpResponse response = httpclient.execute(httpDelete);
             StatusLine status = response.getStatusLine();
             if (status.getStatusCode() != 200) {
-                throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase());
+                throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase(), null);
             }
             HttpEntity entity = response.getEntity();
             String retorno = EntityUtils.toString(entity);
@@ -67,7 +64,7 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             return retorno;
         } catch (IOException ex) {
             this.logger.log(Level.SEVERE, null, ex);
-            throw new ConnectionException(500, ex.getMessage());
+            throw new ConnectionException(500, ex.getMessage(), null);
         }
     }
 
@@ -81,8 +78,8 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             CloseableHttpResponse response = httpclient.execute(httpPost);
             StatusLine status = response.getStatusLine();
             if (status.getStatusCode() != 200 && status.getStatusCode() != 400) {
-                System.out.println(status.getReasonPhrase());
-                throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase());
+                this.logger.log(Level.SEVERE, status.getReasonPhrase());
+                throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase(), null);
             }
             HttpEntity entidade = response.getEntity();
             String retorno = EntityUtils.toString(entidade);
@@ -90,7 +87,30 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             return retorno;
         } catch (IOException ex) {
             this.logger.log(Level.SEVERE, null, ex);
-            throw new ConnectionException(500, ex.getMessage());
+            throw new ConnectionException(500, ex.getMessage(), null);
+        }
+    }
+
+    @Override
+    public String put(String url, String contentJSON) throws ConnectionException {
+        try {
+            HttpPut httpPut = new HttpPut(url);
+            httpPut.addHeader("access_token", accessToken);
+            StringEntity entity = new StringEntity(contentJSON);
+            httpPut.setEntity(entity);
+            CloseableHttpResponse response = httpclient.execute(httpPut);
+            StatusLine status = response.getStatusLine();
+            if (status.getStatusCode() != 200 && status.getStatusCode() != 400) {
+                this.logger.log(Level.SEVERE, status.getReasonPhrase());
+                throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase(), null);
+            }
+            HttpEntity entidade = response.getEntity();
+            String retorno = EntityUtils.toString(entidade);
+            this.logger.log(Level.INFO, retorno);
+            return retorno;
+        } catch (IOException ex) {
+            this.logger.log(Level.SEVERE, null, ex);
+            throw new ConnectionException(500, ex.getMessage(), null);
         }
     }
 }

@@ -62,6 +62,12 @@ public final class Payment extends AsaasEntity<String> {
     private PaymentStatus status;
 
     @Expose(serialize = false)
+    private Boolean canBePaidAfterDueDate;
+    @Expose(serialize = false)
+    private String pixTransaction;
+    @Expose(serialize = false)
+    private String pixQrCodeId;
+    @Expose(serialize = false)
     private Date originalDueDate;
     @Expose(serialize = false)
     private BigDecimal originalValue;
@@ -73,6 +79,10 @@ public final class Payment extends AsaasEntity<String> {
     private Date paymentDate;
     @Expose(serialize = false)
     private Date clientPaymentDate;
+    @Expose(serialize = false)
+    private String installmentNumber;
+    @Expose(serialize = false)
+    private Boolean antecipated;
     @Expose(serialize = false)
     private Date lastInvoiceViewedDate;
     @Expose(serialize = false)
@@ -98,15 +108,10 @@ public final class Payment extends AsaasEntity<String> {
     @Expose(serialize = false)
     private ChargeBack chargeback;
     @Expose(serialize = false)
-    private Refund refunds;
+    private List<Refund> refunds;
 
     @Expose
     private List<Split> split;// = new ArrayList<>();
-
-    @Override
-    public boolean recordCreated() {
-        return id != null;
-    }
 
     /**
      *
@@ -122,6 +127,10 @@ public final class Payment extends AsaasEntity<String> {
      */
     public String getCustomer() {
         return customer;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
@@ -338,6 +347,42 @@ public final class Payment extends AsaasEntity<String> {
         return externalReference;
     }
 
+    public Boolean getPostalService() {
+        return postalService;
+    }
+
+    public Date getCreditDate() {
+        return creditDate;
+    }
+
+    public Date getEstimatedCreditDate() {
+        return estimatedCreditDate;
+    }
+
+    public String getPaymentLink() {
+        return paymentLink;
+    }
+
+    public Date getLastInvoiceViewedDate() {
+        return lastInvoiceViewedDate;
+    }
+
+    public Date getLastBankSlipViewedDate() {
+        return lastBankSlipViewedDate;
+    }
+
+    public String getTransactionReceiptUrl() {
+        return transactionReceiptUrl;
+    }
+
+    public ChargeBack getChargeback() {
+        return chargeback;
+    }
+
+    public List<Refund> getRefunds() {
+        return refunds;
+    }
+
     /**
      *
      * @param externalReference Campo livre, pode ser usado para pesquisa
@@ -448,6 +493,26 @@ public final class Payment extends AsaasEntity<String> {
 
     public void setSplit(List<Split> split) {
         this.split = split;
+    }
+
+    public Boolean getCanBePaidAfterDueDate() {
+        return canBePaidAfterDueDate;
+    }
+
+    public String getPixTransaction() {
+        return pixTransaction;
+    }
+
+    public String getPixQrCodeId() {
+        return pixQrCodeId;
+    }
+
+    public String getInstallmentNumber() {
+        return installmentNumber;
+    }
+
+    public Boolean getAntecipated() {
+        return antecipated;
     }
 
     @Override

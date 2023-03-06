@@ -7,8 +7,8 @@ package br.com.jasaas.api;
 
 import br.com.jasaas.adapter.AdapterConnection;
 import br.com.jasaas.entity.WebhookConfig;
-import br.com.jasaas.enumeration.Ambiente;
 import br.com.jasaas.enumeration.EndpointEnum;
+import br.com.jasaas.enumeration.EnvironmentAsaas;
 import br.com.jasaas.exception.ConnectionException;
 import br.com.jasaas.util.JsonUtil;
 
@@ -20,13 +20,13 @@ import java.util.logging.Level;
  */
 public class WebhookConfigConnection extends AsaasConnection<WebhookConfig, Object> {
 
-    public WebhookConfigConnection(AdapterConnection httpClient, Ambiente ambiente) {
-        super(ambiente, httpClient, EndpointEnum.WEBHOOK);
+    public WebhookConfigConnection(AdapterConnection httpClient, EnvironmentAsaas environmentAsaas) {
+        super(environmentAsaas, httpClient, EndpointEnum.WEBHOOK);
         this.metaGenericClass = WebhookConfig.class;
     }
 
     public WebhookConfig get() throws ConnectionException {
-        String url = String.format(super.templateGet, this.ambiente.getEndpoint(), EndpointEnum.WEBHOOK.getEndpoint());
+        String url = String.format(super.templateGet, this.environmentAsaas.getEndpoint(), EndpointEnum.WEBHOOK.getEndpoint());
         this.logger.log(Level.INFO, "GET URL: {0}", url);
         lastResponseJson = httpClient.get(url);
         this.logger.log(Level.INFO, "GET RESPONSE: {0}", lastResponseJson);

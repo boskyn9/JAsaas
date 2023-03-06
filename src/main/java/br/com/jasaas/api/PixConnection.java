@@ -8,8 +8,8 @@ package br.com.jasaas.api;
 import br.com.jasaas.adapter.AdapterConnection;
 import br.com.jasaas.entity.Pix;
 import br.com.jasaas.entity.filter.PixFilter;
-import br.com.jasaas.enumeration.Ambiente;
 import br.com.jasaas.enumeration.EndpointEnum;
+import br.com.jasaas.enumeration.EnvironmentAsaas;
 
 /**
  *
@@ -17,8 +17,8 @@ import br.com.jasaas.enumeration.EndpointEnum;
  */
 public class PixConnection extends AsaasConnection<Pix, PixFilter> {
 
-    public PixConnection(AdapterConnection httpClient, Ambiente ambiente) {
-        super(ambiente, httpClient, EndpointEnum.PIX);
+    public PixConnection(AdapterConnection httpClient, EnvironmentAsaas environmentAsaas) {
+        super(environmentAsaas, httpClient, EndpointEnum.PIX);
         this.metaGenericClass = Pix.class;
     }
 
