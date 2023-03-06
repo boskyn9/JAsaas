@@ -26,7 +26,7 @@ public class Teste {
 
     public static void main(String[] args) throws URISyntaxException, MalformedURLException, IOException, ClassNotFoundException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
 
-        String acessToken = "";
+        String acessToken = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAwMDU1MjI6OiRhYWNoX2U1NTM0MjFhLTVhYTItNDM4Mi1iMTkzLWExNTZjMTAzNmVkNQ==";
         Asaas asaas = new Asaas(new ApacheHttpClientAdapter(acessToken), Asaas.AMBIENTE_HOMOLOGACAO);
         PaymentConnection connPay = asaas.payment();
         CustomerConnection conn = asaas.customer();
@@ -36,7 +36,7 @@ public class Teste {
 //        System.out.println(whp.getEvent());
 //        System.out.println(whp.getPayment().toString());      
         //tipos 0 getpayment, 1 payment create, 2 get customer, 3 creat customer
-        int tipo = 2;
+        int tipo = 1;
 
         switch (tipo) {
             case 0:
@@ -79,7 +79,7 @@ public class Teste {
 //        }
             case 1:
                 Payment p = new Payment();
-                p.setCustomer("cus_000000064959");
+                p.setCustomer("cus_000005173845");
                 p.setBillingType(BillingType.BOLETO);
                 p.setValue(new BigDecimal("100.00"));
                 Calendar calendar = Calendar.getInstance();
