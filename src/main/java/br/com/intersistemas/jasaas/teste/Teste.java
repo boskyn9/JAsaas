@@ -4,9 +4,7 @@ import br.com.intersistemas.jasaas.adapter.ApacheHttpClientAdapter;
 import br.com.intersistemas.jasaas.api.Asaas;
 import br.com.intersistemas.jasaas.api.CustomerConnection;
 import br.com.intersistemas.jasaas.api.PaymentConnection;
-import br.com.intersistemas.jasaas.entity.Customer;
-import br.com.intersistemas.jasaas.entity.Discount;
-import br.com.intersistemas.jasaas.entity.Payment;
+import br.com.intersistemas.jasaas.entity.*;
 import br.com.intersistemas.jasaas.entity.meta.MetaCustomer;
 import br.com.intersistemas.jasaas.util.BillingType;
 import br.com.intersistemas.jasaas.util.DiscountType;
@@ -43,7 +41,7 @@ public class Teste {
         switch (tipo) {
             case 0:
                 try {
-                    Payment pay = connPay.getById("pay_121566863590");
+                    Payment pay = connPay.getById("pay_123456789");
                     System.out.println(pay);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -81,7 +79,7 @@ public class Teste {
 //        }
             case 1:
                 Payment p = new Payment();
-                p.setCustomer("cus_000000064959");
+                p.setCustomer("cus_123456789");
                 p.setBillingType(BillingType.BOLETO);
                 p.setValue(new BigDecimal("100.00"));
                 Calendar calendar = Calendar.getInstance();
@@ -96,7 +94,13 @@ public class Teste {
                 p.setExternalReference("bol_2020");
                 try {
                     Payment pCreated = connPay.createPayment(p);
+
+                    LinhaBoleto linhaBoleto = connPay.getLinhaBoletoByIdBoleto(pCreated.getId());
+                    QRCodePix qrCodePix = connPay.getQRCodeByIdBoleto(pCreated.getId());
+
                     System.out.println(pCreated);
+                    System.out.println(linhaBoleto);
+                    System.out.println(qrCodePix);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

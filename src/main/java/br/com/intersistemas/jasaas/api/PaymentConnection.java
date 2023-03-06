@@ -1,5 +1,7 @@
 package br.com.intersistemas.jasaas.api;
 
+import br.com.intersistemas.jasaas.entity.LinhaBoleto;
+import br.com.intersistemas.jasaas.entity.QRCodePix;
 import br.com.intersistemas.jasaas.exception.ConnectionException;
 import br.com.intersistemas.jasaas.util.HttpParamsUtil;
 import br.com.intersistemas.jasaas.util.JsonUtil;
@@ -191,5 +193,12 @@ public class PaymentConnection extends AbstractConnection {
             throw new ConnectionException(500, ex.getMessage());
         }
     }
-
+    public LinhaBoleto getLinhaBoletoByIdBoleto(String id) throws ConnectionException {
+        lastResponseJson = adapter.get(endpoint + "/payments/" + id + "/identificationField");
+        return (LinhaBoleto) JsonUtil.parse(lastResponseJson, LinhaBoleto.class);
+    }
+    public QRCodePix getQRCodeByIdBoleto(String id) throws ConnectionException {
+        lastResponseJson = adapter.get(endpoint + "/payments/" + id + "/pixQrCode");
+        return (QRCodePix) JsonUtil.parse(lastResponseJson, QRCodePix.class);
+    }
 }

@@ -5,6 +5,7 @@ import br.com.intersistemas.jasaas.exception.PaymentException;
 import br.com.intersistemas.jasaas.util.BillingType;
 import br.com.intersistemas.jasaas.util.PaymentStatus;
 import com.google.gson.annotations.Expose;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,475 +13,478 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
  * @author bosco
  */
 public final class Payment {
 
-    @Expose(serialize = false)
-    private String id;
+	@Expose(serialize = false)
+	private String id;
 
-    @Expose
-    private String customer;
-    @Expose
-    private BillingType billingType;
-    @Expose
-    private BigDecimal value;
-    @Expose
-    private Date dueDate;
-    @Expose
-    private String description;
-    @Expose
-    private String externalReference;
-    @Expose
-    private Integer installmentCount;
-    @Expose
-    private BigDecimal installmentValue;
-    @Expose
-    private Discount discount;
-    @Expose
-    private Interest interest;
-    @Expose
-    private Fine fine;
-    @Expose
-    private Boolean postalService = false;
+	@Expose
+	private String customer;
+	@Expose
+	private BillingType billingType;
+	@Expose
+	private BigDecimal value;
+	@Expose
+	private Date dueDate;
+	@Expose
+	private String description;
+	@Expose
+	private String externalReference;
+	@Expose
+	private String pixTransaction;
+	@Expose
+	private String pixQrCodeId;
+	@Expose
+	private Integer installmentCount;
+	@Expose
+	private BigDecimal installmentValue;
+	@Expose
+	private Discount discount;
+	@Expose
+	private Interest interest;
+	@Expose
+	private Fine fine;
+	@Expose
+	private Boolean postalService = false;
 
-    @Expose(serialize = false)
-    private Date dateCreated;
-    @Expose(serialize = false)
-    private Date creditDate;
-    @Expose(serialize = false)
-    private Date estimatedCreditDate;
-    @Expose(serialize = false)
-    private String subscription;
-    @Expose(serialize = false)
-    private String installment;
-    @Expose(serialize = false)
-    private String paymentLink;
-    @Expose(serialize = false)
-    private BigDecimal netValue;
-    @Expose(serialize = false)
-    private PaymentStatus status;
+	@Expose(serialize = false)
+	private Date dateCreated;
+	@Expose(serialize = false)
+	private Date creditDate;
+	@Expose(serialize = false)
+	private Date estimatedCreditDate;
+	@Expose(serialize = false)
+	private String subscription;
+	@Expose(serialize = false)
+	private String installment;
+	@Expose(serialize = false)
+	private String paymentLink;
+	@Expose(serialize = false)
+	private BigDecimal netValue;
+	@Expose(serialize = false)
+	private PaymentStatus status;
 
-    @Expose(serialize = false)
-    private Date originalDueDate;
-    @Expose(serialize = false)
-    private BigDecimal originalValue;
-    @Expose(serialize = false)
-    private BigDecimal interestValue;
-    @Expose(serialize = false)
-    private Date confirmedDate;
-    @Expose(serialize = false)
-    private Date paymentDate;
-    @Expose(serialize = false)
-    private Date clientPaymentDate;
-    @Expose(serialize = false)
-    private Date lastInvoiceViewedDate;
-    @Expose(serialize = false)
-    private Date lastBankSlipViewedDate;
-    @Expose(serialize = false)
-    private String invoiceUrl;
-    @Expose(serialize = false)
-    private String bankSlipUrl;
-    @Expose(serialize = false)
-    private String invoiceNumber;
-    @Expose(serialize = false)
-    private Boolean deleted;
-    @Expose(serialize = false)
-    private String transactionReceiptUrl;
+	@Expose(serialize = false)
+	private Date originalDueDate;
+	@Expose(serialize = false)
+	private BigDecimal originalValue;
+	@Expose(serialize = false)
+	private BigDecimal interestValue;
+	@Expose(serialize = false)
+	private Date confirmedDate;
+	@Expose(serialize = false)
+	private Date paymentDate;
+	@Expose(serialize = false)
+	private Date clientPaymentDate;
+	@Expose(serialize = false)
+	private Date lastInvoiceViewedDate;
+	@Expose(serialize = false)
+	private Date lastBankSlipViewedDate;
+	@Expose(serialize = false)
+	private String invoiceUrl;
+	@Expose(serialize = false)
+	private String bankSlipUrl;
+	@Expose(serialize = false)
+	private String invoiceNumber;
+	@Expose(serialize = false)
+	private Boolean deleted;
+	@Expose(serialize = false)
+	private String transactionReceiptUrl;
+	@Expose
+	private CreditCard creditCard;
+	@Expose
+	private CreditCardHolderInfo creditCardHolderInfo;
+	@Expose
+	private String remoteIp;
+	@Expose(serialize = false)
+	private ChargeBack chargeback;
+	@Expose(serialize = false)
+	private Refund refunds;
 
-    @Expose
-    private CreditCard creditCard;
-    @Expose
-    private CreditCardHolderInfo creditCardHolderInfo;
-    @Expose
-    private String remoteIp;
+	@Expose
+	private List<Split> split;// = new ArrayList<>();
 
-    @Expose(serialize = false)
-    private ChargeBack chargeback;
-    @Expose(serialize = false)
-    private Refund refunds;
+	/**
+	 * @return Identificador único da cobrança (Gerado pelo Asaas)
+	 */
+	public String getId() {
+		return id;
+	}
 
-    @Expose
-    private List<Split> split;// = new ArrayList<>();
+	/**
+	 * @return Identificador único do cliente
+	 */
+	public String getCustomer() {
+		return customer;
+	}
 
-    /**
-     *
-     * @return Identificador único da cobrança (Gerado pelo Asaas)
-     */
-    public String getId() {
-        return id;
-    }
+	/**
+	 * @param customer Identificador único do cliente
+	 */
+	public void setCustomer(String customer) {
+		this.customer = customer;
+	}
 
-    /**
-     *
-     * @return Identificador único do cliente
-     */
-    public String getCustomer() {
-        return customer;
-    }
+	/**
+	 * @return Identificador único da transação Pix à qual a cobrança pertence
+	 */
 
-    /**
-     *
-     * @param customer Identificador único do cliente
-     */
-    public void setCustomer(String customer) {
-        this.customer = customer;
-    }
+	public String getPixTransaction() {
+		return pixTransaction;
+	}
 
-    /**
-     *
-     * @return Identificador único da assinatura, quando houver.
-     */
-    public String getSubscription() {
-        return subscription;
-    }
+	/**
+	 * @param pixTransaction Identificador único da transação Pix à qual a cobrança pertence
+	 */
 
-    /**
-     *
-     * @param subscription Identificador único da assinatura, quando houver.
-     */
-    public void setSubscription(String subscription) {
-        this.subscription = subscription;
-    }
+	public void setPixTransaction(String pixTransaction) {
+		this.pixTransaction = pixTransaction;
+	}
 
-    /**
-     *
-     * @return Identificador único do parcelamento (quando cobrança parcelada)
-     */
-    public String getInstallment() {
-        return installment;
-    }
+	/**
+	 * @return Identificador único do QrCode estático gerado para determinada chave Pix
+	 */
 
-    /**
-     *
-     * @param installment Identificador único do parcelamento (quando cobrança
-     * parcelada)
-     */
-    public void setInstallment(String installment) {
-        this.installment = installment;
-    }
+	public String getPixQrCodeId() {
+		return pixQrCodeId;
+	}
 
-    /**
-     *
-     * @return Forma de pagamento.
-     */
-    public BillingType getBillingType() {
-        return billingType;
-    }
+	/**
+	 * @param pixQrCodeId Identificador único do QrCode estático gerado para determinada chave Pix
+	 */
+	public void setPixQrCodeId(String pixQrCodeId) {
+		this.pixQrCodeId = pixQrCodeId;
+	}
 
-    /**
-     *
-     * @param billingType Forma de pagamento.
-     */
-    public void setBillingType(BillingType billingType) {
-        this.billingType = billingType;
-    }
+	/**
+	 * @return Identificador único da assinatura, quando houver.
+	 */
+	public String getSubscription() {
+		return subscription;
+	}
 
-    /**
-     *
-     * @return Valor da cobrança
-     */
-    public BigDecimal getValue() {
-        return value;
-    }
+	/**
+	 * @param subscription Identificador único da assinatura, quando houver.
+	 */
+	public void setSubscription(String subscription) {
+		this.subscription = subscription;
+	}
 
-    /**
-     *
-     * @param value Valor da cobrança
-     */
-    public void setValue(BigDecimal value) {
-        this.value = value;
-    }
+	/**
+	 * @return Identificador único do parcelamento (quando cobrança parcelada)
+	 */
+	public String getInstallment() {
+		return installment;
+	}
 
-    /**
-     *
-     * @return Valor líquido (calculado pelo Asaas)
-     */
-    public BigDecimal getNetValue() {
-        return netValue;
-    }
+	/**
+	 * @param installment Identificador único do parcelamento (quando cobrança
+	 *                    parcelada)
+	 */
+	public void setInstallment(String installment) {
+		this.installment = installment;
+	}
 
-    /**
-     *
-     * @return Valor original (preenchido somente quando a cobrança é recebida
-     * com valor diferente do cadastrado) (somente leitura)
-     */
-    public BigDecimal getOriginalValue() {
-        return originalValue;
-    }
+	/**
+	 * @return Forma de pagamento.
+	 */
+	public BillingType getBillingType() {
+		return billingType;
+	}
 
-    /**
-     *
-     * @return Valor de multa e juros, quando houver. (somente leitura
-     */
-    public BigDecimal getInterestValue() {
-        return interestValue;
-    }
+	/**
+	 * @param billingType Forma de pagamento.
+	 */
+	public void setBillingType(BillingType billingType) {
+		this.billingType = billingType;
+	}
 
-    /**
-     *
-     * @return Data de vencimento.
-     */
-    public Date getDueDate() {
-        return dueDate;
-    }
+	/**
+	 * @return Valor da cobrança
+	 */
+	public BigDecimal getValue() {
+		return value;
+	}
 
-    /**
-     *
-     * @param dueDate Data de vencimento.
-     */
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
-    }
+	/**
+	 * @param value Valor da cobrança
+	 */
+	public void setValue(BigDecimal value) {
+		this.value = value;
+	}
 
-    /**
-     *
-     * @return Data de vencimento original, definida na criação da cobrança.
-     */
-    public Date getOriginalDueDate() {
-        return originalDueDate;
-    }
+	/**
+	 * @return Valor líquido (calculado pelo Asaas)
+	 */
+	public BigDecimal getNetValue() {
+		return netValue;
+	}
 
-    /**
-     *
-     * @param originalDueDate Data de vencimento original, definida na criação
-     * da cobrança.
-     */
-    public void setOriginalDueDate(Date originalDueDate) {
-        this.originalDueDate = originalDueDate;
-    }
+	/**
+	 * @return Valor original (preenchido somente quando a cobrança é recebida
+	 * com valor diferente do cadastrado) (somente leitura)
+	 */
+	public BigDecimal getOriginalValue() {
+		return originalValue;
+	}
 
-    /**
-     *
-     * @return Status da cobrança (Verificar tabela de status) (somente leitura)
-     */
-    public PaymentStatus getStatus() {
-        return status;
-    }
+	/**
+	 * @return Valor de multa e juros, quando houver. (somente leitura
+	 */
+	public BigDecimal getInterestValue() {
+		return interestValue;
+	}
 
-    /**
-     *
-     * @return Descrição da cobrança
-     */
-    public String getDescription() {
-        return description;
-    }
+	/**
+	 * @return Data de vencimento.
+	 */
+	public Date getDueDate() {
+		return dueDate;
+	}
 
-    /**
-     *
-     * @param description Descrição da cobrança
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	/**
+	 * @param dueDate Data de vencimento.
+	 */
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
+	}
 
-    /**
-     *
-     * @return Link público para a fatura (somente leitura)
-     */
-    public String getInvoiceUrl() {
-        return invoiceUrl;
-    }
+	/**
+	 * @return Data de vencimento original, definida na criação da cobrança.
+	 */
+	public Date getOriginalDueDate() {
+		return originalDueDate;
+	}
 
-    /**
-     *
-     * @return Número da fatura (único) (somente leitura)
-     */
-    public String getInvoiceNumber() {
-        return invoiceNumber;
-    }
+	/**
+	 * @param originalDueDate Data de vencimento original, definida na criação
+	 *                        da cobrança.
+	 */
+	public void setOriginalDueDate(Date originalDueDate) {
+		this.originalDueDate = originalDueDate;
+	}
 
-    /**
-     *
-     * @return Número de parcelas (somente no caso de cobrança parcelada)
-     */
-    public Integer getInstallmentCount() {
-        return installmentCount;
-    }
+	/**
+	 * @return Status da cobrança (Verificar tabela de status) (somente leitura)
+	 */
+	public PaymentStatus getStatus() {
+		return status;
+	}
 
-    /**
-     *
-     * @param installmentCount Número de parcelas (somente no caso de cobrança
-     * parcelada)
-     */
-    public void setInstallmentCount(Integer installmentCount) {
-        this.installmentCount = installmentCount;
-    }
+	/**
+	 * @return Descrição da cobrança
+	 */
+	public String getDescription() {
+		return description;
+	}
 
-    /**
-     *
-     * @return Valor da parcela (obrigatório quando informado installmentCount >
-     * 1)
-     */
-    public BigDecimal getInstallmentValue() {
-        return installmentValue;
-    }
+	/**
+	 * @param description Descrição da cobrança
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    /**
-     *
-     * @param installmentValue Valor da parcela (obrigatório quando informado
-     * installmentCount > 1)
-     */
-    public void setInstallmentValue(BigDecimal installmentValue) {
-        this.installmentValue = installmentValue;
-    }
+	/**
+	 * @return Link público para a fatura (somente leitura)
+	 */
+	public String getInvoiceUrl() {
+		return invoiceUrl;
+	}
 
-    /**
-     *
-     * @return Campo livre, pode ser usado para pesquisa
-     */
-    public String getExternalReference() {
-        return externalReference;
-    }
+	/**
+	 * @return Número da fatura (único) (somente leitura)
+	 */
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
 
-    /**
-     *
-     * @param externalReference Campo livre, pode ser usado para pesquisa
-     */
-    public void setExternalReference(String externalReference) {
-        this.externalReference = externalReference;
-    }
+	/**
+	 * @return Número de parcelas (somente no caso de cobrança parcelada)
+	 */
+	public Integer getInstallmentCount() {
+		return installmentCount;
+	}
 
-    public Discount getDiscount() {
-        return discount;
-    }
+	/**
+	 * @param installmentCount Número de parcelas (somente no caso de cobrança
+	 *                         parcelada)
+	 */
+	public void setInstallmentCount(Integer installmentCount) {
+		this.installmentCount = installmentCount;
+	}
 
-    public void setDiscount(Discount discount) {
-        this.discount = discount;
-    }
+	/**
+	 * @return Valor da parcela (obrigatório quando informado installmentCount >
+	 * 1)
+	 */
+	public BigDecimal getInstallmentValue() {
+		return installmentValue;
+	}
 
-    public Interest getInterest() {
-        return interest;
-    }
+	/**
+	 * @param installmentValue Valor da parcela (obrigatório quando informado
+	 *                         installmentCount > 1)
+	 */
+	public void setInstallmentValue(BigDecimal installmentValue) {
+		this.installmentValue = installmentValue;
+	}
 
-    public void setInterest(Interest interest) {
-        this.interest = interest;
-    }
+	/**
+	 * @return Campo livre, pode ser usado para pesquisa
+	 */
+	public String getExternalReference() {
+		return externalReference;
+	}
 
-    public Fine getFine() {
-        return fine;
-    }
+	/**
+	 * @param externalReference Campo livre, pode ser usado para pesquisa
+	 */
+	public void setExternalReference(String externalReference) {
+		this.externalReference = externalReference;
+	}
 
-    public void setFine(Fine fine) {
-        this.fine = fine;
-    }
+	public Discount getDiscount() {
+		return discount;
+	}
 
-    public Date getDateCreated() {
-        return dateCreated;
-    }
+	public void setDiscount(Discount discount) {
+		this.discount = discount;
+	}
 
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
+	public Interest getInterest() {
+		return interest;
+	}
 
-    public Date getConfirmedDate() {
-        return confirmedDate;
-    }
+	public void setInterest(Interest interest) {
+		this.interest = interest;
+	}
 
-    public void setConfirmedDate(Date confirmedDate) {
-        this.confirmedDate = confirmedDate;
-    }
+	public Fine getFine() {
+		return fine;
+	}
 
-    public Date getPaymentDate() {
-        return paymentDate;
-    }
+	public void setFine(Fine fine) {
+		this.fine = fine;
+	}
 
-    public void setPaymentDate(Date paymentDate) {
-        this.paymentDate = paymentDate;
-    }
+	public Date getDateCreated() {
+		return dateCreated;
+	}
 
-    public Date getClientPaymentDate() {
-        return clientPaymentDate;
-    }
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
 
-    public void setClientPaymentDate(Date clientPaymentDate) {
-        this.clientPaymentDate = clientPaymentDate;
-    }
+	public Date getConfirmedDate() {
+		return confirmedDate;
+	}
 
-    public String getBankSlipUrl() {
-        return bankSlipUrl;
-    }
+	public void setConfirmedDate(Date confirmedDate) {
+		this.confirmedDate = confirmedDate;
+	}
 
-    public void setBankSlipUrl(String bankSlipUrl) {
-        this.bankSlipUrl = bankSlipUrl;
-    }
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
 
-    public Boolean getDeleted() {
-        return deleted;
-    }
+	public void setPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
+	}
 
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
+	public Date getClientPaymentDate() {
+		return clientPaymentDate;
+	}
 
-    public CreditCard getCreditCard() {
-        return creditCard;
-    }
+	public void setClientPaymentDate(Date clientPaymentDate) {
+		this.clientPaymentDate = clientPaymentDate;
+	}
 
-    public void setCreditCard(CreditCard creditCard) {
-        this.creditCard = creditCard;
-    }
+	public String getBankSlipUrl() {
+		return bankSlipUrl;
+	}
 
-    public CreditCardHolderInfo getCreditCardHolderInfo() {
-        return creditCardHolderInfo;
-    }
+	public void setBankSlipUrl(String bankSlipUrl) {
+		this.bankSlipUrl = bankSlipUrl;
+	}
 
-    public void setCreditCardHolderInfo(CreditCardHolderInfo creditCardHolderInfo) {
-        this.creditCardHolderInfo = creditCardHolderInfo;
-    }
+	public Boolean getDeleted() {
+		return deleted;
+	}
 
-    public String getRemoteIp() {
-        return remoteIp;
-    }
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
 
-    public void setRemoteIp(String remoteIp) {
-        this.remoteIp = remoteIp;
-    }
+	public CreditCard getCreditCard() {
+		return creditCard;
+	}
 
-    public List<Split> getSplit() {
-        return split;
-    }
+	public void setCreditCard(CreditCard creditCard) {
+		this.creditCard = creditCard;
+	}
 
-    public void setSplit(List<Split> split) {
-        this.split = split;
-    }
+	public CreditCardHolderInfo getCreditCardHolderInfo() {
+		return creditCardHolderInfo;
+	}
 
-    @Override
-    public String toString() {
-        return "Payment{" + "id=" + id + ", customer=" + customer + ", billingType=" + billingType + ", value=" + value + ", dueDate=" + dueDate + ", description=" + description + ", externalReference=" + externalReference + ", installmentCount=" + installmentCount + ", installmentValue=" + installmentValue + ", discount=" + discount + ", interest=" + interest + ", fine=" + fine + ", dateCreated=" + dateCreated + ", subscription=" + subscription + ", installment=" + installment + ", netValue=" + netValue + ", status=" + status + ", originalDueDate=" + originalDueDate + ", originalValue=" + originalValue + ", interestValue=" + interestValue + ", confirmedDate=" + confirmedDate + ", paymentDate=" + paymentDate + ", clientPaymentDate=" + clientPaymentDate + ", invoiceUrl=" + invoiceUrl + ", bankSlipUrl=" + bankSlipUrl + ", invoiceNumber=" + invoiceNumber + ", deleted=" + deleted + ", creditCard=" + creditCard + ", creditCardHolderInfo=" + creditCardHolderInfo + ", remoteIp=" + remoteIp + ", split=" + split + '}';
-    }
+	public void setCreditCardHolderInfo(CreditCardHolderInfo creditCardHolderInfo) {
+		this.creditCardHolderInfo = creditCardHolderInfo;
+	}
 
-    public void validate() {
-        //System.out.println("VALIDACAO DO PAYMENT ANTES DO ENVIO");
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+	public String getRemoteIp() {
+		return remoteIp;
+	}
+
+	public void setRemoteIp(String remoteIp) {
+		this.remoteIp = remoteIp;
+	}
+
+	public List<Split> getSplit() {
+		return split;
+	}
+
+	public void setSplit(List<Split> split) {
+		this.split = split;
+	}
+
+	@Override
+	public String toString() {
+		return "Payment{" + "id=" + id + ", customer=" + customer + ", billingType=" + billingType + ", value=" + value + ", dueDate=" + dueDate + ", description=" + description + ", externalReference=" + externalReference + ", installmentCount=" + installmentCount + ", installmentValue=" + installmentValue + ", discount=" + discount + ", interest=" + interest + ", fine=" + fine + ", dateCreated=" + dateCreated + ", subscription=" + subscription + ", installment=" + installment + ", netValue=" + netValue + ", status=" + status + ", originalDueDate=" + originalDueDate + ", originalValue=" + originalValue + ", interestValue=" + interestValue + ", confirmedDate=" + confirmedDate + ", paymentDate=" + paymentDate + ", clientPaymentDate=" + clientPaymentDate + ", invoiceUrl=" + invoiceUrl + ", bankSlipUrl=" + bankSlipUrl + ", invoiceNumber=" + invoiceNumber + ", deleted=" + deleted + ", creditCard=" + creditCard + ", creditCardHolderInfo=" + creditCardHolderInfo + ", remoteIp=" + remoteIp + ", split=" + split + '}';
+	}
+
+	public void validate() {
+		//System.out.println("VALIDACAO DO PAYMENT ANTES DO ENVIO");
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
 //        System.out.println("dueDate: " + dueDate);
 //        System.out.println("dueDate: " + dueDate.getTime());
 //        System.out.println("calendar.getTime(): " + calendar.getTime());
 //        System.out.println("calendar.getTime(): " + calendar.getTime().getTime());
-        if (dueDate.before(calendar.getTime())) {
-            throw new PaymentException(500, "Data de vencimento inválida. A data de vencimento deve ser maior ou igual a hoje. Data informada: " + dueDate);
-        }
+		if (dueDate.before(calendar.getTime())) {
+			throw new PaymentException(500, "Data de vencimento inválida. A data de vencimento deve ser maior ou igual a hoje. Data informada: " + dueDate);
+		}
 
-        if (description.length() > 255) {
-            //System.out.println("description: " + description);
-            throw new PaymentException(500, "O campo descrição possui limite de 255 caracteres. Tamanho informado: " + description.length());
-        }
+		if (description.length() > 255) {
+			//System.out.println("description: " + description);
+			throw new PaymentException(500, "O campo descrição possui limite de 255 caracteres. Tamanho informado: " + description.length());
+		}
 
-        if (customer == null || "".equals(customer)) {
-            throw new PaymentException(500, "Cliente inválido");
-        }
+		if (customer == null || "".equals(customer)) {
+			throw new PaymentException(500, "Cliente inválido");
+		}
 
-        if (billingType == null) {
-            throw new PaymentException(500, "Tipo de cobrança inválido. Valores possíveis no Enum BillingType");
-        }
+		if (billingType == null) {
+			throw new PaymentException(500, "Tipo de cobrança inválido. Valores possíveis no Enum BillingType");
+		}
 
-        if (value == null) {
-            throw new PaymentException(500, "Valor para cobrança inválido");
-        }
-    }
+		if (value == null) {
+			throw new PaymentException(500, "Valor para cobrança inválido");
+		}
+	}
 }
