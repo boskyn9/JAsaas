@@ -8,7 +8,44 @@ SDK não-oficial de integração à API do serviço www.asaas.com
 Instalação
 ----------
 
-Adicione o jar no classhpath da aplicação.
+## Maven
+Adicione o repositorio do JitPack ao seu pom.xml
+
+```xml
+<repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+</repository>
+```
+
+E na seção de dependências adicione a dependência do JAsaas:
+```xml
+<dependency>
+    <groupId>com.github.rafaeldalbosco</groupId>
+    <artifactId>JAsaas</artifactId>
+    <version>4.0</version>
+</dependency>
+```
+
+Manual: 
+
+Você pode compilar o projeto utilizando o Maven;
+
+```bash
+mvn clean install -DAPI_KEY_ASAAS=<sua apikey do asaas para rodar o teste unitário>
+```
+
+A dependência do Maven será:
+    
+```xml
+    <dependency>
+        <groupId>br.com.jasaas</groupId>
+        <artifactId>JAsaas</artifactId>
+        <version>4.0-SNAPSHOT</version>
+    </dependency>   
+```
+
+Também poderá adicionar o jar no classhpath da aplicação.
 
 Endpoint
 --------
@@ -207,6 +244,15 @@ Créditos
 * Jefferson Willian da C Lucena
 * Marcio Davi M M
 
+
+Contribuição
+------------
+
+#### [Agende Tecnologias](http://agende.com.br/ "Agende Tecnologias")
+
+##### Desenvolvedores:
+
+* [Rafael Dal Bosco](https://github.com/rafaeldalbosco "Rafael Dal Bosco")
 
 Licença
 -------
