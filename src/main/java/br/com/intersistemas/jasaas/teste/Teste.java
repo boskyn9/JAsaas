@@ -41,7 +41,7 @@ public class Teste {
         switch (tipo) {
             case 0:
                 try {
-                    Payment pay = connPay.getById("pay_123456789");
+                    Payment pay = connPay.getById("pay_121566863590");
                     System.out.println(pay);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -79,7 +79,7 @@ public class Teste {
 //        }
             case 1:
                 Payment p = new Payment();
-                p.setCustomer("cus_123456789");
+                p.setCustomer("cus_000000064959");
                 p.setBillingType(BillingType.BOLETO);
                 p.setValue(new BigDecimal("100.00"));
                 Calendar calendar = Calendar.getInstance();
