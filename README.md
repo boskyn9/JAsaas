@@ -206,6 +206,7 @@ Créditos
 * João Bosco C M Filho
 * Jefferson Willian da C Lucena
 * Marcio Davi M M
+* João Pedro F S Araújo
 
 
 Licença
