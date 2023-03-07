@@ -9,6 +9,7 @@ package br.com.jasaas.enumeration;
 public enum BillingType {
     BOLETO, //Boleto Bancário
     CREDIT_CARD, //Cartão de Crédito
+    PIX, //PIX
     UNDEFINED, //Perguntar ao Cliente
     //Apenas como retorno:
     TRANSFER,
