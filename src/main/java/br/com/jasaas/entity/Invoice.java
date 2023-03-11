@@ -4,6 +4,7 @@ import br.com.jasaas.enumeration.InvoiceStatus;
 import com.google.gson.annotations.Expose;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Invoice extends AsaasEntity<String> {
 
@@ -11,7 +12,7 @@ public class Invoice extends AsaasEntity<String> {
     private String id;
     @Expose(serialize = false)
     private InvoiceStatus status;
-    @Expose(serialize = false)
+    @Expose
     private String customer;
     @Expose
     private String payment;
@@ -40,7 +41,7 @@ public class Invoice extends AsaasEntity<String> {
     @Expose
     private BigDecimal deductions;
     @Expose
-    private String effectiveDate;
+    private Date effectiveDate;
     @Expose
     private String externalReference;
     @Expose
@@ -62,7 +63,7 @@ public class Invoice extends AsaasEntity<String> {
     public Invoice(String id, InvoiceStatus status, String customer, String payment, String installment, String type,
                    String statusDescription, String serviceDescription, String pdfUrl, String xmlUrl, String rpsSerie,
                    String rpsNumber, String number, String validationCode, BigDecimal value, BigDecimal deductions,
-                   String effectiveDate, String externalReference, String observations, String estimatedTaxesDescription,
+                   Date effectiveDate, String externalReference, String observations, String estimatedTaxesDescription,
                    String municipalServiceId, String municipalServiceCode, String municipalServiceName, Taxes taxes) {
         this.id = id;
         this.status = status;
@@ -218,11 +219,11 @@ public class Invoice extends AsaasEntity<String> {
         this.deductions = deductions;
     }
 
-    public String getEffectiveDate() {
+    public Date getEffectiveDate() {
         return effectiveDate;
     }
 
-    public void setEffectiveDate(String effectiveDate) {
+    public void setEffectiveDate(Date effectiveDate) {
         this.effectiveDate = effectiveDate;
     }
 

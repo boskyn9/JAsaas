@@ -10,15 +10,15 @@ public class MunicipalService {
     @Expose(serialize = false)
     private String description;
     @Expose(serialize = false)
-    private BigDecimal iss;
+    private BigDecimal issTax;
 
     public MunicipalService() {
     }
 
-    public MunicipalService(String id, String description, BigDecimal iss) {
+    public MunicipalService(String id, String description, BigDecimal issTax) {
         this.id = id;
         this.description = description;
-        this.iss = iss;
+        this.issTax = issTax;
     }
 
     public String getId() {
@@ -37,11 +37,11 @@ public class MunicipalService {
         this.description = description;
     }
 
-    public BigDecimal getIss() {
-        return iss;
+    public BigDecimal getIssTax() {
+        return issTax;
     }
 
-    public void setIss(BigDecimal iss) {
-        this.iss = iss;
+    public void setIssTax(BigDecimal issTax) {
+        this.issTax = issTax;
     }
 }

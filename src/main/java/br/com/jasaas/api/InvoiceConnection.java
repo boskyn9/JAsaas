@@ -6,6 +6,8 @@ import br.com.jasaas.entity.MunicipalService;
 import br.com.jasaas.entity.filter.InvoiceFilter;
 import br.com.jasaas.entity.meta.MetaError;
 import br.com.jasaas.entity.meta.MetaGeneric;
+import br.com.jasaas.entity.meta.MetaInvoice;
+import br.com.jasaas.entity.meta.MetaMunicipalService;
 import br.com.jasaas.enumeration.EndpointEnum;
 import br.com.jasaas.enumeration.EnvironmentAsaas;
 import br.com.jasaas.exception.ConnectionException;
@@ -17,7 +19,7 @@ import java.util.logging.Level;
 public class InvoiceConnection extends AsaasConnection<Invoice, InvoiceFilter> {
     public InvoiceConnection(EnvironmentAsaas environmentAsaas, AdapterConnection httpClient) {
         super(environmentAsaas, httpClient, EndpointEnum.INVOICE);
-        this.metaGenericClass = Invoice.class;
+        this.metaGenericClass = MetaInvoice.class;
     }
 
     public Invoice schedule(Invoice invoice) {
@@ -75,7 +77,28 @@ public class InvoiceConnection extends AsaasConnection<Invoice, InvoiceFilter> {
             this.logger.log(Level.INFO, "MUNICIPAL SERVICES URL: {0}", url);
             lastResponseJson = httpClient.get(url);
             this.logger.log(Level.INFO, "MUNICIPAL SERVICES RESPONSE: {0}", lastResponseJson);
-            MetaGeneric<MunicipalService> metaResult = (MetaGeneric<MunicipalService>) JsonUtil.parse(lastResponseJson, MetaGeneric.class);
+            MetaGeneric<MunicipalService> metaResult = (MetaGeneric<MunicipalService>) JsonUtil.parse(lastResponseJson, MetaMunicipalService.class);
+            if (metaResult == null) {
+                MetaError error = (MetaError) JsonUtil.parse(lastResponseJson, MetaError.class);
+                throw new ConnectionException(500, error.toString(), error);
+            }
+            return metaResult.getData();
+        } catch (Exception ex) {
+            this.logger.log(Level.SEVERE, null, ex);
+            if (ex instanceof ConnectionException) {
+                throw ex;
+            }
+            throw new ConnectionException(500, ex.getMessage());
+        }
+    }
+
+    public List<MunicipalService> getAllMunicipalService() {
+        try {
+            String url = String.format("%s/%s/municipalServices", this.environmentAsaas.getEndpoint(), this.endpoint.getEndpoint());
+            this.logger.log(Level.INFO, "MUNICIPAL SERVICES URL: {0}", url);
+            lastResponseJson = httpClient.get(url);
+            this.logger.log(Level.INFO, "MUNICIPAL SERVICES RESPONSE: {0}", lastResponseJson);
+            MetaGeneric<MunicipalService> metaResult = (MetaGeneric<MunicipalService>) JsonUtil.parse(lastResponseJson, MetaMunicipalService.class);
             if (metaResult == null) {
                 MetaError error = (MetaError) JsonUtil.parse(lastResponseJson, MetaError.class);
                 throw new ConnectionException(500, error.toString(), error);
