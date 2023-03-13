@@ -1,10 +1,7 @@
 package br.com.jasaas.api;
 
 import br.com.jasaas.adapter.AdapterConnection;
-import br.com.jasaas.entity.Payment;
-import br.com.jasaas.entity.PaymentIdentificationField;
-import br.com.jasaas.entity.PaymentPixQrCode;
-import br.com.jasaas.entity.PaymentReceiveInCash;
+import br.com.jasaas.entity.*;
 import br.com.jasaas.entity.filter.PaymentFilter;
 import br.com.jasaas.entity.meta.MetaPayment;
 import br.com.jasaas.enumeration.EndpointEnum;
@@ -106,7 +103,6 @@ public class PaymentConnection extends AsaasConnection<Payment, PaymentFilter> {
     }
 
     public PaymentIdentificationField identificationField(String id) throws ConnectionException {
-        //todo: testar
         String url = String.format("%s/%s/%s/identificationField", this.environmentAsaas.getEndpoint(), EndpointEnum.PAYMENT.getEndpoint(), id);
         this.logger.log(Level.INFO, "POST URL: {0}", url);
         lastResponseJson = httpClient.post(url, null);
@@ -115,7 +111,6 @@ public class PaymentConnection extends AsaasConnection<Payment, PaymentFilter> {
     }
 
     public PaymentPixQrCode pixQrCode(String id) throws ConnectionException {
-        //todo: testar
         String url = String.format("%s/%s/%s/pixQrCode", this.environmentAsaas.getEndpoint(), EndpointEnum.PAYMENT.getEndpoint(), id);
         this.logger.log(Level.INFO, "POST URL: {0}", url);
         lastResponseJson = httpClient.post(url, null);
@@ -139,6 +134,28 @@ public class PaymentConnection extends AsaasConnection<Payment, PaymentFilter> {
         lastResponseJson = httpClient.post(url, "");
         this.logger.log(Level.INFO, "POST RESPONSE: {0}", lastResponseJson);
         return (Payment) JsonUtil.parse(lastResponseJson, Payment.class);
+    }
+
+    public LinhaBoleto getLinhaBoletoByIdBoleto(String id) throws ConnectionException {
+        try {
+            //retrocompatibilidade alterações jpedro
+            identificationField(id);
+            return (LinhaBoleto) JsonUtil.parse(lastResponseJson, LinhaBoleto.class);
+        } catch (Exception ex) {
+            this.logger.log(Level.SEVERE, null, ex);
+            throw new ConnectionException(500, ex.getMessage());
+        }
+    }
+
+    public QRCodePix getQRCodeByIdBoleto(String id) throws ConnectionException {
+        try {
+            //retrocompatibilidade alterações jpedro
+            pixQrCode(id);
+            return (QRCodePix) JsonUtil.parse(lastResponseJson, QRCodePix.class);
+        } catch (Exception ex) {
+            this.logger.log(Level.SEVERE, null, ex);
+            throw new ConnectionException(500, ex.getMessage());
+        }
     }
 
 }

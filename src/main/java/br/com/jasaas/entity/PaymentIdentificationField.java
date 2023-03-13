@@ -8,6 +8,8 @@ import com.google.gson.annotations.Expose;
  */
 public final class PaymentIdentificationField {
 
+    @Expose
+    private Boolean success;
     @Expose(serialize = false)
     private String identificationField;
     @Expose(serialize = false)
@@ -22,6 +24,14 @@ public final class PaymentIdentificationField {
         this.identificationField = identificationField;
         this.nossoNumero = nossoNumero;
         this.barCode = barCode;
+    }
+
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
     }
 
     public String getIdentificationField() {
@@ -47,4 +57,10 @@ public final class PaymentIdentificationField {
     public void setBarCode(String barCode) {
         this.barCode = barCode;
     }
+
+    @Override
+    public String toString() {
+        return "LinhaBoleto{" + "identificationField=" + identificationField + ", nossoNumero=" + nossoNumero + ", barCode=" + barCode + '}';
+    }
+
 }
