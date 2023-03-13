@@ -13,7 +13,7 @@ public class Webhook {
     }
     
     public static WebhookPayment parseToPayment(String dataJson, Boolean showLog) {
-        WebhookPayment whPayment = (WebhookPayment) JsonUtil.parse(dataJson, WebhookPayment.class, showLog);
+        WebhookPayment whPayment = (WebhookPayment) JsonUtil.parse(dataJson, WebhookPayment.class, showLog, true);
         return whPayment;
     }
 }

@@ -16,5 +16,8 @@ public enum PaymentStatus {
     REFUND_REQUESTED,// - Estorno Solicitado
     CHARGEBACK_REQUESTED,// - Recebido chargeback
     CHARGEBACK_DISPUTE,// - Em disputa de chargeback (caso sejam apresentados documentos para contestação)
-    AWAITING_CHARGEBACK_REVERSAL,// - Disputa vencida, aguardando repasse da adquirente 
+    AWAITING_CHARGEBACK_REVERSAL,// - Disputa vencida, aguardando repasse da adquirente
+    DUNNING_REQUESTED, // Em processo de negativação
+    DUNNING_RECEIVED, //Recuperada
+    AWAITING_RISK_ANALYSIS, //pagamento em analise
 }
