@@ -67,10 +67,6 @@ public final class Payment extends AsaasEntity<String> {
 	@Expose(serialize = false)
     private Boolean canBePaidAfterDueDate;
     @Expose(serialize = false)
-    private String pixTransaction;
-    @Expose(serialize = false)
-    private String pixQrCodeId;
-    @Expose(serialize = false)
 	private Date originalDueDate;
 	@Expose(serialize = false)
 	private BigDecimal originalValue;
@@ -502,14 +498,6 @@ public final class Payment extends AsaasEntity<String> {
 
 	public Boolean getCanBePaidAfterDueDate() {
         return canBePaidAfterDueDate;
-    }
-
-    public String getPixTransaction() {
-        return pixTransaction;
-    }
-
-    public String getPixQrCodeId() {
-        return pixQrCodeId;
     }
 
     public String getInstallmentNumber() {

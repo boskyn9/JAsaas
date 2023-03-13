@@ -23,7 +23,7 @@ E na seção de dependências adicione a dependência do JAsaas:
 <dependency>
     <groupId>com.github.rafaeldalbosco</groupId>
     <artifactId>JAsaas</artifactId>
-    <version>4.0</version>
+    <version>4.2</version>
 </dependency>
 ```
 
