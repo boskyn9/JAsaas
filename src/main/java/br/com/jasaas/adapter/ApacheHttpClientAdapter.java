@@ -1,6 +1,8 @@
 package br.com.jasaas.adapter;
 
+import br.com.jasaas.entity.meta.MetaError;
 import br.com.jasaas.exception.ConnectionException;
+import br.com.jasaas.util.JsonUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.*;
@@ -36,7 +38,7 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             CloseableHttpResponse response = httpclient.execute(httpGet);
             StatusLine status = response.getStatusLine();
             if (status.getStatusCode() != 200) {
-                throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase(), null);
+                throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase(), loadMetaError(response));
             }
             HttpEntity entity = response.getEntity();
             String retorno = EntityUtils.toString(entity);
@@ -56,7 +58,7 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             CloseableHttpResponse response = httpclient.execute(httpDelete);
             StatusLine status = response.getStatusLine();
             if (status.getStatusCode() != 200) {
-                throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase(), null);
+                throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase(), loadMetaError(response));
             }
             HttpEntity entity = response.getEntity();
             String retorno = EntityUtils.toString(entity);
@@ -79,7 +81,7 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             StatusLine status = response.getStatusLine();
             if (status.getStatusCode() != 200 && status.getStatusCode() != 400) {
                 this.logger.log(Level.SEVERE, status.getReasonPhrase());
-                throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase(), null);
+                throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase(), loadMetaError(response));
             }
             HttpEntity entidade = response.getEntity();
             String retorno = EntityUtils.toString(entidade);
@@ -102,7 +104,7 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             StatusLine status = response.getStatusLine();
             if (status.getStatusCode() != 200 && status.getStatusCode() != 400) {
                 this.logger.log(Level.SEVERE, status.getReasonPhrase());
-                throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase(), null);
+                throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase(), loadMetaError(response));
             }
             HttpEntity entidade = response.getEntity();
             String retorno = EntityUtils.toString(entidade);
@@ -111,6 +113,17 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
         } catch (IOException ex) {
             this.logger.log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage(), null);
+        }
+    }
+
+    private MetaError loadMetaError(CloseableHttpResponse response) throws IOException {
+        try {
+            HttpEntity entity = response.getEntity();
+            String retorno = EntityUtils.toString(entity);
+            return (MetaError) JsonUtil.parse(retorno, MetaError.class);
+        } catch (IOException ex) {
+            this.logger.log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 }
