@@ -8,17 +8,54 @@ SDK não-oficial de integração à API do serviço www.asaas.com
 Instalação
 ----------
 
-Adicione o jar no classhpath da aplicação.
+## Maven
+Adicione o repositorio do JitPack ao seu pom.xml
+
+```xml
+<repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+</repository>
+```
+
+E na seção de dependências adicione a dependência do JAsaas:
+```xml
+<dependency>
+    <groupId>com.github.rafaeldalbosco</groupId>
+    <artifactId>JAsaas</artifactId>
+    <version>4.3</version>
+</dependency>
+```
+
+Manual: 
+
+Você pode compilar o projeto utilizando o Maven;
+
+```bash
+mvn clean install -DAPI_KEY_ASAAS=<sua apikey do asaas para rodar o teste unitário>
+```
+
+A dependência do Maven será:
+    
+```xml
+    <dependency>
+        <groupId>br.com.jasaas</groupId>
+        <artifactId>JAsaas</artifactId>
+        <version>4.0-SNAPSHOT</version>
+    </dependency>   
+```
+
+Também poderá adicionar o jar no classhpath da aplicação.
 
 Endpoint
 --------
 
-Caso queira usar a API em modo teste basta especificar o `ambiente` no momento em que o cliente é instanciado.
+Caso queira usar a API em modo teste basta especificar o `environmentAsaas` no momento em que o cliente é instanciado.
 
 ```java
-Asaas asaas = new Asaas(new ApacheHttpClientAdapter(acessToken), Asaas.AMBIENTE_HOMOLOGACAO);
+Asaas asaas = new Asaas(Ambiente.SANDBOX, "YOUR_API_KEY_SANDBOX");
 ou
-Asaas asaas = new Asaas(new ApacheHttpClientAdapter(acessToken), Asaas.AMBIENTE_PRODUCAO);
+Asaas asaas = new Asaas(Ambiente.PRODUCTION, "YOUR_API_KEY_PRODUCTION");
 ```
 
 
@@ -208,6 +245,15 @@ Créditos
 * Marcio Davi M M
 * João Pedro F S Araújo
 
+
+Contribuição
+------------
+
+#### [Agende Tecnologias](http://agende.com.br/ "Agende Tecnologias")
+
+##### Desenvolvedores:
+
+* [Rafael Dal Bosco](https://github.com/rafaeldalbosco "Rafael Dal Bosco")
 
 Licença
 -------
