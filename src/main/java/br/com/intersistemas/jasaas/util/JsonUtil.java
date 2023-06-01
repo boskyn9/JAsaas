@@ -23,16 +23,10 @@ public class JsonUtil {
 	}
 
 	public static Object parse(String json, Class clazz, Boolean showLog, Boolean verificaDataBR) {
-		String dateFormat = "dd/MM/yyyy";
-		if (!verificaDataBR) {
-			dateFormat = "yyyy-MM-dd";
-		}
 		if (gsonBuilder == null) {
 			gsonBuilder = new GsonBuilder()
 					.excludeFieldsWithoutExposeAnnotation()
-					.setDateFormat(dateFormat);
-		}else{
-			gsonBuilder.setDateFormat(dateFormat);
+					.setDateFormat("yyyy-MM-dd");
 		}
 		try {
 			return gsonBuilder.create().fromJson(json, clazz);
