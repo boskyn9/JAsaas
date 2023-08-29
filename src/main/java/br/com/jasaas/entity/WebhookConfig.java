@@ -112,7 +112,7 @@ public class WebhookConfig extends AsaasEntity<String> {
 
     @Override
     public String getId() {
-        return null;
+        return interrupted? "1" : null;
     }
 
     public String getAuthToken() {
