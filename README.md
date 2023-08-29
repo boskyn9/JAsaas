@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/rafaeldalbosco/JAsaas.svg)](https://jitpack.io/#rafaeldalbosco/JAsaas)
+
 # JAsaas [EM DESENVOLVIMENTO]
 
 Asaas.com JAVA-SDK
@@ -23,7 +25,7 @@ E na seção de dependências adicione a dependência do JAsaas:
 <dependency>
     <groupId>com.github.rafaeldalbosco</groupId>
     <artifactId>JAsaas</artifactId>
-    <version>4.3</version>
+    <version>4.4</version>
 </dependency>
 ```
 
