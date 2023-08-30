@@ -2,7 +2,7 @@ package br.com.jasaas.enumeration;
 
 public enum EnvironmentAsaas {
     SANDBOX("https://sandbox.asaas.com/api/v3"),
-    PRODUCTION("https://www.asaas.com/api/v3");
+    PRODUCTION("https://api.asaas.com/v3");
 
     private String endpoint;
 
