@@ -3,6 +3,7 @@ package br.com.intersistemas.jasaas.entity;
 import br.com.intersistemas.jasaas.util.RefundStatus;
 import com.google.gson.annotations.Expose;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Date;
 public class Refund {
 
 	@Expose(serialize = false)
-	Date dateCreated;
+	LocalDateTime dateCreated;
 	@Expose(serialize = false)
 	String value;
 	@Expose(serialize = false)

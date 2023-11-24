@@ -47,6 +47,10 @@ public class Asaas {
     public SubscriptionConnection subscription(){
         return new SubscriptionConnection(adapter, ambiente);
     }
+
+    public TokenizeConnection tokenize(){
+        return new TokenizeConnection(adapter, ambiente);
+    }
     
     public WebhookConfigConnection webhookConfig() {
         return new WebhookConfigConnection(adapter, ambiente);

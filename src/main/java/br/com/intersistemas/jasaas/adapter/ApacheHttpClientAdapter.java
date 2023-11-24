@@ -1,9 +1,11 @@
 package br.com.intersistemas.jasaas.adapter;
 
 import br.com.intersistemas.jasaas.exception.ConnectionException;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -16,7 +18,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 /**
- *
  * @author bosco
  */
 public class ApacheHttpClientAdapter implements AdapterConnection {
@@ -41,15 +42,11 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
                 throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase());
             }
 
-            HttpEntity entity = response.getEntity();
-            String retorno = EntityUtils.toString(entity);
-
-            return retorno;
+            return EntityUtils.toString(response.getEntity());
         } catch (IOException ex) {
             Logger.getLogger(ApacheHttpClientAdapter.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());
         }
-        //return null;
     }
 
     @Override
@@ -63,48 +60,33 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             if (status.getStatusCode() != 200) {
                 throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase());
             }
-            HttpEntity entity = response.getEntity();
-            String retorno = EntityUtils.toString(entity);
-            //System.out.println(retorno);
-            return retorno;
+            return EntityUtils.toString(response.getEntity());
         } catch (IOException ex) {
             Logger.getLogger(ApacheHttpClientAdapter.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());
         }
     }
 
-    /*@Override
+    @Override
     public String put(String url, String content) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
+    }
+
     @Override
     public String post(String url, String contentJSON) throws ConnectionException {
         try {
-            //System.out.println(url);
-            //System.out.println(contentJSON);
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("access_token", accessToken);
-
             StringEntity entity = new StringEntity(contentJSON);
             httpPost.setEntity(entity);
-
             CloseableHttpResponse response = httpclient.execute(httpPost);
-            //System.out.println("CloseableHttpResponse");
-//            for (Header allHeader : response.getAllHeaders()) {
-//                System.out.println(allHeader.toString());
-//            }
             StatusLine status = response.getStatusLine();
             System.out.println("Status: " + status.getStatusCode());
             if (status.getStatusCode() != 200 && status.getStatusCode() != 400) {
-                System.out.println(status.getReasonPhrase());
+                System.out.println("Reason: " +status.getReasonPhrase());
                 throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase());
             }
-            
-            HttpEntity entidade = response.getEntity();
-            String retorno = EntityUtils.toString(entidade);
-//            System.out.println("retorno");
-//            System.out.println(retorno);
-            return retorno;
+            return EntityUtils.toString(response.getEntity());
         } catch (IOException ex) {
             Logger.getLogger(ApacheHttpClientAdapter.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());

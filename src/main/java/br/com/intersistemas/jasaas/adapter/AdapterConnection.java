@@ -32,10 +32,10 @@ public interface AdapterConnection {
      *
      * @param url URL do serviço para comunicação
      * @param contentJSON Conteúdo da comunicação
-     * @throws ConnectionException     
+     * @throws ConnectionException
      * @return string
      */
-//    public String put(String url, String contentJSON);
+    public String put(String url, String contentJSON);
 
     /**
      * POST Request

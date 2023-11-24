@@ -24,11 +24,16 @@ public class CreditCard {
     private String creditCardNumber; //Últimos 4 dígitos do cartão utilizado
     @Expose(serialize = false)
     private String creditCardBrand; //Bandeira do cartão utilizado
-    @Expose(serialize = false)
-    private String creditCardToken; // Token do cartão de crédito para uso em One Click Buy.
+
+    public CreditCard(String holderName, String number, String expiryMonth, String expiryYear, String ccv) {
+        this.holderName = holderName;
+        this.number = number;
+        this.expiryMonth = expiryMonth;
+        this.expiryYear = expiryYear;
+        this.ccv = ccv;
+    }
 
     /**
-     *
      * @return Nome impresso no cartão
      */
     public String getHolderName() {
@@ -36,7 +41,6 @@ public class CreditCard {
     }
 
     /**
-     *
      * @param holderName Nome impresso no cartão
      */
     public void setHolderName(String holderName) {
@@ -44,7 +48,6 @@ public class CreditCard {
     }
 
     /**
-     *
      * @return Número do cartão
      */
     public String getNumber() {
@@ -52,7 +55,6 @@ public class CreditCard {
     }
 
     /**
-     *
      * @param number Número do cartão
      */
     public void setNumber(String number) {
@@ -60,7 +62,6 @@ public class CreditCard {
     }
 
     /**
-     *
      * @return Mês de expiração (ex: 06)
      */
     public String getExpiryMonth() {
@@ -68,7 +69,6 @@ public class CreditCard {
     }
 
     /**
-     *
      * @param expiryMonth Mês de expiração (ex: 06)
      */
     public void setExpiryMonth(String expiryMonth) {
@@ -76,7 +76,6 @@ public class CreditCard {
     }
 
     /**
-     *
      * @return Ano de expiração (ex: 2019)
      */
     public String getExpiryYear() {
@@ -84,7 +83,6 @@ public class CreditCard {
     }
 
     /**
-     *
      * @param expiryYear Ano de expiração (ex: 2019)
      */
     public void setExpiryYear(String expiryYear) {
@@ -92,7 +90,6 @@ public class CreditCard {
     }
 
     /**
-     *
      * @return Código de segurança
      */
     public String getCcv() {
@@ -100,7 +97,6 @@ public class CreditCard {
     }
 
     /**
-     *
      * @param ccv Código de segurança
      */
     public void setCcv(String ccv) {
@@ -108,7 +104,6 @@ public class CreditCard {
     }
 
     /**
-     * 
      * @return Últimos 4 dígitos do cartão utilizado
      */
     public String getCreditCardNumber() {
@@ -116,7 +111,6 @@ public class CreditCard {
     }
 
     /**
-     * 
      * @param creditCardNumber Últimos 4 dígitos do cartão utilizado
      */
     public void setCreditCardNumber(String creditCardNumber) {
@@ -124,7 +118,6 @@ public class CreditCard {
     }
 
     /**
-     * 
      * @return Bandeira do cartão utilizado
      */
     public String getCreditCardBrand() {
@@ -132,33 +125,15 @@ public class CreditCard {
     }
 
     /**
-     * 
      * @param creditCardBrand Bandeira do cartão utilizado
      */
     public void setCreditCardBrand(String creditCardBrand) {
         this.creditCardBrand = creditCardBrand;
     }
 
-    /**
-     * 
-     * @return Token do cartão de crédito para uso em One Click Buy.
-     */
-    public String getCreditCardToken() {
-        return creditCardToken;
-    }
-
-    /**
-     * 
-     * @param creditCardToken Token do cartão de crédito para uso em One Click
-     * Buy.
-     */
-    public void setCreditCardToken(String creditCardToken) {
-        this.creditCardToken = creditCardToken;
-    }
-
     @Override
     public String toString() {
-        return "CreditCard{" + "holderName=" + holderName + ", number=" + number + ", expiryMonth=" + expiryMonth + ", expiryYear=" + expiryYear + ", ccv=" + ccv + ", creditCardNumber=" + creditCardNumber + ", creditCardBrand=" + creditCardBrand + ", creditCardToken=" + creditCardToken + '}';
+        return "CreditCard{" + "holderName=" + holderName + ", number=" + number + ", expiryMonth=" + expiryMonth + ", expiryYear=" + expiryYear + ", ccv=" + ccv + ", creditCardNumber=" + creditCardNumber + ", creditCardBrand=" + creditCardBrand + '}';
     }
 
 }

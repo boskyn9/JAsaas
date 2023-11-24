@@ -26,6 +26,15 @@ public class CreditCardHolderInfo {
     @Expose
     private String mobilePhone;
 
+    public CreditCardHolderInfo(String name, String email, String cpfCnpj, String postalCode, String addressNumber, String phone) {
+        this.name = name;
+        this.email = email;
+        this.cpfCnpj = cpfCnpj;
+        this.postalCode = postalCode;
+        this.addressNumber = addressNumber;
+        this.phone = phone;
+    }
+
     /**
      *
      * @return Nome do titular do cartão

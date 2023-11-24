@@ -1,12 +1,11 @@
 package br.com.intersistemas.jasaas.teste;
 
 import br.com.intersistemas.jasaas.adapter.ApacheHttpClientAdapter;
-import br.com.intersistemas.jasaas.api.Asaas;
-import br.com.intersistemas.jasaas.api.CustomerConnection;
-import br.com.intersistemas.jasaas.api.PaymentConnection;
+import br.com.intersistemas.jasaas.api.*;
 import br.com.intersistemas.jasaas.entity.*;
 import br.com.intersistemas.jasaas.entity.meta.MetaCustomer;
 import br.com.intersistemas.jasaas.util.BillingType;
+import br.com.intersistemas.jasaas.util.Cycle;
 import br.com.intersistemas.jasaas.util.DiscountType;
 import br.com.intersistemas.jasaas.util.JsonUtil;
 
@@ -17,7 +16,9 @@ import java.net.URISyntaxException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
+import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @author bosco
@@ -26,17 +27,18 @@ public class Teste {
 
     public static void main(String[] args) throws URISyntaxException, MalformedURLException, IOException, ClassNotFoundException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
 
-        String acessToken = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAwMDU1MjI6OiRhYWNoX2U1NTM0MjFhLTVhYTItNDM4Mi1iMTkzLWExNTZjMTAzNmVkNQ==";
-        Asaas asaas = new Asaas(new ApacheHttpClientAdapter(acessToken), Asaas.AMBIENTE_HOMOLOGACAO);
+        String acessToken = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAwMDc3NDc6OiRhYWNoXzIxNTE4OTY2LWY3NWUtNGVjMC05M2U4LTUyMmE4YmUyODI0OA==";
+        Asaas asaas = new Asaas(new ApacheHttpClientAdapter(acessToken), Asaas.AMBIENTE_PRODUCAO);
         PaymentConnection connPay = asaas.payment();
         CustomerConnection conn = asaas.customer();
+        SubscriptionConnection subscriptionConnection = asaas.subscription();
 
 //        String dataJson = "{ \"event\": \"PAYMENT_RECEIVED\", \"payment\": { \"object\": \"payment\", \"id\": \"pay_614896582179\", \"customer\": \"cus_k9c5dkgf82j9\", \"value\": 500.00, \"netValue\": 495.00, \"originalValue\": null, \"nossoNumero\": \"80516081\", \"description\": \"Pedido nr. 10598\", \"billingType\": \"BOLETO\", \"status\": \"RECEIVED\", \"dueDate\": \"07/05/2016\", \"paymentDate\": \"07/05/2016\", \"invoiceUrl\": \"https://www.asaas.com/i/614896582179\", \"boletoUrl\": \"https://www.asaas.com/b/pdf/614896582179\", \"invoiceNumber\": \"00932305\", \"externalReference\": null, \"deleted\": false } }";
 //        WebhookPayment whp = Webhook.parseToPayment(dataJson);
 //        System.out.println(whp.getEvent());
 //        System.out.println(whp.getPayment().toString());      
         //tipos 0 getpayment, 1 payment create, 2 get customer, 3 creat customer
-        int tipo = 1;
+        int tipo = 4;
 
         switch (tipo) {
             case 0:
@@ -83,12 +85,7 @@ public class Teste {
                 p.setBillingType(BillingType.BOLETO);
                 p.setValue(new BigDecimal("100.00"));
                 Calendar calendar = Calendar.getInstance();
-                //        calendar.set(Calendar.HOUR_OF_DAY, 0);
-//        calendar.set(Calendar.MINUTE, 0);
-//        calendar.set(Calendar.SECOND, 0);
-//        calendar.set(Calendar.MILLISECOND, 0);
-//        calendar.set(Calendar.DAY_OF_MONTH, 04);
-                p.setDueDate(calendar.getTime());
+                p.setDueDate(LocalDate.now());
                 p.setDescription("Teste boleto com desconto 20.0");
                 p.setDiscount(new Discount(new BigDecimal("20"), 0, DiscountType.FIXED));
                 p.setExternalReference("bol_2020");
@@ -117,7 +114,7 @@ public class Teste {
 //                    }
                     String json = "{\"object\":\"list\",\"hasMore\":false,\"totalCount\":1,\"limit\":10,\"offset\":0,\"data\":[{\"object\":\"customer\",\"id\":\"cus_000004744494\",\"dateCreated\":\"2021-10-13\",\"name\":\"Cliente de teste\",\"email\":\"pedroheavy87@gmail.com\",\"company\":null,\"phone\":null,\"mobilePhone\":null,\"address\":null,\"addressNumber\":null,\"complement\":null,\"province\":null,\"postalCode\":null,\"cpfCnpj\":\"66998940050\",\"personType\":\"FISICA\",\"deleted\":false,\"additionalEmails\":null,\"externalReference\":null,\"notificationDisabled\":false,\"observations\":null,\"city\":null,\"state\":null,\"country\":\"Brasil\",\"foreignCustomer\":false}]}";
                     MetaCustomer meta = (MetaCustomer) JsonUtil.parse(json, MetaCustomer.class);
-                    for(Customer custo: meta.getData()){
+                    for (Customer custo : meta.getData()) {
                         System.out.println(custo.getId());
                     }
 
@@ -128,12 +125,69 @@ public class Teste {
             case 3:
                 Customer customer = new Customer();
                 customer.setName("J Willian");
-                customer.setCpfCnpj("99999999999");
+                customer.setCpfCnpj("01353121321");
                 customer.setEmail("jwillian@liamg.moc.rb");
                 Customer cCreated = conn.createCustomer(customer);
                 System.out.println("##################################");
                 System.out.println(cCreated);
                 System.out.println("##################################");
+                break;
+            case 4:
+                Tokenize tokenize = new Tokenize();
+                tokenize.setCustomer("cus_000072931275");
+                tokenize.setCreditCard(
+                        new CreditCard(
+                                "Joao B C Moreira",
+                                "2306504090849629",
+                                "01",
+                                "29",
+                                "628"
+                        ));
+                tokenize.setCreditCardHolderInfo(
+                        new CreditCardHolderInfo(
+                                "Joao Bosco Cavalcante Moreira Filho",
+                                "boskyn9@gmail.com",
+                                "01353121321",
+                                "59141730",
+                                "1130",
+                                "84998573449"
+                        )
+                );
+                tokenize.setRemoteIp("189.124.215.62");
+                TokenizeConnection tokenizeConn = asaas.tokenize();
+                TokenizeResponse response = tokenizeConn.createTokenize(tokenize);
+                System.out.println(response);
+                break;
+            case 5:
+                Subscription subscription = new Subscription();
+                subscription.setCustomer("cus_000072931275");
+                subscription.setBillingType(BillingType.CREDIT_CARD);
+                subscription.setValue(new BigDecimal(5));
+                subscription.setNextDueDate(LocalDate.now().plusDays(20));
+                subscription.setCycle(Cycle.MONTHLY);
+                subscription.setCreditCard(
+                        new CreditCard(
+                                "Joao B C Moreira",
+                                "2306504090849629",
+                                "01",
+                                "29",
+                                "628"
+                        )
+                );
+                subscription.setCreditCardHolderInfo(
+                        new CreditCardHolderInfo(
+                                "Joao Bosco Cavalcante Moreira Filho",
+                                "boskyn9@gmail.com",
+                                "01353121321",
+                                "59141730",
+                                "1130",
+                                "84998573449"
+                        )
+                );
+                subscription.setRemoteIp("189.124.215.62");
+
+                Subscription sCreated = subscriptionConnection.createSubscription(subscription);
+                System.out.println(sCreated);
                 break;
             default:
                 break;

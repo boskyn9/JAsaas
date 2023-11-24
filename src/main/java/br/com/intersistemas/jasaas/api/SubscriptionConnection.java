@@ -99,9 +99,9 @@ public class SubscriptionConnection extends AbstractConnection {
         if (subscription.getId() == null) {
             try {
                 System.out.println("createSubscription");
+                System.out.println(subscriptionJSON);
                 String data = adapter.post((endpoint + "/subscriptions/"), subscriptionJSON);
-                Subscription subscriptionsCreated = (Subscription) JsonUtil.parse(data, Subscription.class);
-                return subscriptionsCreated;
+                return (Subscription) JsonUtil.parse(data, Subscription.class);
             } catch (Exception ex) {
                 Logger.getLogger(SubscriptionConnection.class.getName()).log(Level.SEVERE, null, ex);
                 throw new ConnectionException(500, ex.getMessage());

@@ -6,10 +6,12 @@ import br.com.intersistemas.jasaas.util.SubscriptionStatus;
 import com.google.gson.annotations.Expose;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 /**
- *
  * @author bosco
  */
 public final class Subscription {
@@ -23,7 +25,7 @@ public final class Subscription {
     @Expose
     private BigDecimal value;
     @Expose
-    private Date nextDueDate;
+    private LocalDate nextDueDate;
     @Expose
     private Discount discount;
     @Expose
@@ -35,29 +37,29 @@ public final class Subscription {
     @Expose
     private String description;
     @Expose
-    private Date endDate;
+    private LocalDate endDate;
     @Expose
     private Integer maxPayments;
-
-    @Expose(serialize = false)
-    private Date dateCreated;
-    @Expose(serialize = false)
-    private SubscriptionStatus status;
-
     @Expose
-    private Boolean updatePendingPayments;
-
-//    @Expose
-//    private List<MetaPayment> payments = new ArrayList<>();
+    private String externalReference;
+    @Expose
+    private List<Split> split;
     @Expose
     private CreditCard creditCard;
     @Expose
     private CreditCardHolderInfo creditCardHolderInfo;
     @Expose
+    private String creditCardToken;
+    @Expose
     private String remoteIp;
+    @Expose
+    private Boolean updatePendingPayments;
+    @Expose(serialize = false)
+    private LocalDateTime dateCreated;
+    @Expose(serialize = false)
+    private SubscriptionStatus status;
 
     /**
-     *
      * @return Identificar único da assinatura (Gerado pelo Asaas)
      */
     public String getId() {
@@ -65,7 +67,6 @@ public final class Subscription {
     }
 
     /**
-     *
      * @return Identificador único do cliente
      */
     public String getCustomer() {
@@ -73,7 +74,6 @@ public final class Subscription {
     }
 
     /**
-     *
      * @param customer Identificador único do cliente
      */
     public void setCustomer(String customer) {
@@ -81,7 +81,6 @@ public final class Subscription {
     }
 
     /**
-     *
      * @return Valor da assinatura
      */
     public BigDecimal getValue() {
@@ -89,7 +88,6 @@ public final class Subscription {
     }
 
     /**
-     *
      * @param value Valor da assinatura
      */
     public void setValue(BigDecimal value) {
@@ -97,23 +95,20 @@ public final class Subscription {
     }
 
     /**
-     *
      * @return Data de vencimento da próxima cobrança
      */
-    public Date getNextDueDate() {
+    public LocalDate getNextDueDate() {
         return nextDueDate;
     }
 
     /**
-     *
      * @param nextDueDate Data de vencimento da próxima cobrança
      */
-    public void setNextDueDate(Date nextDueDate) {
+    public void setNextDueDate(LocalDate nextDueDate) {
         this.nextDueDate = nextDueDate;
     }
 
     /**
-     *
      * @return Intervalo de cobrança. Verificar tabela de intervalos.
      */
     public Cycle getCycle() {
@@ -121,7 +116,6 @@ public final class Subscription {
     }
 
     /**
-     *
      * @param cycle Intervalo de cobrança. Verificar tabela de intervalos.
      */
     public void setCycle(Cycle cycle) {
@@ -129,7 +123,6 @@ public final class Subscription {
     }
 
     /**
-     *
      * @return Forma de pagamento.
      */
     public BillingType getBillingType() {
@@ -137,7 +130,6 @@ public final class Subscription {
     }
 
     /**
-     *
      * @param billingType Forma de pagamento.
      */
     public void setBillingType(BillingType billingType) {
@@ -145,7 +137,6 @@ public final class Subscription {
     }
 
     /**
-     *
      * @return Descrição da assinatura
      */
     public String getDescription() {
@@ -153,7 +144,6 @@ public final class Subscription {
     }
 
     /**
-     *
      * @param description Descrição da assinatura
      */
     public void setDescription(String description) {
@@ -161,7 +151,6 @@ public final class Subscription {
     }
 
     /**
-     *
      * @return Somente para atualização. Caso true, atualiza as cobranças
      * pendentes da assinatura como o novo valor e/ou forma de pagamento
      */
@@ -170,17 +159,15 @@ public final class Subscription {
     }
 
     /**
-     *
      * @param updatePendingPayments Somente para atualização. Caso true,
-     * atualiza as cobranças pendentes da assinatura como o novo valor e/ou
-     * forma de pagamento
+     *                              atualiza as cobranças pendentes da assinatura como o novo valor e/ou
+     *                              forma de pagamento
      */
     public void setUpdatePendingPayments(Boolean updatePendingPayments) {
         this.updatePendingPayments = updatePendingPayments;
     }
 
     /**
-     *
      * @return Lista de cobranças da assinatura
      */
     public Integer getMaxPayments() {
@@ -188,7 +175,6 @@ public final class Subscription {
     }
 
     /**
-     *
      * @param maxPayments Lista de cobranças da assinatura
      */
     public void setMaxPayments(Integer maxPayments) {
@@ -196,23 +182,20 @@ public final class Subscription {
     }
 
     /**
-     *
      * @return Número máximo de cobranças
      */
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
     /**
-     *
      * @param endDate Número máximo de cobranças
      */
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
     /**
-     *
      * @return Status da assinatura. Valores válidos: ACTIVE, INACTIVE
      */
     public SubscriptionStatus getStatus() {
@@ -220,7 +203,6 @@ public final class Subscription {
     }
 
     /**
-     *
      * @param status Status da assinatura. Valores válidos: ACTIVE, INACTIVE
      */
     public void setStatus(SubscriptionStatus status) {
@@ -251,11 +233,11 @@ public final class Subscription {
         this.fine = fine;
     }
 
-    public Date getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 
@@ -283,8 +265,58 @@ public final class Subscription {
         this.remoteIp = remoteIp;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getExternalReference() {
+        return externalReference;
+    }
+
+    public void setExternalReference(String externalReference) {
+        this.externalReference = externalReference;
+    }
+
+    public List<Split> getSplit() {
+        return split;
+    }
+
+    public void setSplit(List<Split> split) {
+        this.split = split;
+    }
+
+    public String getCreditCardToken() {
+        return creditCardToken;
+    }
+
+    public void setCreditCardToken(String creditCardToken) {
+        this.creditCardToken = creditCardToken;
+    }
+
     @Override
     public String toString() {
-        return "Subscription{" + "id=" + id + ", customer=" + customer + ", billingType=" + billingType + ", value=" + value + ", nextDueDate=" + nextDueDate + ", discount=" + discount + ", interest=" + interest + ", fine=" + fine + ", cycle=" + cycle + ", description=" + description + ", endDate=" + endDate + ", maxPayments=" + maxPayments + ", dateCreated=" + dateCreated + ", status=" + status + ", updatePendingPayments=" + updatePendingPayments + ", creditCard=" + creditCard + ", creditCardHolderInfo=" + creditCardHolderInfo + ", remoteIp=" + remoteIp + '}';
+        return "Subscription{" +
+                "id='" + id + '\'' +
+                ", customer='" + customer + '\'' +
+                ", billingType=" + billingType +
+                ", value=" + value +
+                ", nextDueDate=" + nextDueDate +
+                ", discount=" + discount +
+                ", interest=" + interest +
+                ", fine=" + fine +
+                ", cycle=" + cycle +
+                ", description='" + description + '\'' +
+                ", endDate=" + endDate +
+                ", maxPayments=" + maxPayments +
+                ", externalReference='" + externalReference + '\'' +
+                ", split=" + split +
+                ", creditCard=" + creditCard +
+                ", creditCardHolderInfo=" + creditCardHolderInfo +
+                ", creditCardToken='" + creditCardToken + '\'' +
+                ", remoteIp='" + remoteIp + '\'' +
+                ", updatePendingPayments=" + updatePendingPayments +
+                ", dateCreated=" + dateCreated +
+                ", status=" + status +
+                '}';
     }
 }
