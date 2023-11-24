@@ -126,7 +126,7 @@ public class Teste {
                 Customer customer = new Customer();
                 customer.setName("J Willian");
                 customer.setCpfCnpj("01353121321");
-                customer.setEmail("jwillian@liamg.moc.rb");
+                customer.setEmail("jwillian@moc.rb");
                 Customer cCreated = conn.createCustomer(customer);
                 System.out.println("##################################");
                 System.out.println(cCreated);
@@ -137,20 +137,20 @@ public class Teste {
                 tokenize.setCustomer("cus_000072931275");
                 tokenize.setCreditCard(
                         new CreditCard(
-                                "Joao B C Moreira",
-                                "2306504090849629",
-                                "01",
-                                "29",
-                                "628"
+                                "Joao B",
+                                "151515415",
+                                "52",
+                                "58",
+                                "888"
                         ));
                 tokenize.setCreditCardHolderInfo(
                         new CreditCardHolderInfo(
-                                "Joao Bosco Cavalcante Moreira Filho",
-                                "boskyn9@gmail.com",
-                                "01353121321",
-                                "59141730",
-                                "1130",
-                                "84998573449"
+                                "Joao Bosco",
+                                "bos@gmail.com",
+                                "01354555321",
+                                "58585855",
+                                "12515",
+                                "4848484849"
                         )
                 );
                 tokenize.setRemoteIp("189.124.215.62");
@@ -167,24 +167,24 @@ public class Teste {
                 subscription.setCycle(Cycle.MONTHLY);
                 subscription.setCreditCard(
                         new CreditCard(
-                                "Joao B C Moreira",
-                                "2306504090849629",
-                                "01",
-                                "29",
-                                "628"
+                                "Joao B",
+                                "151515415",
+                                "52",
+                                "58",
+                                "888"
                         )
                 );
                 subscription.setCreditCardHolderInfo(
                         new CreditCardHolderInfo(
-                                "Joao Bosco Cavalcante Moreira Filho",
-                                "boskyn9@gmail.com",
-                                "01353121321",
-                                "59141730",
-                                "1130",
-                                "84998573449"
+                                "Joao Bosco",
+                                "bos@gmail.com",
+                                "01354555321",
+                                "58585855",
+                                "12515",
+                                "4848484849"
                         )
                 );
-                subscription.setRemoteIp("189.124.215.62");
+                subscription.setRemoteIp("4848484848");
 
                 Subscription sCreated = subscriptionConnection.createSubscription(subscription);
                 System.out.println(sCreated);
