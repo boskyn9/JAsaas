@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.com.intersistemas</groupId>
     <artifactId>JAsaas</artifactId>
-    <version>3.8.2-SNAPSHOT</version>
+    <version>3.8.2</version>
     <packaging>jar</packaging>
 
     <licenses>
@@ -18,6 +18,12 @@
         <developer>
             <name>Bosco Filho</name>
             <email>bosco@intersistemas.com.br</email>
+            <organization>br.com.intersistemas</organization>
+            <organizationUrl>https://intersistemas.com.br</organizationUrl>
+        </developer>
+        <developer>
+            <name>J Willian</name>
+            <email>willian@intersistemas.com.br</email>
             <organization>br.com.intersistemas</organization>
             <organizationUrl>https://intersistemas.com.br</organizationUrl>
         </developer>

@@ -1,4 +1,4 @@
-![maven](https://badgen.net/badge/maven/3.8.1/blue?icon=maven)
+![maven](https://badgen.net/badge/maven/3.8.2/blue?icon=maven)
 ![java](https://badgen.net/badge/Java/11/red?icon=Java)
 ![License](https://badgen.net/badge/License/Apache&nbsp;2.0/green?icon=apach2)
 
@@ -21,19 +21,19 @@ SDK **não-oficial** de integração à API do serviço [Asaas](www.asaas.com)
 <dependency>
     <groupId>br.com.intersistemas</groupId>
     <artifactId>JAsaas</artifactId>
-    <version>3.8.1</version>
+    <version>3.8.2</version>
 </dependency>
 ```
 #### Gradle
 
 ```groovy
-implementation group: 'br.com.intersistemas', name: 'JAsaas', version: '3.8.1'
+implementation group: 'br.com.intersistemas', name: 'JAsaas', version: '3.8.2'
 ```
 #### Grape
 
 ```groovy
 @Grapes(
-        @Grab(group='br.com.intersistemas', module='JAsaas', version='3.8.1')
+        @Grab(group='br.com.intersistemas', module='JAsaas', version='3.8.2')
 )
 ```
 
