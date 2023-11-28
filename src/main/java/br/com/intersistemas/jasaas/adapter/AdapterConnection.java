@@ -2,6 +2,8 @@ package br.com.intersistemas.jasaas.adapter;
 
 import br.com.intersistemas.jasaas.exception.ConnectionException;
 
+import java.io.IOException;
+
 /**
  *
  * @author bosco
@@ -24,7 +26,7 @@ public interface AdapterConnection {
      * @return String contendo JSON com o objeto deletado ou um objeto de erro
      * @throws ConnectionException
      */
-    String delete(String url);
+    String delete(String url) throws IOException;
 
     /**
      * PUT Request

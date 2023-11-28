@@ -6,6 +6,7 @@ import br.com.intersistemas.jasaas.exception.ConnectionException;
 import br.com.intersistemas.jasaas.util.HttpParamsUtil;
 import br.com.intersistemas.jasaas.util.JsonUtil;
 
+import java.io.IOException;
 import java.util.List;
 
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
@@ -29,49 +30,39 @@ public class PaymentConnection extends AbstractConnection {
         this.adapter = adapter;
     }
 
-    public List<Payment> getAll() throws ConnectionException {
+    public List<Payment> getAll() throws ConnectionException, IllegalAccessException {
         return getAll(null, null, null);
     }
 
-    public List<Payment> getAll(PaymentFilter paymentFilter) throws ConnectionException {
+    public List<Payment> getAll(PaymentFilter paymentFilter) throws ConnectionException, IllegalAccessException {
         return getAll(paymentFilter, null, null);
     }
 
-    public List<Payment> getAll(PaymentFilter paymentFilter, Integer limit, Integer offset) throws ConnectionException {
-        try {
-            String url;
+    public List<Payment> getAll(PaymentFilter paymentFilter, Integer limit, Integer offset) throws ConnectionException, IllegalAccessException {
+        String url;
 
-            if (limit == null) {
-                limit = 10;
-            }
-            if (offset == null) {
-                offset = 0;
-            }
-
-            String params = HttpParamsUtil.parse(paymentFilter);
-            if (params != null) {
-                url = (endpoint + "/payments" + params + "&limit=" + limit + "&offset=" + offset);
-            } else {
-                url = (endpoint + "/payments" + "?limit=" + limit + "&offset=" + offset);
-            }
-
-            //System.out.println(url);
-            lastResponseJson = adapter.get(url);
-            //System.out.println(lastResponseJson);
-
-            MetaPayment meta = (MetaPayment) JsonUtil.parse(lastResponseJson, MetaPayment.class);
-
-            setHasMore(meta.getHasMore());
-            setLimit(meta.getLimit());
-            setOffset(meta.getOffset());
-
-            List<Payment> payments = Arrays.asList(meta.getData());
-
-            return payments;
-
-        } catch (IllegalArgumentException | IllegalAccessException ex) {
-            throw new ConnectionException(500, ex.getMessage());
+        if (limit == null) {
+            limit = 10;
         }
+        if (offset == null) {
+            offset = 0;
+        }
+
+        String params = HttpParamsUtil.parse(paymentFilter);
+        if (params != null) {
+            url = (endpoint + "/payments" + params + "&limit=" + limit + "&offset=" + offset);
+        } else {
+            url = (endpoint + "/payments" + "?limit=" + limit + "&offset=" + offset);
+        }
+
+        lastResponseJson = adapter.get(url);
+        MetaPayment meta = (MetaPayment) JsonUtil.parse(lastResponseJson, MetaPayment.class);
+
+        setHasMore(meta.getHasMore());
+        setLimit(meta.getLimit());
+        setOffset(meta.getOffset());
+
+        return Arrays.asList(meta.getData());
     }
 
     public Payment getById(String id) throws ConnectionException {
@@ -140,71 +131,44 @@ public class PaymentConnection extends AbstractConnection {
     public Payment createPayment(Payment payment) throws ConnectionException {
         String paymentJSON = JsonUtil.toJSON(payment);
         if (payment.getId() == null) {
-            try {
-                System.out.println("createPayment");
-                payment.validate();
-                String data = adapter.post((endpoint + "/payments/"), paymentJSON);
-                //System.out.println(data);
-                Payment paymentCreated = (Payment) JsonUtil.parse(data, Payment.class);
-                if (paymentCreated.getId() == null) {
-                    MetaError error = (MetaError) JsonUtil.parse(data, MetaError.class);
-                    //System.out.println(error);
-                    throw new ConnectionException(500, error.toString());
-                }
-                return paymentCreated;
-            } catch (Exception ex) {
-                throw new ConnectionException(500, ex.getMessage());
+            payment.validate();
+            String data = adapter.post((endpoint + "/payments/"), paymentJSON);
+            Payment paymentCreated = (Payment) JsonUtil.parse(data, Payment.class);
+            if (paymentCreated.getId() == null) {
+                MetaError error = (MetaError) JsonUtil.parse(data, MetaError.class);
+                throw new ConnectionException(500, error.toString(), error);
             }
+            return paymentCreated;
         } else {
             throw new ConnectionException(500, "You should not enter the id in the entity to create it.");
         }
     }
 
     public Payment updatePayment(Payment payment) throws ConnectionException {
-        try {
-            System.out.println("updatePayment");
-            String paymentJSON = JsonUtil.toJSON(payment);
-            payment.validate();
-            String data = adapter.post((endpoint + "/payments/" + payment.getId()), paymentJSON);
-            Payment paymentUpdated = (Payment) JsonUtil.parse(data, Payment.class);
-            if (paymentUpdated.getId() == null) {
-                MetaError error = (MetaError) JsonUtil.parse(data, MetaError.class);
-                //System.out.println(error);
-                throw new ConnectionException(500, error.toString());
-            }
-            return paymentUpdated;
-        } catch (Exception ex) {
-            throw new ConnectionException(500, ex.getMessage());
+        String paymentJSON = JsonUtil.toJSON(payment);
+        payment.validate();
+        String data = adapter.post((endpoint + "/payments/" + payment.getId()), paymentJSON);
+        Payment paymentUpdated = (Payment) JsonUtil.parse(data, Payment.class);
+        if (paymentUpdated.getId() == null) {
+            MetaError error = (MetaError) JsonUtil.parse(data, MetaError.class);
+            throw new ConnectionException(500, error.toString(), error);
         }
+        return paymentUpdated;
     }
 
-    public boolean deletePayment(String id) throws ConnectionException {
-        try {
-            System.out.println("deletePayment");
-            String data = adapter.delete((endpoint + "/payments/" + id));
-            DeletedEntityReturn deleted = (DeletedEntityReturn) JsonUtil.parse(data, DeletedEntityReturn.class);
-            return deleted.getDeleted();
-        } catch (Exception ex) {
-            throw new ConnectionException(500, ex.getMessage());
-        }
+    public boolean deletePayment(String id) throws ConnectionException, IOException {
+        String data = adapter.delete((endpoint + "/payments/" + id));
+        DeletedEntityReturn deleted = (DeletedEntityReturn) JsonUtil.parse(data, DeletedEntityReturn.class);
+        return deleted.getDeleted();
     }
 
     public LinhaBoleto getLinhaBoletoByIdBoleto(String id) throws ConnectionException {
-        try {
-            lastResponseJson = adapter.get(endpoint + "/payments/" + id + "/identificationField");
-            return (LinhaBoleto) JsonUtil.parse(lastResponseJson, LinhaBoleto.class);
-
-        } catch (Exception ex) {
-            throw new ConnectionException(500, ex.getMessage());
-        }
+        lastResponseJson = adapter.get(endpoint + "/payments/" + id + "/identificationField");
+        return (LinhaBoleto) JsonUtil.parse(lastResponseJson, LinhaBoleto.class);
     }
 
     public QRCodePix getQRCodeByIdBoleto(String id) throws ConnectionException {
-        try {
-            lastResponseJson = adapter.get(endpoint + "/payments/" + id + "/pixQrCode");
-            return (QRCodePix) JsonUtil.parse(lastResponseJson, QRCodePix.class);
-        } catch (Exception ex) {
-            throw new ConnectionException(500, ex.getMessage());
-        }
+        lastResponseJson = adapter.get(endpoint + "/payments/" + id + "/pixQrCode");
+        return (QRCodePix) JsonUtil.parse(lastResponseJson, QRCodePix.class);
     }
 }

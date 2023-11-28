@@ -6,6 +6,7 @@
 package br.com.intersistemas.jasaas.entity.meta;
 
 import br.com.intersistemas.jasaas.entity.Erro;
+import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import java.util.Arrays;
 
@@ -28,6 +29,6 @@ public class MetaError {
 
     @Override
     public String toString() {
-        return "MetaError{" + "errors=" + Arrays.toString(errors) + '}';
+        return new Gson().toJson(this);
     }
 }

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.com.intersistemas</groupId>
     <artifactId>JAsaas</artifactId>
-    <version>3.9.0-SNAPSHOT</version>
+    <version>3.8.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <licenses>

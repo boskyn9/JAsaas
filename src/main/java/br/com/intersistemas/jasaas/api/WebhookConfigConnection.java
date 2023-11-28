@@ -11,7 +11,6 @@ import br.com.intersistemas.jasaas.exception.ConnectionException;
 import br.com.intersistemas.jasaas.util.JsonUtil;
 
 /**
- *
  * @author atendimento
  */
 public class WebhookConfigConnection extends AbstractConnection {
@@ -33,14 +32,10 @@ public class WebhookConfigConnection extends AbstractConnection {
     }
 
     public WebhookConfig updateWebhookConfig(WebhookConfig webhookConfig) throws ConnectionException {
-        try {
-            System.out.println("updateWebhookConfig");
-            String webhookConfigJSON = JsonUtil.toJSON(webhookConfig);
-            String data = adapter.post((endpoint + "/webhook/"), webhookConfigJSON);
-            WebhookConfig subscriptionUpdated = (WebhookConfig) JsonUtil.parse(data, WebhookConfig.class);
-            return subscriptionUpdated;
-        } catch (Exception ex) {
-            throw new ConnectionException(500, ex.getMessage());
-        }
+        System.out.println("updateWebhookConfig");
+        String webhookConfigJSON = JsonUtil.toJSON(webhookConfig);
+        String data = adapter.post((endpoint + "/webhook/"), webhookConfigJSON);
+        WebhookConfig subscriptionUpdated = (WebhookConfig) JsonUtil.parse(data, WebhookConfig.class);
+        return subscriptionUpdated;
     }
 }

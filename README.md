@@ -4,15 +4,19 @@
 
 # JAsaas
 
+
 Asaas.com JAVA-SDK
 =================
 
-SDK não-oficial de integração à API do serviço www.asaas.com
+SDK **não-oficial** de integração à API do serviço [Asaas](www.asaas.com)
 
- [Instalação](https://central.sonatype.com/artifact/br.com.intersistemas/JAsaas)
+
+ Instalação
 ----------
-#### Maven
 
+[Maven central](https://central.sonatype.com/artifact/br.com.intersistemas/JAsaas)
+
+#### Maven 
 ```xml
 <dependency>
     <groupId>br.com.intersistemas</groupId>
@@ -213,9 +217,7 @@ connWH.updateWebhookConfig(webhookConfig);
 Documentação Oficial
 --------------------
 
-Obs.: Esta é uma API não oficial. Foi feita com base na documentação disponibilizada  [neste link](https://docs.google.com/document/d/1XUJRHY_0nd45CzFK5EmjDK92qgaQJGMxT0rjZriTk-g).
-
-V3: https://asaasv3.docs.apiary.io
+[Asaas - v3](https://docs.asaas.com/reference/comece-por-aqui)
 
 Créditos
 --------

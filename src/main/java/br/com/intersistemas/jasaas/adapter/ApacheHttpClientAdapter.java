@@ -46,20 +46,15 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
     }
 
     @Override
-    public String delete(String url) throws ConnectionException {
-        try {
-            HttpDelete httpDelete = new HttpDelete(url);
-            httpDelete.addHeader("access_token", accessToken);
-            CloseableHttpResponse response = httpclient.execute(httpDelete);
-
-            StatusLine status = response.getStatusLine();
-            if (status.getStatusCode() != 200) {
-                throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase());
-            }
-            return EntityUtils.toString(response.getEntity());
-        } catch (IOException ex) {
-            throw new ConnectionException(500, ex.getMessage());
+    public String delete(String url) throws ConnectionException, IOException {
+        HttpDelete httpDelete = new HttpDelete(url);
+        httpDelete.addHeader("access_token", accessToken);
+        CloseableHttpResponse response = httpclient.execute(httpDelete);
+        StatusLine status = response.getStatusLine();
+        if (status.getStatusCode() != 200) {
+            throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase());
         }
+        return EntityUtils.toString(response.getEntity());
     }
 
     @Override
