@@ -1,6 +1,5 @@
 package br.com.intersistemas.jasaas.entity;
 
-import br.com.intersistemas.jasaas.entity.meta.MetaPayment;
 import br.com.intersistemas.jasaas.exception.PaymentException;
 import br.com.intersistemas.jasaas.util.BillingType;
 import br.com.intersistemas.jasaas.util.PaymentStatus;
@@ -9,9 +8,6 @@ import com.google.gson.annotations.Expose;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -467,7 +463,7 @@ public final class Payment {
             throw new PaymentException(500, "O campo descrição possui limite de 255 caracteres. Tamanho informado: " + description.length());
         }
 
-        if (customer == null || "".equals(customer)) {
+        if (customer == null || customer.isEmpty()) {
             throw new PaymentException(500, "Cliente inválido");
         }
 

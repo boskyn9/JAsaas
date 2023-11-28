@@ -1,7 +1,6 @@
 package br.com.intersistemas.jasaas.adapter;
 
 import br.com.intersistemas.jasaas.exception.ConnectionException;
-import java.util.List;
 
 /**
  *
@@ -16,7 +15,7 @@ public interface AdapterConnection {
      * @return string
      * @throws ConnectionException
      */
-    public String get(String url);
+    String get(String url);
 
     /**
      * DELETE Request
@@ -25,7 +24,7 @@ public interface AdapterConnection {
      * @return String contendo JSON com o objeto deletado ou um objeto de erro
      * @throws ConnectionException
      */
-    public String delete(String url);
+    String delete(String url);
 
     /**
      * PUT Request
@@ -35,7 +34,7 @@ public interface AdapterConnection {
      * @throws ConnectionException
      * @return string
      */
-    public String put(String url, String contentJSON);
+    String put(String url, String contentJSON);
 
     /**
      * POST Request
@@ -45,6 +44,6 @@ public interface AdapterConnection {
      * @return String contendo JSON com o objeto gerado ou um objeto de erro
      * @throws ConnectionException
      */
-    public String post(String url, String contentJSON);
+    String post(String url, String contentJSON);
 
 }

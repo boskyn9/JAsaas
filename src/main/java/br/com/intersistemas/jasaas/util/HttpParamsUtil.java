@@ -9,7 +9,7 @@ import org.apache.http.client.utils.URIBuilder;
  */
 public class HttpParamsUtil {
     
-    public static String parse(Object obj) throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException {
+    public static String parse(Object obj) throws IllegalArgumentException, IllegalAccessException {
         if(obj == null)
             return null;
         

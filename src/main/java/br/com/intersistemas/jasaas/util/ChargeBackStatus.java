@@ -7,10 +7,10 @@ package br.com.intersistemas.jasaas.util;
  */
 public enum ChargeBackStatus {
 
-	REQUESTED, //Solicitado
-	IN_DISPUTE, //Em contestação
-	DISPUTE_LOST, //Contestação perdida
-	REVERSED, //Revertido
-	DONE //Concluído
+	REQUESTED,
+	IN_DISPUTE,
+	DISPUTE_LOST,
+	REVERSED,
+	DONE
 
 }

@@ -5,17 +5,17 @@ import br.com.intersistemas.jasaas.entity.meta.MetaCustomer;
 import br.com.intersistemas.jasaas.exception.ConnectionException;
 import br.com.intersistemas.jasaas.util.HttpParamsUtil;
 import br.com.intersistemas.jasaas.util.JsonUtil;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 import br.com.intersistemas.jasaas.entity.filter.CustomerFilter;
 import br.com.intersistemas.jasaas.entity.meta.DeletedEntityReturn;
 import br.com.intersistemas.jasaas.entity.meta.MetaError;
 
 /**
- *
  * @author bosco
  */
 public class CustomerConnection extends AbstractConnection {
@@ -53,10 +53,7 @@ public class CustomerConnection extends AbstractConnection {
                 url = (endpoint + "/customers" + "?limit=" + limit + "&offset=" + offset);
             }
 
-            //System.out.println(url);
             lastResponseJson = adapter.get(url);
-            //System.out.println(lastResponseJson);
-
             MetaCustomer meta = (MetaCustomer) JsonUtil.parse(lastResponseJson, MetaCustomer.class);
 
             setHasMore(meta.getHasMore());
@@ -66,15 +63,11 @@ public class CustomerConnection extends AbstractConnection {
             Customer[] contentList = meta.getData();
             List<Customer> customers = new ArrayList<>();
 
-            for (Customer content : contentList) {
-                customers.add(content);
-            }
+            Collections.addAll(customers, contentList);
             return customers;
-        } catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException ex) {
-            Logger.getLogger(CustomerConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException | IllegalAccessException ex) {
             throw new ConnectionException(500, ex.getMessage());
         }
-        //return null;
     }
 
     public Customer getById(String id) throws ConnectionException {
@@ -97,21 +90,33 @@ public class CustomerConnection extends AbstractConnection {
         return contentList[0];
     }
 
+    public Customer getByExternalReference(String externalReference) throws ConnectionException {
+        lastResponseJson = adapter.get(endpoint + "/customers?externalReference=" + externalReference);
+        MetaCustomer meta = (MetaCustomer) JsonUtil.parse(lastResponseJson, MetaCustomer.class);
+
+        setHasMore(meta.getHasMore());
+        setLimit(meta.getLimit());
+        setOffset(meta.getOffset());
+
+        Customer[] contentList = meta.getData();
+        if (contentList.length == 0) {
+            return null;
+        }
+        return contentList[0];
+    }
+
     public Customer createCustomer(Customer customer) throws ConnectionException {
         String customerJSON = JsonUtil.toJSON(customer);
         if (customer.getId() == null) {
             try {
-                System.out.println("createCustomer");
                 String data = adapter.post((endpoint + "/customers/"), customerJSON);
                 Customer customerCreated = (Customer) JsonUtil.parse(data, Customer.class);
                 if (customerCreated.getId() == null) {
                     MetaError error = (MetaError) JsonUtil.parse(data, MetaError.class);
-                    //System.out.println(error);
                     throw new ConnectionException(500, error.toString());
                 }
                 return customerCreated;
             } catch (Exception ex) {
-                Logger.getLogger(CustomerConnection.class.getName()).log(Level.SEVERE, null, ex);
                 throw new ConnectionException(500, ex.getMessage());
             }
         } else {
@@ -132,7 +137,6 @@ public class CustomerConnection extends AbstractConnection {
             }
             return customerUpdated;
         } catch (Exception ex) {
-            Logger.getLogger(CustomerConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());
         }
     }
@@ -144,7 +148,6 @@ public class CustomerConnection extends AbstractConnection {
             DeletedEntityReturn deleted = (DeletedEntityReturn) JsonUtil.parse(data, DeletedEntityReturn.class);
             return deleted.getDeleted();
         } catch (Exception ex) {
-            Logger.getLogger(CustomerConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());
         }
     }

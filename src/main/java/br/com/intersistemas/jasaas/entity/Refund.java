@@ -4,7 +4,6 @@ import br.com.intersistemas.jasaas.util.RefundStatus;
 import com.google.gson.annotations.Expose;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * Estornos realizados

@@ -1,14 +1,8 @@
 package br.com.intersistemas.jasaas.entity;
 
-import br.com.intersistemas.jasaas.util.BillingType;
-import br.com.intersistemas.jasaas.util.Cycle;
-import br.com.intersistemas.jasaas.util.SubscriptionStatus;
 import com.google.gson.annotations.Expose;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author bosco

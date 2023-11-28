@@ -11,21 +11,19 @@ import br.com.intersistemas.jasaas.util.JsonUtil;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * @author bosco
  */
 public class Teste {
 
-    public static void main(String[] args) throws URISyntaxException, MalformedURLException, IOException, ClassNotFoundException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
+    public static void main(String[] args) throws URISyntaxException, IOException, ClassNotFoundException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
 
         String acessToken = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAwMDc3NDc6OiRhYWNoXzIxNTE4OTY2LWY3NWUtNGVjMC05M2U4LTUyMmE4YmUyODI0OA==";
         Asaas asaas = new Asaas(new ApacheHttpClientAdapter(acessToken), Asaas.AMBIENTE_PRODUCAO);
@@ -38,17 +36,25 @@ public class Teste {
 //        System.out.println(whp.getEvent());
 //        System.out.println(whp.getPayment().toString());      
         //tipos 0 getpayment, 1 payment create, 2 get customer, 3 creat customer
-        int tipo = 4;
+        int tipo = 5;
 
         switch (tipo) {
             case 0:
-                try {
-                    Payment pay = connPay.getById("pay_121566863590");
-                    System.out.println(pay);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
+//                try {
+//                    Payment pay = connPay.getById("pay_121566863590");
+//                    System.out.println(pay);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                break;
+
+            try {
+                Customer customer = conn.getByExternalReference("550e8400e29b41d4a716446655440000");
+                System.out.println(customer);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            break;
             // Atualiza os dados do cliente
 //        cCreated.setEmail("bosc@liamg.moc.rb");
 //        Customer cUpdated = conn.updateCustomer(cCreated);

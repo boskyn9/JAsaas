@@ -7,11 +7,10 @@ package br.com.intersistemas.jasaas.util;
  * @author willian
  */
 public enum BillingType {
-    BOLETO, //Boleto Bancário
-    CREDIT_CARD, //Cartão de Crédito
+    BOLETO,
+    CREDIT_CARD,
     DEBIT_CARD,
-    UNDEFINED, //Perguntar ao Cliente
-    //Apenas como retorno:
+    UNDEFINED,
     TRANSFER,
     DEPOSIT,
     PIX

@@ -3,8 +3,7 @@ package br.com.intersistemas.jasaas.api;
 import br.com.intersistemas.jasaas.exception.ConnectionException;
 import br.com.intersistemas.jasaas.util.JsonUtil;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import br.com.intersistemas.jasaas.adapter.AdapterConnection;
 import br.com.intersistemas.jasaas.entity.Notification;
 import br.com.intersistemas.jasaas.entity.meta.MetaNotification;
@@ -28,9 +27,6 @@ public class NotificationConnection extends AbstractConnection {
         return getAll(null, null);
     }
 
-//    public List<Notification> getAll(NotificationFilter notificationFilter) throws ConnectionException {
-//        return getAll(notificationFilter, null, null);
-//    }
     public List<Notification> getAll(Integer limit, Integer offset) throws ConnectionException {
         try {
             if (limit == null) {
@@ -40,9 +36,6 @@ public class NotificationConnection extends AbstractConnection {
                 offset = 0;
             }
 
-            //String params = HttpParamsUtil.parse(notificationFilter);
-//            if (params != null) {
-//                url = (endpoint + "/notifications" + params + "&limit=" + limit + "&offset=" + offset);
 //            } else {
 //            }
             String url = (endpoint + "/notifications" + "?limit=" + limit + "&offset=" + offset);
@@ -57,10 +50,8 @@ public class NotificationConnection extends AbstractConnection {
 
             return Arrays.asList(meta.getData());
         } catch (IllegalArgumentException ex) {
-            Logger.getLogger(NotificationConnection.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ConnectionException(500, ex.getMessage());
         }
-
-        return null;
     }
 
     public Notification getById(String id) throws ConnectionException {
@@ -89,7 +80,6 @@ public class NotificationConnection extends AbstractConnection {
                 Notification notificationCreated = (Notification) JsonUtil.parse(data, Notification.class);
                 return notificationCreated;
             } catch (Exception ex) {
-                Logger.getLogger(NotificationConnection.class.getName()).log(Level.SEVERE, null, ex);
                 throw new ConnectionException(500, ex.getMessage());
             }
         } else {
@@ -105,7 +95,6 @@ public class NotificationConnection extends AbstractConnection {
             Notification notificationUpdated = (Notification) JsonUtil.parse(data, Notification.class);
             return notificationUpdated;
         } catch (Exception ex) {
-            Logger.getLogger(NotificationConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());
         }
     }
@@ -117,7 +106,6 @@ public class NotificationConnection extends AbstractConnection {
             DeletedEntityReturn deleted = (DeletedEntityReturn) JsonUtil.parse(data, DeletedEntityReturn.class);
             return deleted.getDeleted();
         } catch (Exception ex) {
-            Logger.getLogger(NotificationConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());
         }
     }

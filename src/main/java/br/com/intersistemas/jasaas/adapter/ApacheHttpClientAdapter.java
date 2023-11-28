@@ -3,10 +3,7 @@ package br.com.intersistemas.jasaas.adapter;
 import br.com.intersistemas.jasaas.exception.ConnectionException;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
@@ -44,7 +41,6 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
 
             return EntityUtils.toString(response.getEntity());
         } catch (IOException ex) {
-            Logger.getLogger(ApacheHttpClientAdapter.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());
         }
     }
@@ -62,7 +58,6 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             }
             return EntityUtils.toString(response.getEntity());
         } catch (IOException ex) {
-            Logger.getLogger(ApacheHttpClientAdapter.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());
         }
     }
@@ -81,14 +76,11 @@ public class ApacheHttpClientAdapter implements AdapterConnection {
             httpPost.setEntity(entity);
             CloseableHttpResponse response = httpclient.execute(httpPost);
             StatusLine status = response.getStatusLine();
-            System.out.println("Status: " + status.getStatusCode());
             if (status.getStatusCode() != 200 && status.getStatusCode() != 400) {
-                System.out.println("Reason: " +status.getReasonPhrase());
                 throw new ConnectionException(status.getStatusCode(), status.getReasonPhrase());
             }
             return EntityUtils.toString(response.getEntity());
         } catch (IOException ex) {
-            Logger.getLogger(ApacheHttpClientAdapter.class.getName()).log(Level.SEVERE, null, ex);
             throw new ConnectionException(500, ex.getMessage());
         }
     }

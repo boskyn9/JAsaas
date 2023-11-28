@@ -1,9 +1,7 @@
 package br.com.intersistemas.jasaas.util;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.util.regex.Matcher;
@@ -56,7 +54,5 @@ public class JsonUtil {
 		Pattern pattern = Pattern.compile("^[0-9]{2}/[0-9]{2}/[0-9]{4}$");
 		Matcher matcher = pattern.matcher(json);
 		return matcher.matches();
-//        String dateUS = "2018-01-01";
-//        pattern = Pattern.compile("^[0-9]{4}-[0-9]{2}-[0-9]{2}$");
 	}
 }

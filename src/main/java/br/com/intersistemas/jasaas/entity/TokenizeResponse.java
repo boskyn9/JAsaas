@@ -1,6 +1,5 @@
 package br.com.intersistemas.jasaas.entity;
 
-import br.com.intersistemas.jasaas.util.SubscriptionStatus;
 import com.google.gson.annotations.Expose;
 
 import java.time.LocalDateTime;

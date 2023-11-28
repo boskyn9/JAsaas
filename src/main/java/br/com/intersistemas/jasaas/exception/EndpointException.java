@@ -11,7 +11,7 @@ package br.com.intersistemas.jasaas.exception;
  */
 public class EndpointException extends RuntimeException{
 
-    int endpointValue;
+    final int endpointValue;
 
     public EndpointException(String message, int endpointValue) {
         super(message);

@@ -4,8 +4,6 @@ import br.com.intersistemas.jasaas.exception.CustomerException;
 import com.google.gson.annotations.Expose;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  *
@@ -59,7 +57,7 @@ public final class Customer {
     @Expose(serialize = false)
     private Boolean deleted;
     @Expose(serialize = false)
-    private LocalDateTime dateCreated;
+    private LocalDate dateCreated;
 
     public Customer() {
     }
@@ -283,7 +281,7 @@ public final class Customer {
         this.cpfCnpj = cpfCnpj;
     }
 
-    public  LocalDateTime getDateCreated() {
+    public  LocalDate getDateCreated() {
         return dateCreated;
     }
 
@@ -389,10 +387,10 @@ public final class Customer {
     }
 
     public void validate() {
-        if (name == null || "".equals(name)) {
+        if (name == null || name.isEmpty()) {
             throw new CustomerException(500, "Nome inválido");
         }
-        if (cpfCnpj == null || "".equals(cpfCnpj)) {
+        if (cpfCnpj == null || cpfCnpj.isEmpty()) {
             throw new CustomerException(500, "CPF/CNPJ inválido");
         }
     }
