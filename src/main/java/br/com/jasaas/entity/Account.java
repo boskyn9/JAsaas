@@ -4,6 +4,7 @@ import br.com.jasaas.enumeration.CompanyType;
 import br.com.jasaas.enumeration.PersonType;
 import com.google.gson.annotations.Expose;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -29,6 +30,10 @@ public class Account extends AsaasEntity<String> {
     private String phone;
     @Expose
     private String mobilePhone;
+    @Expose
+    private String site;
+    @Expose
+    private BigDecimal incomeValue;
     @Expose
     private String address;
     @Expose
@@ -58,9 +63,10 @@ public class Account extends AsaasEntity<String> {
     }
 
     public Account(String id, String name, String email, String loginEmail, String cpfCnpj, Date birthDate,
-                   CompanyType companyType, String phone, String mobilePhone, String address, String addressNumber,
-                   String complement, String province, String postalCode, PersonType personType, String city,
-                   String state, String country, AccountNumber accountNumber, String walletId, String apiKey) {
+                   CompanyType companyType, String phone, String mobilePhone, String site, BigDecimal incomeValue,
+                   String address, String addressNumber, String complement, String province, String postalCode,
+                   PersonType personType, String city, String state, String country, AccountNumber accountNumber,
+                   String walletId, String apiKey) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -70,6 +76,8 @@ public class Account extends AsaasEntity<String> {
         this.companyType = companyType;
         this.phone = phone;
         this.mobilePhone = mobilePhone;
+        this.site = site;
+        this.incomeValue = incomeValue;
         this.address = address;
         this.addressNumber = addressNumber;
         this.complement = complement;
@@ -154,6 +162,22 @@ public class Account extends AsaasEntity<String> {
 
     public void setMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
+    }
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
+    }
+
+    public BigDecimal getIncomeValue() {
+        return incomeValue;
+    }
+
+    public void setIncomeValue(BigDecimal incomeValue) {
+        this.incomeValue = incomeValue;
     }
 
     public String getAddress() {
