@@ -54,7 +54,7 @@ public final class Subscription {
     @Expose
     private Boolean updatePendingPayments;
     @Expose(serialize = false)
-    private LocalDateTime dateCreated;
+    private LocalDate dateCreated;
     @Expose(serialize = false)
     private SubscriptionStatus status;
 
