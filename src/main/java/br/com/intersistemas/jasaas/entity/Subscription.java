@@ -232,11 +232,11 @@ public final class Subscription {
         this.fine = fine;
     }
 
-    public LocalDateTime getDateCreated() {
+    public LocalDate getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(LocalDateTime dateCreated) {
+    public void setDateCreated(LocalDate dateCreated) {
         this.dateCreated = dateCreated;
     }
 
