@@ -13,7 +13,7 @@ import br.com.intersistemas.jasaas.exception.EndpointException;
  */
 public abstract class AbstractConnection {
 
-    private static final String ENDPOINT_PRODUCAO = "https://www.asaas.com/api/v3";
+    private static final String ENDPOINT_PRODUCAO = "https://api.asaas.com/v3";
     private static final String ENDPOINT_HOMOLOGACAO = "https://sandbox.asaas.com/api/v3";
 
     public static final int AMBIENTE_PRODUCAO = 1;
