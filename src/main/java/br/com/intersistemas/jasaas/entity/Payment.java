@@ -48,7 +48,7 @@ public final class Payment {
     private Boolean postalService = false;
 
     @Expose(serialize = false)
-    private LocalDateTime dateCreated;
+    private LocalDate dateCreated;
     @Expose(serialize = false)
     private LocalDate creditDate;
     @Expose(serialize = false)
@@ -368,11 +368,11 @@ public final class Payment {
         this.fine = fine;
     }
 
-    public LocalDateTime getDateCreated() {
+    public LocalDate getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(LocalDateTime dateCreated) {
+    public void setDateCreated(LocalDate dateCreated) {
         this.dateCreated = dateCreated;
     }
 
