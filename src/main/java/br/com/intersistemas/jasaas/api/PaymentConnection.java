@@ -100,7 +100,7 @@ public class PaymentConnection extends AbstractConnection {
 
 	public List<Payment> getBySubscription(String subscription_id, String status) throws ConnectionException {
 		String statusPayment = status != null ? ("?status=" + status) : "";
-		lastResponseJson = adapter.get(endpoint + "/subscriptions/" + subscription_id + "/payments" + status);
+		lastResponseJson = adapter.get(endpoint + "/subscriptions/" + subscription_id + "/payments" + statusPayment);
 		MetaPayment meta = (MetaPayment) JsonUtil.parse(lastResponseJson, MetaPayment.class);
 
         setHasMore(meta.getHasMore());
