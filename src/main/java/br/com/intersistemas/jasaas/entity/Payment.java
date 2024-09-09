@@ -8,6 +8,7 @@ import com.google.gson.annotations.Expose;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -77,9 +78,9 @@ public final class Payment {
     @Expose(serialize = false)
     private LocalDate clientPaymentDate;
     @Expose(serialize = false)
-    private LocalDate lastInvoiceViewedDate;
+    private ZonedDateTime lastInvoiceViewedDate;
     @Expose(serialize = false)
-    private LocalDate lastBankSlipViewedDate;
+    private ZonedDateTime lastBankSlipViewedDate;
     @Expose(serialize = false)
     private String invoiceUrl;
     @Expose(serialize = false)

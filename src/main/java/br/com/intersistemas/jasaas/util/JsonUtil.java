@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 
 import java.text.DateFormat;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,6 +28,7 @@ public class JsonUtil {
 			gsonBuilder = new GsonBuilder()
 					.excludeFieldsWithoutExposeAnnotation()
 					.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+					.registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeAdapter())
 					.setDateFormat(DateFormat.SHORT);
 		}
 		try {
@@ -45,6 +47,7 @@ public class JsonUtil {
 			gsonBuilder = new GsonBuilder()
 					.excludeFieldsWithoutExposeAnnotation()
 					.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+					.registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeAdapter())
 					.setDateFormat(DateFormat.SHORT);
 		}
 		return gsonBuilder.create().toJson(obj);
