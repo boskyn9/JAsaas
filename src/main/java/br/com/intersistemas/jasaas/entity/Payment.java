@@ -459,7 +459,7 @@ public final class Payment {
             throw new PaymentException(500, "Data de vencimento inválida. A data de vencimento deve ser maior ou igual a hoje. Data informada: " + dueDate);
         }
 
-        if (description.length() > 255) {
+        if (description.length() > 500) {
             //System.out.println("description: " + description);
             throw new PaymentException(500, "O campo descrição possui limite de 255 caracteres. Tamanho informado: " + description.length());
         }
