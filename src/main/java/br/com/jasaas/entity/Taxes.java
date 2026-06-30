@@ -20,10 +20,19 @@ public class Taxes {
     private Boolean retainIss;
     @Expose
     private BigDecimal iss;
-    @Expose
+    /**
+     * Calculado automaticamente pelo Asaas a partir da NT-007. Não deve ser enviado nas requisições.
+     */
+    @Expose(serialize = false)
     private PIsCofinsRetentionType pisCofinsRetentionType;
     @Expose
     private PisCofinsTaxStatus pisCofinsTaxStatus;
+    @Expose
+    private BigDecimal operationPis;
+    @Expose
+    private BigDecimal operationCofins;
+    @Expose
+    private Boolean useTaxSystemReformNT007;
     @Expose
     private BigDecimal cofins;
     @Expose
@@ -118,6 +127,30 @@ public class Taxes {
 
     public void setPisCofinsTaxStatus(PisCofinsTaxStatus pisCofinsTaxStatus) {
         this.pisCofinsTaxStatus = pisCofinsTaxStatus;
+    }
+
+    public BigDecimal getOperationPis() {
+        return operationPis;
+    }
+
+    public void setOperationPis(BigDecimal operationPis) {
+        this.operationPis = operationPis;
+    }
+
+    public BigDecimal getOperationCofins() {
+        return operationCofins;
+    }
+
+    public void setOperationCofins(BigDecimal operationCofins) {
+        this.operationCofins = operationCofins;
+    }
+
+    public Boolean getUseTaxSystemReformNT007() {
+        return useTaxSystemReformNT007;
+    }
+
+    public void setUseTaxSystemReformNT007(Boolean useTaxSystemReformNT007) {
+        this.useTaxSystemReformNT007 = useTaxSystemReformNT007;
     }
 
     public BigDecimal getCofins() {
